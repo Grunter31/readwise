@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ReadWise — Free Reading Diagnostic | Flying Start Family Daycare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600&display=swap"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #FAF7F2; --cream-dark: #F0EBE1;
+    --forest: #1A5C3A; --forest-mid: #2A7A50;
+    --forest-light: #D6EDE0; --forest-xlight: #EDF7F2;
+    --amber: #D97706; --amber-light: #FEF3C7;
+    --ink: #1C1C1C; --ink-mid: #4A4A4A; --ink-soft: #7A7A7A;
+    --white: #FFFFFF; --border: rgba(28,28,28,0.09);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+ 
+  /* ELLE HERO */
+  .elle-hero { background: var(--forest); padding: 70px 6% 80px; }
+  .elle-hero-inner { max-width: 860px; margin: 0 auto; }
+  .elle-flag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); padding: 6px 16px; border-radius: 99px; font-size: 13px; font-weight: 500; margin-bottom: 2rem; }
+  .elle-profile { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 2.5rem; }
+  .elle-photo {
+    width: 80px; height: 80px; border-radius: 50%; flex-shrink: 0;
+    overflow: hidden; border: 3px solid rgba(255,255,255,0.2);
+    background: var(--forest-light);
+  }
+  .elle-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .elle-profile-text { padding-top: 4px; }
+  .elle-name { font-family: 'Lora', serif; font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+  .elle-role { font-size: 14px; color: rgba(255,255,255,0.6); }
+  .elle-hero h1 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(28px, 4.5vw, 52px); color: var(--white); line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+  .elle-hero h1 em { font-style: italic; color: #9FE1CB; }
+  .elle-story {
+    background: rgba(255,255,255,0.07); border-left: 3px solid rgba(255,255,255,0.2);
+    border-radius: 0 14px 14px 0; padding: 1.5rem 1.75rem; margin-bottom: 2.5rem;
+  }
+  .elle-story p { font-size: 16px; color: rgba(255,255,255,0.82); line-height: 1.8; margin-bottom: 0.85rem; }
+  .elle-story p:last-child { margin-bottom: 0; }
+  .elle-story strong { color: var(--white); font-weight: 600; }
+  .elle-story em { color: #9FE1CB; font-style: normal; font-weight: 600; }
+  .btn-white-lg { display: inline-block; background: var(--white); color: var(--forest); padding: 17px 42px; border-radius: 99px; font-size: 17px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 24px rgba(0,0,0,0.2); transition: transform 0.15s, box-shadow 0.15s; }
+  .btn-white-lg:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.26); }
+  .elle-note { font-size: 13px; color: rgba(255,255,255,0.4); margin-top: 0.9rem; }
+ 
+  /* CREDENTIALS STRIP */
+  .creds { background: rgba(0,0,0,0.25); padding: 18px 6%; }
+  .creds-inner { max-width: 860px; margin: 0 auto; display: flex; gap: 2rem; flex-wrap: wrap; }
+  .cred { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 500; }
+  .cred span { color: #9FE1CB; }
+ 
+  /* WHAT IS IT */
+  .what { padding: 80px 6%; }
+  .what-inner { max-width: 900px; margin: 0 auto; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--forest); margin-bottom: 12px; }
+  .section-title { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(24px, 3vw, 40px); line-height: 1.2; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1rem; max-width: 620px; }
+  .section-sub { font-size: 17px; color: var(--ink-mid); line-height: 1.7; max-width: 580px; margin-bottom: 2.5rem; }
+  .three-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .what-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; border-top: 3px solid var(--forest); transition: transform 0.2s; }
+  .what-card:hover { transform: translateY(-3px); }
+  .what-card-icon { font-size: 26px; margin-bottom: 10px; }
+  .what-card h3 { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .what-card p { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+ 
+  /* SYMPTOMS */
+  .symptoms { background: var(--ink); padding: 80px 6%; }
+  .symptoms-inner { max-width: 860px; margin: 0 auto; }
+  .symptoms h2 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(24px, 3.5vw, 40px); color: var(--white); line-height: 1.25; margin-bottom: 0.75rem; }
+  .symptoms-lead { font-size: 16px; color: rgba(255,255,255,0.55); margin-bottom: 2rem; max-width: 560px; line-height: 1.65; }
+  .symptom-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 2.5rem; }
+  .symptom-item { display: flex; align-items: flex-start; gap: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 1rem 1.25rem; }
+  .symptom-dot { width: 8px; height: 8px; border-radius: 50%; background: #5DCAA5; flex-shrink: 0; margin-top: 8px; }
+  .symptom-item p { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+  .symptom-item strong { color: var(--white); font-weight: 600; }
+  .symptom-cta { background: rgba(93,202,165,0.12); border: 1px solid rgba(93,202,165,0.25); border-radius: 14px; padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .symptom-cta p { font-size: 16px; color: rgba(255,255,255,0.85); font-weight: 500; }
+  .symptom-cta a { background: #1D9E75; color: var(--white); padding: 10px 24px; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
+  .symptom-cta a:hover { background: #0F6E56; }
+ 
+  /* HOW */
+  .how { background: var(--cream-dark); padding: 80px 6%; }
+  .how-inner { max-width: 900px; margin: 0 auto; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-top: 2.5rem; }
+  .step { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; transition: transform 0.2s; }
+  .step:hover { transform: translateY(-3px); }
+  .step-num { width: 34px; height: 34px; border-radius: 9px; background: var(--forest-light); color: var(--forest); font-family: 'Lora', serif; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.9rem; }
+  .step h3 { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 7px; }
+  .step p { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+ 
+  /* LEVELS */
+  .levels { padding: 80px 6%; }
+  .levels-inner { max-width: 900px; margin: 0 auto; }
+  .levels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: 2.5rem; }
+  .level-card { background: var(--white); border-radius: 12px; padding: 1.1rem; border: 1px solid var(--border); border-top: 3px solid var(--forest); transition: transform 0.2s; }
+  .level-card:hover { transform: translateY(-2px); }
+  .level-num { font-size: 11px; font-weight: 700; color: var(--forest); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 5px; }
+  .level-name { font-family: 'Lora', serif; font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+  .level-desc { font-size: 13px; color: var(--ink-mid); line-height: 1.5; }
+ 
+  /* PROFILE */
+  .profile-section { background: var(--forest-xlight); padding: 80px 6%; }
+  .profile-inner { max-width: 900px; margin: 0 auto; }
+  .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 2.5rem; }
+  .profile-preview { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; box-shadow: 0 16px 48px rgba(28,28,28,0.08); }
+  .profile-bar { margin-bottom: 13px; }
+  .profile-bar-label { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .profile-bar-label span:first-child { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .profile-bar-label span:last-child { font-size: 13px; font-weight: 700; }
+  .profile-bar-track { height: 7px; background: var(--cream-dark); border-radius: 99px; overflow: hidden; }
+  .profile-bar-fill { height: 100%; border-radius: 99px; }
+  .superpower-tag { display: flex; align-items: center; gap: 8px; background: var(--amber-light); color: var(--amber); padding: 9px 13px; border-radius: 9px; font-size: 13px; font-weight: 600; margin-top: 1rem; }
+  .gap-tag { display: flex; align-items: center; gap: 8px; background: var(--forest-light); color: var(--forest); padding: 9px 13px; border-radius: 9px; font-size: 13px; font-weight: 600; margin-top: 7px; }
+  .profile-points { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .profile-points li { display: flex; align-items: flex-start; gap: 11px; font-size: 15px; color: var(--ink-mid); line-height: 1.55; }
+  .profile-points li::before { content: '✓'; width: 20px; height: 20px; border-radius: 50%; background: var(--forest-light); color: var(--forest); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+ 
+  /* CLOSING CTA */
+  .closing { background: var(--forest); padding: 90px 6%; text-align: center; }
+  .closing-inner { max-width: 680px; margin: 0 auto; }
+  .closing h2 { font-family: 'Lora', serif; font-weight: 700; font-style: italic; font-size: clamp(26px, 3.5vw, 46px); color: var(--white); line-height: 1.2; margin-bottom: 1.25rem; }
+  .closing p { font-size: 17px; color: rgba(255,255,255,0.65); line-height: 1.75; margin-bottom: 2.5rem; }
+  .closing-note { font-size: 13px; color: rgba(255,255,255,0.38); margin-top: 1rem; }
+ 
+  /* UTILS */
+  .fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+ 
+  @media (max-width: 700px) {
+    .profile-grid { grid-template-columns: 1fr; }
+    .elle-profile { flex-direction: column; }
+    .creds-inner { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+ 
+<!-- ELLE HERO -->
+<section class="elle-hero">
+  <div class="elle-hero-inner">
+ 
+    <div class="elle-flag">🇹🇭 &nbsp;A personal recommendation from Elle — Flying Start Family Daycare, Darwin</div>
+ 
+    <div class="elle-profile">
+      <div class="elle-photo">
+        <img src="https://flyingstartfamilydaycare.com.au/wp-content/uploads/2026/03/Ladawans-Website-Photo.jpg" alt="Elle, educator at Flying Start Family Daycare" onerror="this.style.display='none'"/>
+      </div>
+      <div class="elle-profile-text">
+        <div class="elle-name">Ladawan (Elle)</div>
+        <div class="elle-role">Diploma-Qualified Educator · Flying Start Family Daycare · Darwin</div>
+      </div>
+    </div>
+ 
+    <h1>Your child can read the words.<br/>But do they truly <em>understand</em> them?</h1>
+ 
+    <div class="elle-story">
+      <p>My name is Ladawan — everyone calls me Elle. I came to Australia from Thailand, and English is my second language. I know firsthand what it feels like to read every word correctly and still not fully grasp what they mean together. <strong>That gap between decoding and understanding is real — and it is something you have to be taught, not something that just happens on its own.</strong></p>
+ 
+      <p>Every day at Flying Start, I work with children who are exactly the same. They can read beautifully. They can say every word. But when I ask them what the story was about, or why a character made a choice — they go quiet. The words went in. <strong>The meaning didn't.</strong></p>
+ 
+      <p>That is why I am recommending <em>ReadWise</em> to every Flying Start family. It finds the exact point where your child's understanding breaks down — in 8 minutes, for free — and tells you precisely what to work on next. I wish something like this had existed when I was learning English. <strong>I want every child I care for to have it now.</strong></p>
+    </div>
+ 
+    <a href="https://flyingstartfamilydaycare.com.au/readwise-app" class="btn-white-lg">
+      Start the free diagnostic →
+    </a>
+    <p class="elle-note">Free for the first 3 sessions · No credit card · Takes 8 minutes · Ages 5–12</p>
+ 
+  </div>
+</section>
+ 
+<!-- CREDENTIALS STRIP -->
+<section class="creds" style="background:rgba(0,0,0,0.3)">
+  <div class="creds-inner">
+    <div class="cred"><span>🎓</span> Diploma in Early Childhood Education</div>
+    <div class="cred"><span>🩺</span> Current First Aid + CPR</div>
+    <div class="cred"><span>🛡️</span> Ochre Card — Working With Children</div>
+    <div class="cred"><span>✅</span> Registered with Kentish Family Day Care</div>
+  </div>
+</section>
+ 
+<!-- WHAT IS IT -->
+<section class="what">
+  <div class="what-inner">
+    <div class="eyebrow fade-in">What is ReadWise?</div>
+    <h2 class="section-title fade-in">A free AI reading diagnostic built for children aged 5–12</h2>
+    <p class="section-sub fade-in">ReadWise is not another reading app. It is a diagnostic tool — it finds the exact layer of comprehension your child is missing, and gives you a precise picture of what to work on next.</p>
+    <div class="three-grid">
+      <div class="what-card fade-in">
+        <div class="what-card-icon">📖</div>
+        <h3>Your child reads a story</h3>
+        <p>A short, engaging story written specifically for their age. Something they actually want to read — not a school worksheet.</p>
+      </div>
+      <div class="what-card fade-in">
+        <div class="what-card-icon">💬</div>
+        <h3>They answer five open questions</h3>
+        <p>Not multiple choice. Real answers, across five levels of comprehension — revealing exactly how deeply they understood the story.</p>
+      </div>
+      <div class="what-card fade-in">
+        <div class="what-card-icon">🔍</div>
+        <h3>You get their reading profile</h3>
+        <p>A complete map of your child's comprehension — their strengths, their gap, and exactly what to focus on next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- IS THIS YOUR CHILD -->
+<section class="symptoms">
+  <div class="symptoms-inner">
+    <h2>Does any of this sound like your child?</h2>
+    <p class="symptoms-lead">These are the signs Elle sees every day — children who can decode words beautifully but haven't yet learned to truly understand them.</p>
+    <div class="symptom-list">
+      <div class="symptom-item">
+        <div class="symptom-dot"></div>
+        <p>They can <strong>read a page aloud perfectly</strong> — but when you ask what it was about, they go quiet.</p>
+      </div>
+      <div class="symptom-item">
+        <div class="symptom-dot"></div>
+        <p>Their reading app gives them <strong>stars and badges</strong> — but their school comprehension results tell a different story.</p>
+      </div>
+      <div class="symptom-item">
+        <div class="symptom-dot"></div>
+        <p>They struggle to explain <strong>why a character did something</strong>, or what the story was really about.</p>
+      </div>
+      <div class="symptom-item">
+        <div class="symptom-dot"></div>
+        <p>They answer comprehension questions with <strong>guesses</strong> rather than thinking — and sometimes get lucky.</p>
+      </div>
+      <div class="symptom-item">
+        <div class="symptom-dot"></div>
+        <p>You know they are <strong>smarter than their results suggest</strong> — something is blocking them, but you don't know what.</p>
+      </div>
+    </div>
+    <div class="symptom-cta">
+      <p>ReadWise finds the exact block in under 8 minutes — free.</p>
+      <a href="https://flyingstartfamilydaycare.com.au/readwise-app">Start the free diagnostic →</a>
+    </div>
+  </div>
+</section>
+ 
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="how-inner">
+    <div class="eyebrow fade-in">How it works</div>
+    <h2 class="section-title fade-in">Three steps to your child's complete reading profile</h2>
+    <div class="steps">
+      <div class="step fade-in">
+        <div class="step-num">1</div>
+        <h3>Enter your child's name and age</h3>
+        <p>ReadWise calibrates everything — the story, the questions, the language — to your child's exact age from 5 to 12.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">2</div>
+        <h3>Read the story, answer five questions</h3>
+        <p>A fresh story every session. Five open questions that reveal comprehension at five levels — not just right or wrong, but how deeply they understood.</p>
+      </div>
+      <div class="step fade-in">
+        <div class="step-num">3</div>
+        <h3>Get their reading profile</h3>
+        <p>Instantly. A complete picture of their strengths, their gap, and the single most important thing to work on next.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- FIVE LEVELS -->
+<section class="levels">
+  <div class="levels-inner">
+    <div class="eyebrow fade-in">The five levels of comprehension</div>
+    <h2 class="section-title fade-in">Reading is not one skill. It is five — and most children are only being taught the first.</h2>
+    <p class="section-sub fade-in">Popular reading apps focus on decoding — Level 1. ReadWise diagnoses and builds all five. The ones schools actually test.</p>
+    <div class="levels-grid">
+      <div class="level-card fade-in">
+        <div class="level-num">Level 1</div>
+        <div class="level-name">Finding Facts</div>
+        <div class="level-desc">Can they find what the text directly says? Most apps stop here.</div>
+      </div>
+      <div class="level-card fade-in">
+        <div class="level-num">Level 2</div>
+        <div class="level-name">Word Power</div>
+        <div class="level-desc">Can they work out what an unfamiliar word means from the context around it?</div>
+      </div>
+      <div class="level-card fade-in">
+        <div class="level-num">Level 3</div>
+        <div class="level-name">Reading Between the Lines</div>
+        <div class="level-desc">Can they understand what the author means but doesn't say directly?</div>
+      </div>
+      <div class="level-card fade-in">
+        <div class="level-num">Level 4</div>
+        <div class="level-name">Big Ideas</div>
+        <div class="level-desc">Can they identify the main message or theme of a piece of writing?</div>
+      </div>
+      <div class="level-card fade-in">
+        <div class="level-num">Level 5</div>
+        <div class="level-name">Critical Thinking</div>
+        <div class="level-desc">Can they form their own view, explain it, and back it up?</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- SAMPLE PROFILE -->
+<section class="profile-section">
+  <div class="profile-inner">
+    <div class="eyebrow fade-in">What you receive</div>
+    <h2 class="section-title fade-in">After one session — a complete map of your child's reading mind</h2>
+    <div class="profile-grid">
+      <div>
+        <p style="font-size:17px;color:var(--ink-mid);line-height:1.7;margin-bottom:1.5rem" class="fade-in">Not a score out of ten. A precise picture — exactly which levels your child has mastered, exactly where the gap is, and the single most important thing to work on next.</p>
+        <ul class="profile-points fade-in">
+          <li>Scores across all five comprehension levels</li>
+          <li>Their reading superpower — what they do naturally well</li>
+          <li>The single most important gap to focus on next</li>
+          <li>Personal encouragement written directly to your child</li>
+          <li>Progress tracked session by session over time</li>
+        </ul>
+      </div>
+      <div class="profile-preview fade-in">
+        <p style="font-size:11px;font-weight:700;color:#7A7A7A;text-transform:uppercase;letter-spacing:0.09em;margin-bottom:16px">Sample profile — Mia, age 9</p>
+        <div class="profile-bar">
+          <div class="profile-bar-label"><span>Finding Facts</span><span style="color:#085041">92%</span></div>
+          <div class="profile-bar-track"><div class="profile-bar-fill" style="width:92%;background:#1D9E75"></div></div>
+        </div>
+        <div class="profile-bar">
+          <div class="profile-bar-label"><span>Word Power</span><span style="color:#085041">81%</span></div>
+          <div class="profile-bar-track"><div class="profile-bar-fill" style="width:81%;background:#1D9E75"></div></div>
+        </div>
+        <div class="profile-bar">
+          <div class="profile-bar-label"><span>Reading Between the Lines</span><span style="color:#633806">44%</span></div>
+          <div class="profile-bar-track"><div class="profile-bar-fill" style="width:44%;background:#EF9F27"></div></div>
+        </div>
+        <div class="profile-bar">
+          <div class="profile-bar-label"><span>Big Ideas</span><span style="color:#993C1D">36%</span></div>
+          <div class="profile-bar-track"><div class="profile-bar-fill" style="width:36%;background:#D85A30"></div></div>
+        </div>
+        <div class="profile-bar">
+          <div class="profile-bar-label"><span>Critical Thinking</span><span style="color:#993C1D">28%</span></div>
+          <div class="profile-bar-track"><div class="profile-bar-fill" style="width:28%;background:#D85A30"></div></div>
+        </div>
+        <div class="superpower-tag">⚡ Superpower — Exceptional recall of details</div>
+        <div class="gap-tag">→ Next focus — Reading between the lines</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- CLOSING CTA -->
+<section class="closing">
+  <div class="closing-inner">
+    <h2>"I wish this existed when I was learning English. I want every child at Flying Start to have it now."</h2>
+    <p>It takes 8 minutes. It is completely free to start. And Elle believes it is one of the most useful things you can do for your child's reading this year — because she has lived the experience of working hard to close that exact gap herself.</p>
+    <a href="https://flyingstartfamilydaycare.com.au/readwise-app" class="btn-white-lg">
+      Start the free diagnostic →
+    </a>
+    <p class="closing-note">Free for the first 3 sessions · No credit card · No setup · For ages 5–12</p>
+  </div>
+</section>
+ 
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
+ 

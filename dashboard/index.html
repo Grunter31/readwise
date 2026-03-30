@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ReadWise — My Reading Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;500;600;700&family=Lora:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600&display=swap"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #FAF7F2; --cream-dark: #F0EBE1;
+    --forest: #1A5C3A; --forest-mid: #2A7A50;
+    --forest-light: #D6EDE0; --forest-xlight: #EDF7F2;
+    --amber: #D97706; --amber-light: #FEF3C7;
+    --ink: #1C1C1C; --ink-mid: #4A4A4A; --ink-soft: #7A7A7A;
+    --white: #FFFFFF; --border: rgba(28,28,28,0.09);
+    --teal: #1D9E75; --teal-dark: #0F6E56;
+    --orange: #EF9F27; --red-warm: #D85A30;
+    --purple: #7C3AED; --purple-light: #EDE9FE;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+ 
+  /* NAV */
+  nav { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-family: 'Lora', serif; font-weight: 700; font-size: 20px; color: var(--forest); text-decoration: none; }
+  .nav-logo span { color: var(--ink); }
+  .nav-start { background: var(--teal); color: var(--white); padding: 8px 18px; border-radius: 99px; font-size: 14px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+  .nav-start:hover { background: var(--teal-dark); }
+ 
+  /* WRAP */
+  .wrap { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+ 
+  /* SETUP SCREEN */
+  .setup-hero { text-align: center; margin-bottom: 2rem; }
+  .setup-icon { font-size: 54px; display: block; margin-bottom: 1rem; }
+  .setup-hero h1 { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 30px; color: var(--ink); margin-bottom: 0.5rem; }
+  .setup-hero p { font-size: 16px; color: var(--ink-mid); max-width: 400px; margin: 0 auto; line-height: 1.65; }
+  .setup-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; margin-bottom: 1rem; }
+  .field-label { display: block; font-size: 12px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
+  .text-input { width: 100%; padding: 13px 16px; font-family: 'DM Sans', sans-serif; font-size: 17px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--cream); color: var(--ink); outline: none; transition: border-color 0.2s; }
+  .text-input:focus { border-color: var(--teal); background: var(--white); }
+  .age-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .age-btn { padding: 9px 18px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--cream); color: var(--ink-mid); font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.15s; }
+  .age-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .age-btn.selected { background: var(--teal); color: var(--white); border-color: var(--teal); }
+  .field-gap { height: 20px; }
+  .btn-main { width: 100%; padding: 16px; background: var(--teal); color: var(--white); border: none; border-radius: 14px; font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 18px; cursor: pointer; transition: all 0.15s; box-shadow: 0 4px 20px rgba(29,158,117,0.28); }
+  .btn-main:hover { background: var(--teal-dark); transform: translateY(-1px); }
+ 
+  /* DASHBOARD */
+  .dash-header { margin-bottom: 2rem; }
+  .dash-greeting { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 28px; color: var(--ink); margin-bottom: 4px; }
+  .dash-sub { font-size: 15px; color: var(--ink-soft); }
+ 
+  /* STREAK / STATS ROW */
+  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.25rem; }
+  .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1rem; text-align: center; }
+  .stat-num { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 28px; color: var(--forest); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 12px; color: var(--ink-soft); font-weight: 500; }
+ 
+  /* START NEW STORY */
+  .start-card { background: var(--forest); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .start-card-text h3 { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 20px; color: var(--white); margin-bottom: 4px; }
+  .start-card-text p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+  .btn-start-story { background: var(--white); color: var(--forest); padding: 12px 24px; border-radius: 99px; font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 15px; text-decoration: none; white-space: nowrap; transition: all 0.15s; box-shadow: 0 4px 16px rgba(0,0,0,0.15); display: inline-block; }
+  .btn-start-story:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+ 
+  /* LATEST PROFILE */
+  .section-title { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 18px; color: var(--ink); margin-bottom: 1rem; }
+  .superpower-banner { background: var(--amber-light); border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
+  .superpower-banner .sp-icon { font-size: 24px; flex-shrink: 0; }
+  .superpower-banner .sp-label { font-size: 11px; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 2px; }
+  .superpower-banner .sp-text { font-size: 16px; font-weight: 700; color: #412402; }
+  .profile-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1rem; }
+  .bar-row { margin-bottom: 14px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
+  .bar-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+  .bar-score { font-size: 13px; font-weight: 700; }
+  .bar-track { height: 8px; background: var(--cream-dark); border-radius: 99px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; }
+  .gap-card { background: var(--forest-xlight); border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+  .gap-label { font-size: 11px; font-weight: 700; color: var(--forest); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+  .gap-text { font-size: 15px; color: #04342C; line-height: 1.6; font-weight: 500; }
+ 
+  /* PROGRESS OVER TIME */
+  .progress-section { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.25rem; }
+  .progress-section-title { font-size: 13px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 1.25rem; }
+  .progress-level-row { margin-bottom: 16px; }
+  .progress-level-row:last-child { margin-bottom: 0; }
+  .progress-level-name { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .mini-bars { display: flex; gap: 4px; align-items: flex-end; height: 40px; }
+  .mini-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+  .mini-bar { width: 100%; border-radius: 4px 4px 0 0; transition: height 0.4s ease; min-height: 3px; }
+  .mini-bar-label { font-size: 10px; color: var(--ink-soft); }
+ 
+  /* SESSION HISTORY */
+  .history-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.25rem; }
+  .history-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 14px; }
+  .history-num { width: 36px; height: 36px; border-radius: 10px; background: var(--forest-light); color: var(--forest); font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .history-info { flex: 1; }
+  .history-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+  .history-date { font-size: 12px; color: var(--ink-soft); }
+  .history-avg { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 18px; color: var(--teal); }
+ 
+  /* ELLE CARD */
+  .elle-card { background: var(--forest); border-radius: 16px; padding: 1.25rem; display: flex; align-items: center; gap: 14px; margin-bottom: 1.25rem; }
+  .elle-photo { width: 46px; height: 46px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.25); background: var(--forest-light); }
+  .elle-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .elle-card p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6; }
+  .elle-card strong { color: var(--white); }
+ 
+  /* RESET */
+  .reset-btn { background: none; border: none; font-size: 12px; color: var(--ink-soft); cursor: pointer; font-family: 'DM Sans', sans-serif; display: block; margin: 0 auto; padding: 8px; transition: color 0.2s; }
+  .reset-btn:hover { color: var(--red-warm); }
+ 
+  /* ANIMATIONS */
+  .screen { animation: fadeUp 0.3s ease both; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+ 
+  @media (max-width: 500px) { .stats-row { grid-template-columns: repeat(3, 1fr); } }
+</style>
+</head>
+<body>
+ 
+<nav>
+  <a href="https://flyingstartfamilydaycare.com.au/readwise" class="nav-logo">Read<span>Wise</span></a>
+  <a href="https://flyingstartfamilydaycare.com.au/readwise-app" class="nav-start">New story →</a>
+</nav>
+ 
+<div class="wrap" id="app"></div>
+ 
+<script>
+// ── STORAGE ──
+function saveProfile(data) {
+  const existing = getProfiles();
+  existing.push({ ...data, date: new Date().toLocaleDateString('en-AU', { day:'numeric', month:'short' }) });
+  localStorage.setItem('rw_sessions', JSON.stringify(existing));
+}
+ 
+function getProfiles() {
+  try { return JSON.parse(localStorage.getItem('rw_sessions') || '[]'); } catch { return []; }
+}
+ 
+function getChild() {
+  try { return JSON.parse(localStorage.getItem('rw_child') || 'null'); } catch { return null; }
+}
+ 
+function saveChild(child) {
+  localStorage.setItem('rw_child', JSON.stringify(child));
+}
+ 
+// ── READ URL PARAMS (from app page) ──
+function getURLResult() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const data = params.get('result');
+    if (data) return JSON.parse(decodeURIComponent(data));
+  } catch {}
+  return null;
+}
+ 
+// ── STATE ──
+let state = {
+  screen: 'loading',
+  child: null,
+  setupName: '',
+  setupAge: 8,
+  sessions: []
+};
+ 
+function setState(u) { state = { ...state, ...u }; render(); }
+ 
+function init() {
+  const child = getChild();
+  const sessions = getProfiles();
+ 
+  // Check if app page sent a result via URL
+  const result = getURLResult();
+  if (result && child) {
+    saveProfile(result);
+    window.history.replaceState({}, '', window.location.pathname);
+    setState({ screen: 'dashboard', child, sessions: getProfiles() });
+    return;
+  }
+ 
+  if (child) {
+    setState({ screen: 'dashboard', child, sessions });
+  } else {
+    setState({ screen: 'setup' });
+  }
+}
+ 
+function setupDone() {
+  const name = state.setupName.trim();
+  if (!name) { render(); return; }
+  const child = { name, age: state.setupAge };
+  saveChild(child);
+  setState({ screen: 'dashboard', child, sessions: getProfiles() });
+}
+ 
+function getBarColor(score) {
+  if (score >= 70) return { fill: '#1D9E75', text: '#085041' };
+  if (score >= 45) return { fill: '#EF9F27', text: '#633806' };
+  return { fill: '#D85A30', text: '#993C1D' };
+}
+ 
+function avgScore(session) {
+  if (!session.levels) return 0;
+  return Math.round(session.levels.reduce((a, l) => a + l.score, 0) / session.levels.length);
+}
+ 
+function resetAll() {
+  if (confirm('This will clear all reading history. Are you sure?')) {
+    localStorage.removeItem('rw_sessions');
+    localStorage.removeItem('rw_child');
+    setState({ screen: 'setup', child: null, sessions: [], setupName: '', setupAge: 8 });
+  }
+}
+ 
+// ── RENDER ──
+function render() {
+  const app = document.getElementById('app');
+  const s = state;
+ 
+  // LOADING
+  if (s.screen === 'loading') {
+    app.innerHTML = `<div style="display:flex;justify-content:center;align-items:center;min-height:60vh;font-size:40px">⏳</div>`;
+    return;
+  }
+ 
+  // SETUP
+  if (s.screen === 'setup') {
+    app.innerHTML = `
+<div class="screen">
+  <div class="setup-hero">
+    <span class="setup-icon">🌟</span>
+    <h1>Create Your Reading Space</h1>
+    <p>This is your personal dashboard — it tracks every reading session and shows how you improve over time.</p>
+  </div>
+  <div class="setup-card">
+    <label class="field-label">What's your name?</label>
+    <input class="text-input" id="nameIn" type="text" placeholder="Type your name..." value="${s.setupName}" maxlength="30" autocomplete="off"/>
+    <div class="field-gap"></div>
+    <label class="field-label">How old are you?</label>
+    <div class="age-row">
+      ${[5,6,7,8,9,10,11,12].map(a => `
+        <button class="age-btn ${s.setupAge===a?'selected':''}" onclick="setState({setupAge:${a}})">${a}</button>
+      `).join('')}
+    </div>
+    <div class="field-gap"></div>
+    <button class="btn-main" onclick="setupDone()">Create my reading space →</button>
+  </div>
+</div>`;
+    const inp = document.getElementById('nameIn');
+    inp.addEventListener('input', e => { state.setupName = e.target.value; });
+    inp.addEventListener('keydown', e => { if (e.key==='Enter') setupDone(); });
+    inp.focus();
+    return;
+  }
+ 
+  // DASHBOARD
+  if (s.screen === 'dashboard') {
+    const { child, sessions } = s;
+    const hasHistory = sessions.length > 0;
+    const latest = hasHistory ? sessions[sessions.length - 1] : null;
+    const totalSessions = sessions.length;
+    const avgOverall = hasHistory
+      ? Math.round(sessions.reduce((a, s) => a + avgScore(s), 0) / sessions.length)
+      : 0;
+ 
+    // Streak — consecutive days
+    const streak = totalSessions; // simplified for now
+ 
+    // Hour of day greeting
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+ 
+    // Progress chart data — last 5 sessions per level
+    const levelNames = ['Finding Facts','Word Power','Reading Between Lines','Big Ideas','Critical Thinking'];
+    const last5 = sessions.slice(-5);
+ 
+    const progressBars = hasHistory && sessions.length > 1 ? `
+<div class="progress-section">
+  <div class="progress-section-title">Progress over time — last ${last5.length} sessions</div>
+  ${levelNames.map((lname, li) => {
+    const bars = last5.map((sess, si) => {
+      const lv = sess.levels ? sess.levels[li] : null;
+      const score = lv ? lv.score : 0;
+      const col = getBarColor(score);
+      return `
+<div class="mini-bar-wrap">
+  <div class="mini-bar" style="height:${Math.max(score * 0.36, 3)}px;background:${col.fill}"></div>
+  <div class="mini-bar-label">${si+1}</div>
+</div>`;
+    }).join('');
+    const latestScore = latest && latest.levels ? latest.levels[li].score : 0;
+    const col = getBarColor(latestScore);
+    return `
+<div class="progress-level-row">
+  <div class="progress-level-name">${lname} <span style="color:${col.text};font-size:12px;font-weight:700">${latestScore}%</span></div>
+  <div class="mini-bars">${bars}</div>
+</div>`;
+  }).join('')}
+</div>` : '';
+ 
+    const historyCards = hasHistory ? sessions.slice().reverse().slice(0, 5).map((sess, i) => {
+      const num = sessions.length - i;
+      const avg = avgScore(sess);
+      const col = getBarColor(avg);
+      return `
+<div class="history-card">
+  <div class="history-num">${num}</div>
+  <div class="history-info">
+    <div class="history-title">${sess.storyTitle || 'Reading Session ' + num}</div>
+    <div class="history-date">${sess.date || 'Recent'}</div>
+  </div>
+  <div class="history-avg" style="color:${col.text}">${avg}%</div>
+</div>`;
+    }).join('') : '';
+ 
+    const latestProfile = latest ? `
+<div class="superpower-banner">
+  <div class="sp-icon">⚡</div>
+  <div>
+    <div class="sp-label">Reading superpower</div>
+    <div class="sp-text">${latest.superpower || 'Great reader'}</div>
+  </div>
+</div>
+ 
+<div class="profile-card">
+  <div style="font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:1rem">Latest session — comprehension map</div>
+  ${(latest.levels || []).map(lv => {
+    const col = getBarColor(lv.score);
+    return `
+<div class="bar-row">
+  <div class="bar-meta">
+    <span class="bar-name">${lv.name}</span>
+    <span class="bar-score" style="color:${col.text}">${lv.score}%</span>
+  </div>
+  <div class="bar-track"><div class="bar-fill" style="width:${lv.score}%;background:${col.fill}"></div></div>
+</div>`;
+  }).join('')}
+</div>
+ 
+<div class="gap-card">
+  <div class="gap-label">→ Next focus</div>
+  <div class="gap-text">${latest.rootGap || 'Keep reading and exploring!'}</div>
+</div>` : `
+<div style="background:var(--white);border:1px solid var(--border);border-radius:18px;padding:2.5rem;text-align:center;margin-bottom:1rem">
+  <div style="font-size:44px;margin-bottom:1rem">📖</div>
+  <div style="font-family:'Baloo 2',cursive;font-weight:700;font-size:20px;color:var(--ink);margin-bottom:0.5rem">No sessions yet</div>
+  <div style="font-size:15px;color:var(--ink-soft);margin-bottom:1.5rem">Start your first reading adventure to see your profile here.</div>
+  <a href="https://flyingstartfamilydaycare.com.au/readwise-app?name=${encodeURIComponent(child.name)}&age=${child.age}" class="btn-main" style="display:inline-block;padding:14px 32px;text-decoration:none;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;border-radius:14px;width:auto">Start first session →</a>
+</div>`;
+ 
+    app.innerHTML = `
+<div class="screen">
+  <div class="dash-header">
+    <div class="dash-greeting">${greeting}, ${child.name}! 👋</div>
+    <div class="dash-sub">Age ${child.age} · Your reading journey</div>
+  </div>
+ 
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">${totalSessions}</div>
+      <div class="stat-label">Sessions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">${hasHistory ? avgOverall + '%' : '—'}</div>
+      <div class="stat-label">Average</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">${hasHistory ? '🔥' + streak : '—'}</div>
+      <div class="stat-label">Streak</div>
+    </div>
+  </div>
+ 
+  <div class="start-card">
+    <div class="start-card-text">
+      <h3>${hasHistory ? 'Ready for another story?' : 'Start your first story!'}</h3>
+      <p>${hasHistory ? 'Every session makes you a stronger reader.' : 'Your reading adventure is waiting for you.'}</p>
+    </div>
+    <a href="https://flyingstartfamilydaycare.com.au/readwise-app?name=${encodeURIComponent(child.name)}&age=${child.age}" class="btn-start-story">
+      ${hasHistory ? 'New story →' : 'Start now →'}
+    </a>
+  </div>
+ 
+  ${hasHistory ? `<div class="section-title">Your Reading Profile</div>` : ''}
+  ${latestProfile}
+ 
+  ${progressBars}
+ 
+  ${hasHistory ? `
+  <div class="section-title">Session History</div>
+  <div class="history-list">${historyCards}</div>` : ''}
+ 
+  <div class="elle-card">
+    <div class="elle-photo">
+      <img src="https://flyingstartfamilydaycare.com.au/wp-content/uploads/2026/03/Ladawans-Website-Photo.jpg" alt="Elle" onerror="this.style.display='none'"/>
+    </div>
+    <p><strong>From Elle:</strong> Every story you read makes you a stronger thinker. I'm proud of you for being here. Keep going!</p>
+  </div>
+ 
+  <button class="reset-btn" onclick="resetAll()">Reset my reading data</button>
+</div>`;
+  }
+}
+ 
+// kick off
+init();
+</script>
+</body>
+</html>
+ 
