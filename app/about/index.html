@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About ReadWise — Why We Built This</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600&display=swap"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #FAF7F2; --cream-dark: #F0EBE1;
+    --forest: #1A5C3A; --forest-mid: #2A7A50;
+    --forest-light: #D6EDE0; --forest-xlight: #EDF7F2;
+    --amber: #D97706; --amber-light: #FEF3C7;
+    --ink: #1C1C1C; --ink-mid: #4A4A4A; --ink-soft: #7A7A7A;
+    --white: #FFFFFF; --border: rgba(28,28,28,0.09);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,247,242,0.93); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); padding: 0 6%; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: 'Lora', serif; font-weight: 700; font-size: 22px; color: var(--forest); text-decoration: none; }
+  .logo span { color: var(--ink); }
+  nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+  nav ul a { text-decoration: none; color: var(--ink-mid); font-size: 15px; font-weight: 500; transition: color 0.2s; }
+  nav ul a:hover { color: var(--ink); }
+  .nav-cta { background: var(--forest); color: var(--white) !important; padding: 9px 22px; border-radius: 99px; font-size: 14px; font-weight: 600; }
+  .nav-cta:hover { background: var(--forest-mid) !important; }
+  .hero { background: var(--ink); padding: 140px 6% 100px; text-align: center; }
+  .hero-inner { max-width: 800px; margin: 0 auto; }
+  .hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); padding: 6px 16px; border-radius: 99px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2rem; }
+  .hero h1 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(32px, 5vw, 60px); color: var(--white); line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+  .hero h1 em { color: #9FE1CB; font-style: italic; }
+  .hero-lead { font-size: clamp(17px, 2vw, 21px); color: rgba(255,255,255,0.65); line-height: 1.75; max-width: 640px; margin: 0 auto; }
+  .crisis { background: var(--forest); padding: 90px 6%; }
+  .crisis-inner { max-width: 960px; margin: 0 auto; }
+  .crisis h2 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(26px, 3.5vw, 44px); color: var(--white); line-height: 1.2; margin-bottom: 1rem; max-width: 700px; }
+  .crisis-lead { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.75; max-width: 680px; margin-bottom: 3rem; }
+  .crisis-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 3rem; }
+  .crisis-stat { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; }
+  .crisis-stat-num { font-family: 'Lora', serif; font-size: 44px; font-weight: 700; color: #9FE1CB; line-height: 1; margin-bottom: 8px; }
+  .crisis-stat-label { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.55; }
+  .crisis-quote { background: rgba(255,255,255,0.06); border-left: 3px solid #9FE1CB; border-radius: 0 14px 14px 0; padding: 1.5rem 2rem; }
+  .crisis-quote p { font-size: 18px; color: rgba(255,255,255,0.85); line-height: 1.75; font-style: italic; margin-bottom: 0.75rem; }
+  .crisis-quote cite { font-size: 13px; color: rgba(255,255,255,0.45); font-style: normal; }
+  .real { padding: 90px 6%; }
+  .real-inner { max-width: 960px; margin: 0 auto; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--forest); margin-bottom: 12px; }
+  .section-title { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(26px, 3.5vw, 42px); line-height: 1.2; letter-spacing: -0.02em; color: var(--ink); max-width: 620px; margin-bottom: 1.25rem; }
+  .section-sub { font-size: 18px; color: var(--ink-mid); line-height: 1.75; max-width: 640px; margin-bottom: 2rem; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; margin-top: 3rem; }
+  .prose p { font-size: 17px; color: var(--ink-mid); line-height: 1.8; margin-bottom: 1.25rem; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--ink); font-weight: 600; }
+  .callout { background: var(--forest-light); border-radius: 16px; padding: 1.75rem; }
+  .callout-label { font-size: 11px; font-weight: 700; color: var(--forest); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .callout-text { font-size: 16px; color: #04342C; line-height: 1.7; }
+  .science { background: var(--cream-dark); padding: 90px 6%; }
+  .science-inner { max-width: 960px; margin: 0 auto; }
+  .bloom-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; margin-top: 3rem; display: grid; grid-template-columns: 1fr 1.6fr; gap: 60px; align-items: center; }
+  .bloom-visual { text-align: center; }
+  .sigma-display { font-family: 'Lora', serif; font-size: 100px; font-weight: 700; color: var(--forest); line-height: 1; margin-bottom: 8px; }
+  .sigma-label { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+  .bloom-text h3 { font-family: 'Lora', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 1rem; line-height: 1.3; }
+  .bloom-text p { font-size: 16px; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1rem; }
+  .bloom-text p:last-child { margin-bottom: 0; }
+  .bloom-text strong { color: var(--ink); font-weight: 600; }
+  .science-points { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 2.5rem; }
+  .science-point { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; border-top: 3px solid var(--forest); }
+  .science-point h4 { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .science-point p { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+  .solution { padding: 90px 6%; }
+  .solution-inner { max-width: 960px; margin: 0 auto; }
+  .solution-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 3rem; }
+  .solution-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+  .solution-num { font-family: 'Lora', serif; font-size: 32px; font-weight: 700; color: var(--forest-light); line-height: 1; margin-bottom: 10px; }
+  .solution-card h3 { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .solution-card p { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
+  .mission { background: var(--forest); padding: 90px 6%; text-align: center; }
+  .mission-inner { max-width: 760px; margin: 0 auto; }
+  .mission h2 { font-family: 'Lora', serif; font-weight: 700; font-style: italic; font-size: clamp(28px, 4vw, 50px); color: var(--white); line-height: 1.2; margin-bottom: 1.5rem; }
+  .mission p { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 1.25rem; }
+  .mission-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 3rem 0; text-align: left; }
+  .mission-value { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.25rem; }
+  .mission-value-icon { font-size: 22px; margin-bottom: 8px; }
+  .mission-value h4 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 5px; }
+  .mission-value p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+  .cta-section { padding: 90px 6%; text-align: center; background: var(--cream-dark); }
+  .cta-inner { max-width: 600px; margin: 0 auto; }
+  .cta-inner h2 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(26px, 3.5vw, 42px); color: var(--ink); line-height: 1.2; margin-bottom: 1rem; }
+  .cta-inner p { font-size: 18px; color: var(--ink-mid); line-height: 1.7; margin-bottom: 2.5rem; }
+  .btn-primary { display: inline-block; background: var(--forest); color: var(--white); padding: 17px 44px; border-radius: 99px; font-size: 17px; font-weight: 600; text-decoration: none; box-shadow: 0 4px 24px rgba(26,92,58,0.28); transition: transform 0.15s, box-shadow 0.15s; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(26,92,58,0.34); }
+  footer { background: var(--ink); padding: 40px 6%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-logo { font-family: 'Lora', serif; font-weight: 700; font-size: 18px; color: var(--white); text-decoration: none; }
+  footer p { font-size: 13px; color: rgba(255,255,255,0.35); }
+  footer nav ul { gap: 1.5rem; }
+  footer nav ul a { font-size: 13px; color: rgba(255,255,255,0.5); }
+  footer nav ul a:hover { color: rgba(255,255,255,0.8); }
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  @media (max-width: 720px) { .two-col, .bloom-card { grid-template-columns: 1fr; gap: 2rem; } nav ul { display: none; } }
+</style>
+</head>
+<body>
+ 
+<nav>
+  <a href="/" class="logo">Read<span>Wise</span></a>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/app" class="nav-cta">Try free →</a></li>
+  </ul>
+</nav>
+ 
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Why ReadWise exists</div>
+    <h1>Australia has a reading crisis.<br/>We built the <em>solution.</em></h1>
+    <p class="hero-lead">One in three Australian children cannot read proficiently. Not because they aren't smart. Not because their parents don't care. Because we have been teaching them the wrong half of reading — and nobody built a tool to teach the other half. Until now.</p>
+  </div>
+</section>
+ 
+<section class="crisis">
+  <div class="crisis-inner">
+    <h2>Eight children in your child's classroom can't read well. You probably don't know which ones.</h2>
+    <p class="crisis-lead">The 2024 NAPLAN report and the Grattan Institute's landmark Reading Guarantee study confirmed what teachers have known for years — Australia has a reading problem at scale, and it is getting worse.</p>
+    <div class="crisis-stats">
+      <div class="crisis-stat fade-in">
+        <div class="crisis-stat-num">1 in 3</div>
+        <div class="crisis-stat-label">Australian children cannot read proficiently for their age — that is 450,000 children right now</div>
+      </div>
+      <div class="crisis-stat fade-in">
+        <div class="crisis-stat-num">$40B</div>
+        <div class="crisis-stat-label">The estimated lifetime cost to Australia of today's students who struggle with reading</div>
+      </div>
+      <div class="crisis-stat fade-in">
+        <div class="crisis-stat-num">7%</div>
+        <div class="crisis-stat-label">Drop in children reading for pleasure between 2017 and 2022 — the trend is accelerating</div>
+      </div>
+      <div class="crisis-stat fade-in">
+        <div class="crisis-stat-num">44%</div>
+        <div class="crisis-stat-label">Of Australian adults have low or very low literacy — the problem does not fix itself at school</div>
+      </div>
+    </div>
+    <div class="crisis-quote fade-in">
+      <p>"Australia is failing these children. And it is a preventable tragedy — the reason most of those students cannot read well enough is that we are not teaching them well enough. Australia needs a reading revolution."</p>
+      <cite>— Dr Jordana Hunter, Education Program Director, Grattan Institute, 2024</cite>
+    </div>
+  </div>
+</section>
+ 
+<section class="real">
+  <div class="real-inner">
+    <div class="eyebrow fade-in">The misunderstood problem</div>
+    <h2 class="section-title fade-in">Most children are being taught to read words. Almost none are being taught to understand them.</h2>
+    <p class="section-sub fade-in">This is the distinction that changes everything — and the one that almost every school, parent, and reading app gets wrong.</p>
+    <div class="two-col">
+      <div class="prose fade-in">
+        <p>For two decades, Australian education fought the <strong>"reading wars"</strong> — a debate between phonics and whole-language approaches. That debate was about decoding: how children learn to recognise and say words.</p>
+        <p>Phonics won, rightly. Systematic phonics instruction is clearly more effective at teaching children to decode text.</p>
+        <p>But here is what got lost: <strong>decoding is not reading.</strong> Decoding is the prerequisite for reading. Reading — genuine reading — is the act of comprehending what those decoded words actually mean.</p>
+        <p>A child can be a perfect decoder and a poor reader at the same time. They say every word correctly. They cannot tell you what the paragraph was about. This describes millions of Australian children — children whose parents believe they can read because they can say the words.</p>
+        <p>Schools test comprehension. Schools do not have the time to teach it individually. No app has built a serious diagnostic tool for it. Until ReadWise.</p>
+      </div>
+      <div class="fade-in">
+        <div class="callout" style="margin-bottom:16px">
+          <div class="callout-label">What decoding apps teach</div>
+          <div class="callout-text" style="color:#4A4A4A">Recognising letters, phonics, sounding out words, spelling, reading fluency. Essential — but only half the picture.</div>
+        </div>
+        <div class="callout" style="background:var(--forest);margin-bottom:16px">
+          <div class="callout-label" style="color:rgba(255,255,255,0.6)">What ReadWise teaches</div>
+          <div class="callout-text" style="color:rgba(255,255,255,0.85)">Understanding what words mean in context. Reading between the lines. Finding the main idea. Forming and defending an opinion. The skills schools actually test.</div>
+        </div>
+        <div class="callout">
+          <div class="callout-label">The gap ReadWise closes</div>
+          <div class="callout-text" style="color:#4A4A4A">In the typical Australian classroom, eight children cannot comprehend what they read — even if they say every word aloud. ReadWise finds exactly which eight and tells you precisely what is wrong.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section class="science">
+  <div class="science-inner">
+    <div class="eyebrow fade-in">The science behind ReadWise</div>
+    <h2 class="section-title fade-in">40 years of research pointed to the same answer. We built it.</h2>
+    <p class="section-sub fade-in">ReadWise is not an opinion. Every part of how it works is grounded in peer-reviewed educational research going back to Benjamin Bloom's landmark 1984 study.</p>
+    <div class="bloom-card fade-in">
+      <div class="bloom-visual">
+        <div class="sigma-display">2σ</div>
+        <div class="sigma-label">Standard deviations better<br/>The tutored student advantage<br/>— Bloom, 1984</div>
+      </div>
+      <div class="bloom-text">
+        <h3>Bloom's 2 Sigma Problem — and why AI finally solves it</h3>
+        <p>In 1984, educational psychologist Benjamin Bloom published one of the most important findings in education history: <strong>the average student with a personal tutor performed two standard deviations better than classroom-taught peers.</strong></p>
+        <p>That means the average tutored student outperformed 98% of classroom students. Bloom called it "an educational contribution of the greatest magnitude" — if we could scale it.</p>
+        <p>The problem was always cost. One-to-one tutoring was impossible to give every child. So for 40 years, the finding sat as an open challenge.</p>
+        <p><strong>A 2024 randomised study found that an AI tutor produced learning gains more than twice as large as traditional classroom instruction — in less time.</strong> The 2 sigma problem, after 40 years, is finally being solved. ReadWise is built on exactly this science.</p>
+      </div>
+    </div>
+    <div class="science-points">
+      <div class="science-point fade-in">
+        <h4>Diagnostic-first design</h4>
+        <p>ReadWise does not just quiz — it diagnoses. Every session analyses the pattern of a child's answers to find the root cause of misunderstanding, not just the symptom.</p>
+      </div>
+      <div class="science-point fade-in">
+        <h4>Five-level comprehension framework</h4>
+        <p>Based on decades of reading research, our five-level framework maps every dimension of understanding — from literal recall to critical evaluation.</p>
+      </div>
+      <div class="science-point fade-in">
+        <h4>Mastery-based progression</h4>
+        <p>Bloom's mastery learning — ensuring genuine understanding before moving forward — is the most evidence-backed educational approach ever studied.</p>
+      </div>
+      <div class="science-point fade-in">
+        <h4>Personalised to each child</h4>
+        <p>Every story, every question, every piece of feedback is generated specifically for the child — their age, their level, their pattern of errors. No two children get the same experience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section class="solution">
+  <div class="solution-inner">
+    <div class="eyebrow fade-in">How ReadWise works</div>
+    <h2 class="section-title fade-in">The personal reading tutor every child deserves — at a price every family can afford</h2>
+    <p class="section-sub fade-in">The research said one-to-one tutoring changes outcomes. The problem was always scale and cost. ReadWise solves both.</p>
+    <div class="solution-grid">
+      <div class="solution-card fade-in">
+        <div class="solution-num">01</div>
+        <h3>A story written for your child</h3>
+        <p>Every session begins with an engaging story generated specifically for your child's age — genuinely interesting, not a school worksheet.</p>
+      </div>
+      <div class="solution-card fade-in">
+        <div class="solution-num">02</div>
+        <h3>Five layered questions</h3>
+        <p>Not multiple choice. Open answers across five comprehension levels — revealing exactly how deeply your child understood what they read.</p>
+      </div>
+      <div class="solution-card fade-in">
+        <div class="solution-num">03</div>
+        <h3>AI diagnostic analysis</h3>
+        <p>ReadWise analyses the pattern across all five answers to find the exact comprehension layer breaking down — the root cause, not the symptom.</p>
+      </div>
+      <div class="solution-card fade-in">
+        <div class="solution-num">04</div>
+        <h3>A complete reading profile</h3>
+        <p>Scores across all five levels, their reading superpower, their most important gap, and a personalised next step — after just one session.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section class="mission">
+  <div class="mission-inner">
+    <h2>Every child deserves a reading coach — not just the ones whose parents can afford one.</h2>
+    <p>A private tutor who genuinely diagnoses comprehension gaps costs $60–$100 an hour. ReadWise makes that diagnostic power available to every child, everywhere, for the cost of a coffee a week.</p>
+    <p>We built ReadWise because the research was clear, the problem was urgent, and nobody had built the solution yet.</p>
+    <div class="mission-values">
+      <div class="mission-value fade-in">
+        <div class="mission-value-icon">🔬</div>
+        <h4>Science-led</h4>
+        <p>Every design decision is grounded in peer-reviewed educational research, not opinion or trend.</p>
+      </div>
+      <div class="mission-value fade-in">
+        <div class="mission-value-icon">🎯</div>
+        <h4>Diagnostic-first</h4>
+        <p>We find the root cause of misunderstanding — not just whether the answer was right or wrong.</p>
+      </div>
+      <div class="mission-value fade-in">
+        <div class="mission-value-icon">❤️</div>
+        <h4>Child-centred</h4>
+        <p>Every story, every question, every word of feedback is written with the child's experience first.</p>
+      </div>
+      <div class="mission-value fade-in">
+        <div class="mission-value-icon">🌏</div>
+        <h4>Access for all</h4>
+        <p>World-class reading support should not be a privilege. We are building it for every Australian family.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="fade-in">See what ReadWise finds in your child — in 8 minutes, for free.</h2>
+    <p class="fade-in">No credit card. No setup. Just a story, five honest questions, and the truth about where your child really is with reading comprehension.</p>
+    <a href="/app" class="btn-primary fade-in">Start the free diagnostic →</a>
+  </div>
+</section>
+ 
+<footer>
+  <a href="/" class="footer-logo">ReadWise</a>
+  <nav><ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/app">Try free</a></li>
+    <li><a href="/dashboard">Dashboard</a></li>
+  </ul></nav>
+  <p>© 2026 ReadWise. Built for Australian families.</p>
+</footer>
+ 
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
+ 
