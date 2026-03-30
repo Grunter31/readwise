@@ -126,8 +126,8 @@
 <body>
  
 <nav>
-  <a href="https://flyingstartfamilydaycare.com.au/readwise" class="nav-logo">Read<span>Wise</span></a>
-  <a href="https://flyingstartfamilydaycare.com.au/readwise-app" class="nav-start">New story →</a>
+  <a href="/" class="nav-logo">Read<span>Wise</span></a>
+  <a href="/app" class="nav-start">New story →</a>
 </nav>
  
 <div class="wrap" id="app"></div>
@@ -353,7 +353,7 @@ function render() {
   <div style="font-size:44px;margin-bottom:1rem">📖</div>
   <div style="font-family:'Baloo 2',cursive;font-weight:700;font-size:20px;color:var(--ink);margin-bottom:0.5rem">No sessions yet</div>
   <div style="font-size:15px;color:var(--ink-soft);margin-bottom:1.5rem">Start your first reading adventure to see your profile here.</div>
-  <a href="https://flyingstartfamilydaycare.com.au/readwise-app?name=${encodeURIComponent(child.name)}&age=${child.age}" class="btn-main" style="display:inline-block;padding:14px 32px;text-decoration:none;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;border-radius:14px;width:auto">Start first session →</a>
+  <a href="/app?name=${encodeURIComponent(child.name)}&age=${child.age}" class="btn-main" style="display:inline-block;padding:14px 32px;text-decoration:none;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;border-radius:14px;width:auto">Start first session →</a>
 </div>`;
  
     app.innerHTML = `
@@ -383,7 +383,7 @@ function render() {
       <h3>${hasHistory ? 'Ready for another story?' : 'Start your first story!'}</h3>
       <p>${hasHistory ? 'Every session makes you a stronger reader.' : 'Your reading adventure is waiting for you.'}</p>
     </div>
-    <a href="https://flyingstartfamilydaycare.com.au/readwise-app?name=${encodeURIComponent(child.name)}&age=${child.age}" class="btn-start-story">
+    <a href="/app?name=${encodeURIComponent(child.name)}&age=${child.age}" class="btn-start-story">
       ${hasHistory ? 'New story →' : 'Start now →'}
     </a>
   </div>
@@ -414,4 +414,3 @@ init();
 </script>
 </body>
 </html>
- 
