@@ -1,488 +1,480 @@
+Index · HTML
+Copy
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ReadWise — Start Your Reading Adventure</title>
+<title>ReadWise — Your Personal Reading Tutor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;500;600;700&family=Lora:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600&display=swap"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #FAF7F2; --cream-dark: #F0EBE1;
-    --forest: #1A5C3A; --forest-mid: #2A7A50;
-    --forest-light: #D6EDE0; --forest-xlight: #EDF7F2;
-    --amber: #D97706; --amber-light: #FEF3C7;
-    --ink: #1C1C1C; --ink-mid: #4A4A4A; --ink-soft: #7A7A7A;
-    --white: #FFFFFF; --border: rgba(28,28,28,0.09);
-    --teal: #1D9E75; --teal-dark: #0F6E56;
-    --orange: #EF9F27; --red-warm: #D85A30;
-  }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF7F2;--cream-dark:#F0EBE1;
+  --forest:#1A5C3A;--forest-mid:#2A7A50;--forest-light:#D6EDE0;--forest-xlight:#EDF7F2;
+  --amber:#D97706;--amber-light:#FEF3C7;
+  --ink:#1C1C1C;--ink-mid:#4A4A4A;--ink-soft:#7A7A7A;
+  --white:#FFFFFF;--border:rgba(28,28,28,0.09);
+  --teal:#1D9E75;--teal-dark:#0F6E56;
+  --orange:#EF9F27;--red:#D85A30;
+  --purple:#7C3AED;--purple-light:#EDE9FE;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Baloo 2',cursive;font-weight:800;font-size:22px;color:var(--forest);text-decoration:none}
+.nav-logo span{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-badge{background:var(--forest-light);color:var(--forest);padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;display:none}
+.app{max-width:680px;margin:0 auto;padding:1.5rem 1rem 5rem}
+.screen{animation:fadeUp 0.35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
  
-  /* NAV */
-  nav { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 6%; display: flex; align-items: center; justify-content: space-between; height: 60px; position: sticky; top: 0; z-index: 100; }
-  .nav-logo { font-family: 'Lora', serif; font-weight: 700; font-size: 20px; color: var(--forest); text-decoration: none; }
-  .nav-logo span { color: var(--ink); }
-  .nav-back { font-size: 14px; color: var(--ink-soft); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
-  .nav-back:hover { color: var(--forest); }
+/* WELCOME */
+.welcome-hero{text-align:center;padding:1.5rem 0 1.25rem}
+.welcome-emoji{font-size:52px;display:block;margin-bottom:0.75rem}
+.welcome-hero h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(24px,5vw,34px);color:var(--ink);margin-bottom:0.4rem;line-height:1.2}
+.welcome-hero p{font-size:16px;color:var(--ink-mid);max-width:420px;margin:0 auto;line-height:1.65}
+.card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:1.5rem;margin-bottom:1rem}
+.field-label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:7px}
+.text-input{width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:17px;border:1.5px solid var(--border);border-radius:11px;background:var(--cream);color:var(--ink);outline:none;transition:border-color 0.2s}
+.text-input:focus{border-color:var(--teal);background:var(--white)}
+.age-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px}
+.age-btn{padding:8px 15px;border-radius:9px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink-mid);font-family:'Baloo 2',cursive;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.14s}
+.age-btn:hover{border-color:var(--teal);color:var(--teal)}
+.age-btn.sel{background:var(--teal);color:var(--white);border-color:var(--teal)}
+.gap{height:16px}
+.btn-main{width:100%;padding:15px;background:var(--teal);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(29,158,117,0.26)}
+.btn-main:hover{background:var(--teal-dark);transform:translateY(-1px)}
+.btn-main:active{transform:scale(0.98)}
+.btn-main:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.error-box{background:#FAECE7;border-radius:9px;padding:9px 13px;color:#993C1D;font-size:14px;margin-top:9px}
  
-  /* MAIN WRAPPER */
-  .app-wrap { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+/* LEVEL CARDS */
+.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:1rem}
+.level-card{background:var(--white);border:2px solid var(--border);border-radius:15px;padding:1.1rem;cursor:pointer;transition:all 0.18s;text-align:left}
+.level-card:hover{border-color:var(--teal);transform:translateY(-2px)}
+.level-card.sel{border-color:var(--teal);background:var(--forest-xlight)}
+.lc-icon{font-size:26px;margin-bottom:7px}
+.lc-name{font-family:'Baloo 2',cursive;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px}
+.lc-desc{font-size:12px;color:var(--ink-soft);line-height:1.45}
  
-  /* SCREENS */
-  .screen { animation: fadeUp 0.35s ease both; }
-  @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+/* PASSAGE */
+.passage-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:99px;font-size:12px;font-weight:700}
+.b-teal{background:var(--forest-light);color:var(--forest)}
+.b-amber{background:var(--amber-light);color:var(--amber)}
+.passage-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:22px;color:var(--ink);line-height:1.2;margin-bottom:1rem}
+.passage-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--teal);border-radius:15px;padding:1.5rem;margin-bottom:1rem}
+.passage-text{color:var(--ink)}
+.passage-tip{background:var(--amber-light);border-radius:11px;padding:0.85rem 1rem;margin-bottom:1rem;font-size:14px;color:#633806;display:flex;gap:9px}
+.btn-forest{width:100%;padding:15px;background:var(--forest);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(26,92,58,0.22)}
+.btn-forest:hover{background:var(--forest-mid);transform:translateY(-1px)}
  
-  /* WELCOME SCREEN */
-  .welcome-hero { text-align: center; margin-bottom: 2rem; }
-  .welcome-icon { font-size: 52px; margin-bottom: 1rem; display: block; }
-  .welcome-hero h1 { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 32px; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.2; }
-  .welcome-hero p { font-size: 17px; color: var(--ink-mid); line-height: 1.65; max-width: 420px; margin: 0 auto; }
-  .welcome-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; margin-bottom: 1rem; }
-  .field-label { display: block; font-size: 13px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 8px; }
-  .text-input { width: 100%; padding: 13px 16px; font-family: 'DM Sans', sans-serif; font-size: 17px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--cream); color: var(--ink); outline: none; transition: border-color 0.2s; }
-  .text-input:focus { border-color: var(--teal); background: var(--white); }
-  .age-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-  .age-btn { padding: 9px 18px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--cream); color: var(--ink-mid); font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 15px; cursor: pointer; transition: all 0.15s; }
-  .age-btn:hover { border-color: var(--teal); color: var(--teal); }
-  .age-btn.selected { background: var(--teal); color: var(--white); border-color: var(--teal); }
-  .field-gap { height: 20px; }
-  .how-it-works { background: var(--forest-xlight); border-radius: 14px; padding: 1.25rem; margin-bottom: 1rem; }
-  .how-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-  .how-row:last-child { margin-bottom: 0; }
-  .how-num { width: 26px; height: 26px; border-radius: 8px; background: var(--forest-light); color: var(--forest); font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-  .how-text { font-size: 14px; color: var(--ink-mid); line-height: 1.55; }
-  .how-text strong { color: var(--ink); font-weight: 600; }
-  .error-box { background: #FAECE7; border-radius: 10px; padding: 10px 14px; color: #993C1D; font-size: 14px; margin-top: 10px; }
+/* TUTOR */
+.tutor-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.9rem}
+.tutor-left{display:flex;align-items:center;gap:9px}
+.tutor-av{width:38px;height:38px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.tutor-name{font-size:14px;font-weight:700;color:var(--ink)}
+.tutor-status{font-size:12px;color:var(--teal);font-weight:500}
+.progress-row{display:flex;justify-content:space-between;margin-bottom:5px;font-size:13px;color:var(--ink-soft)}
+.prog-track{height:5px;background:var(--cream-dark);border-radius:99px;overflow:hidden;margin-bottom:1rem}
+.prog-fill{height:100%;border-radius:99px;background:var(--teal);transition:width 0.4s ease}
+.chat-win{display:flex;flex-direction:column;gap:11px;margin-bottom:1rem;min-height:100px}
+.msg{display:flex;gap:9px;align-items:flex-start;animation:msgIn 0.28s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.msg.t{flex-direction:row}
+.msg.c{flex-direction:row-reverse}
+.m-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
+.m-av.ta{background:var(--forest);color:var(--white)}
+.m-av.ca{background:var(--amber-light);color:var(--amber)}
+.bubble{max-width:84%;padding:9px 13px;border-radius:13px;font-size:15px;line-height:1.58}
+.msg.t .bubble{background:var(--white);border:1px solid var(--border);border-radius:3px 13px 13px 13px;color:var(--ink)}
+.msg.c .bubble{background:var(--teal);color:var(--white);border-radius:13px 3px 13px 13px}
+.typing-wrap{background:var(--white);border:1px solid var(--border);border-radius:3px 13px 13px 13px;padding:9px 13px;display:flex;gap:5px;align-items:center;width:56px}
+.td{width:7px;height:7px;border-radius:50%;background:var(--ink-soft);animation:tb 1.2s infinite}
+.td:nth-child(2){animation-delay:0.2s}
+.td:nth-child(3){animation-delay:0.4s}
+@keyframes tb{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.15)}}
+.input-wrap{background:var(--white);border:1.5px solid var(--border);border-radius:15px;padding:10px;display:flex;gap:9px;align-items:flex-end}
+.chat-in{flex:1;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:transparent;resize:none;min-height:22px;max-height:110px;line-height:1.5}
+.chat-in::placeholder{color:var(--ink-soft)}
+.send-btn{width:38px;height:38px;border-radius:50%;background:var(--teal);color:var(--white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.14s;font-size:15px}
+.send-btn:hover{background:var(--teal-dark);transform:scale(1.06)}
+.send-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+.action-row{display:flex;gap:7px;margin-top:7px;flex-wrap:wrap}
+.action-btn{padding:5px 13px;border-radius:99px;border:1px solid var(--border);background:var(--cream);font-size:12px;color:var(--ink-mid);cursor:pointer;transition:all 0.14s;font-family:'DM Sans',sans-serif}
+.action-btn:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-light)}
+.reread-btn{padding:5px 13px;border-radius:99px;border:1px solid var(--border);background:var(--cream);font-size:12px;color:var(--ink-mid);cursor:pointer;transition:all 0.14s;font-family:'DM Sans',sans-serif}
+.reread-btn:hover{border-color:var(--forest);color:var(--forest)}
  
-  /* BUTTONS */
-  .btn-main { width: 100%; padding: 16px; background: var(--teal); color: var(--white); border: none; border-radius: 14px; font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 18px; cursor: pointer; transition: transform 0.1s, opacity 0.15s, box-shadow 0.15s; box-shadow: 0 4px 20px rgba(29,158,117,0.28); }
-  .btn-main:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(29,158,117,0.34); }
-  .btn-main:active { transform: scale(0.98); }
-  .btn-main:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
-  .btn-ghost { background: transparent; border: 1.5px solid var(--border); border-radius: 12px; padding: 12px 20px; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--ink-mid); cursor: pointer; transition: all 0.15s; }
-  .btn-ghost:hover { background: var(--cream-dark); border-color: var(--ink-soft); }
-  .btn-row { display: flex; gap: 10px; margin-top: 12px; }
-  .btn-row .btn-ghost { flex: 0 0 auto; }
-  .btn-row .btn-main { flex: 1; }
+/* SKILL MAP */
+.skill-map{background:var(--white);border:1px solid var(--border);border-radius:15px;padding:1.1rem;margin-top:1rem}
+.sm-title{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:11px}
+.sk-row{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.sk-row:last-child{margin-bottom:0}
+.sk-name{font-size:12px;font-weight:600;color:var(--ink);width:140px;flex-shrink:0}
+.sk-track{flex:1;height:6px;background:var(--cream-dark);border-radius:99px;overflow:hidden}
+.sk-fill{height:100%;border-radius:99px;transition:width 0.6s ease}
+.sk-score{font-size:11px;font-weight:700;width:28px;text-align:right;flex-shrink:0}
  
-  /* LOADING */
-  .loading-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; }
-  .loading-icon { font-size: 48px; margin-bottom: 1rem; animation: pulse 1.5s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
-  .loading-wrap h2 { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 24px; color: var(--ink); margin-bottom: 6px; }
-  .loading-wrap p { font-size: 15px; color: var(--ink-soft); }
-  .dots { display: flex; gap: 6px; justify-content: center; margin-top: 1.5rem; }
-  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--teal); animation: bounce 1.2s ease-in-out infinite; }
-  .dot:nth-child(2) { animation-delay: 0.2s; }
-  .dot:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes bounce { 0%,100%{opacity:0.3;transform:scale(0.8)} 50%{opacity:1;transform:scale(1.2)} }
+/* RESULTS */
+.r-hero{text-align:center;padding:1.25rem 0 0.75rem}
+.r-icon{font-size:52px;display:block;margin-bottom:0.6rem}
+.r-hero h2{font-family:'Baloo 2',cursive;font-weight:800;font-size:26px;color:var(--ink);margin-bottom:3px}
+.r-hero p{font-size:14px;color:var(--ink-soft)}
+.sp-card{background:var(--amber-light);border-radius:15px;padding:1.1rem 1.4rem;margin-bottom:0.9rem;display:flex;align-items:center;gap:12px}
+.sp-icon{font-size:26px;flex-shrink:0}
+.sp-label{font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:2px}
+.sp-text{font-size:16px;font-weight:700;color:#412402}
+.r-card{background:var(--white);border:1px solid var(--border);border-radius:17px;padding:1.4rem;margin-bottom:0.9rem}
+.r-card-title{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:1.1rem}
+.rb-row{margin-bottom:13px}
+.rb-row:last-child{margin-bottom:0}
+.rb-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.rb-name{font-size:13px;font-weight:600;color:var(--ink)}
+.rb-score{font-size:12px;font-weight:700}
+.rb-track{height:7px;background:var(--cream-dark);border-radius:99px;overflow:hidden}
+.rb-fill{height:100%;border-radius:99px;transition:width 0.8s ease}
+.rb-obs{font-size:12px;color:var(--ink-soft);line-height:1.5;margin-top:4px}
+.gap-card{background:var(--forest-xlight);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:0.9rem}
+.gap-lbl{font-size:11px;font-weight:700;color:var(--forest);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
+.gap-txt{font-size:15px;color:#04342C;line-height:1.6;font-weight:500}
+.enc-card{background:var(--white);border:1px solid var(--border);border-radius:17px;padding:1.4rem;margin-bottom:1.4rem}
+.enc-card p{font-size:15px;color:var(--ink-mid);line-height:1.8;font-style:italic}
+.r-btns{display:flex;flex-direction:column;gap:9px}
+.btn-again{width:100%;padding:14px;background:var(--forest);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:16px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(26,92,58,0.2)}
+.btn-again:hover{background:var(--forest-mid);transform:translateY(-1px)}
+.btn-ghost{width:100%;padding:13px;background:transparent;color:var(--ink-mid);border:1.5px solid var(--border);border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all 0.14s}
+.btn-ghost:hover{background:var(--cream-dark)}
  
-  /* READING SCREEN */
-  .story-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--forest-light); color: var(--forest); padding: 5px 14px; border-radius: 99px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
-  .story-title { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 26px; color: var(--ink); margin-bottom: 1.25rem; line-height: 1.2; }
-  .story-card { background: var(--white); border: 1px solid var(--border); border-left: 4px solid var(--teal); border-radius: 16px; padding: 1.75rem; margin-bottom: 1.25rem; }
-  .story-text { font-size: 18px; line-height: 1.9; color: var(--ink); font-family: 'Nunito', sans-serif; font-weight: 500; }
-  .story-hint { background: var(--amber-light); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.25rem; display: flex; align-items: flex-start; gap: 10px; }
-  .story-hint p { font-size: 14px; color: #633806; line-height: 1.55; }
-  .story-hint p strong { font-weight: 700; }
+/* LOADING */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;text-align:center}
+.l-icon{font-size:46px;animation:pulse 1.5s ease-in-out infinite;margin-bottom:0.9rem}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.loading h2{font-family:'Baloo 2',cursive;font-weight:700;font-size:21px;color:var(--ink);margin-bottom:5px}
+.loading p{font-size:14px;color:var(--ink-soft)}
+.dots{display:flex;gap:5px;justify-content:center;margin-top:1.2rem}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:bounce 1.2s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:0.2s}
+.dot:nth-child(3){animation-delay:0.4s}
+@keyframes bounce{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
  
-  /* QUESTION SCREEN */
-  .progress-header { margin-bottom: 1.5rem; }
-  .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .progress-meta span { font-size: 13px; color: var(--ink-soft); font-weight: 500; }
-  .progress-level { display: inline-flex; align-items: center; gap: 5px; background: var(--forest-light); color: var(--forest); padding: 4px 12px; border-radius: 99px; font-size: 12px; font-weight: 700; }
-  .progress-track { height: 6px; background: var(--cream-dark); border-radius: 99px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 99px; background: var(--teal); transition: width 0.4s ease; }
-  .question-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 1.75rem; margin-bottom: 1rem; }
-  .question-level-tag { font-size: 11px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
-  .question-text { font-size: 19px; font-weight: 600; color: var(--ink); line-height: 1.5; font-family: 'Nunito', sans-serif; }
-  .answer-area { width: 100%; padding: 14px 16px; font-family: 'Nunito', sans-serif; font-size: 16px; line-height: 1.65; border: 1.5px solid var(--border); border-radius: 12px; background: var(--white); color: var(--ink); outline: none; resize: vertical; min-height: 100px; transition: border-color 0.2s; }
-  .answer-area:focus { border-color: var(--teal); }
-  .answer-area::placeholder { color: var(--ink-soft); }
-  .reread-link { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--ink-soft); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 8px; transition: color 0.2s; }
-  .reread-link:hover { color: var(--forest); }
- 
-  /* RESULTS SCREEN */
-  .results-hero { text-align: center; margin-bottom: 2rem; }
-  .results-hero-icon { font-size: 54px; display: block; margin-bottom: 0.75rem; }
-  .results-hero h2 { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 28px; color: var(--ink); margin-bottom: 4px; }
-  .results-hero p { font-size: 15px; color: var(--ink-soft); }
-  .superpower-card { background: var(--amber-light); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 14px; }
-  .superpower-card .sp-icon { font-size: 28px; flex-shrink: 0; }
-  .superpower-card .sp-label { font-size: 11px; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
-  .superpower-card .sp-text { font-size: 17px; font-weight: 700; color: #412402; }
-  .profile-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1rem; }
-  .profile-card-title { font-size: 12px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.25rem; }
-  .bar-row { margin-bottom: 14px; }
-  .bar-meta { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 5px; }
-  .bar-name { font-size: 14px; font-weight: 600; color: var(--ink); }
-  .bar-score { font-size: 13px; font-weight: 700; }
-  .bar-track { height: 8px; background: var(--cream-dark); border-radius: 99px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 99px; transition: width 0.8s ease; }
-  .bar-obs { font-size: 13px; color: var(--ink-soft); line-height: 1.5; margin-top: 5px; }
-  .gap-card { background: var(--forest-light); border-radius: 16px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
-  .gap-card .gap-label { font-size: 11px; font-weight: 700; color: var(--forest); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-  .gap-card .gap-text { font-size: 16px; color: #04342C; line-height: 1.6; font-weight: 500; }
-  .encourage-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 1.5rem; }
-  .encourage-card p { font-size: 16px; color: var(--ink-mid); line-height: 1.8; font-style: italic; }
-  .encourage-card p strong { color: var(--ink); font-style: normal; }
-  .results-actions { display: flex; flex-direction: column; gap: 10px; }
-  .btn-again { width: 100%; padding: 15px; background: var(--forest); color: var(--white); border: none; border-radius: 14px; font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 17px; cursor: pointer; transition: all 0.15s; box-shadow: 0 4px 20px rgba(26,92,58,0.25); }
-  .btn-again:hover { background: var(--forest-mid); transform: translateY(-1px); }
-  .btn-home { width: 100%; padding: 14px; background: transparent; color: var(--ink-mid); border: 1.5px solid var(--border); border-radius: 14px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; text-decoration: none; display: block; text-align: center; transition: all 0.15s; }
-  .btn-home:hover { background: var(--cream-dark); }
-  .elle-footer { background: var(--forest); border-radius: 18px; padding: 1.5rem; margin-top: 1rem; display: flex; align-items: center; gap: 14px; }
-  .elle-footer-photo { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.25); background: var(--forest-light); }
-  .elle-footer-photo img { width: 100%; height: 100%; object-fit: cover; }
-  .elle-footer p { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.6; }
-  .elle-footer strong { color: var(--white); font-weight: 600; }
+@media(max-width:500px){.level-grid{grid-template-columns:1fr}.sk-name{width:110px;font-size:11px}}
 </style>
 </head>
 <body>
  
-<!-- NAV -->
 <nav>
   <a href="/" class="nav-logo">Read<span>Wise</span></a>
-  <a href="/" class="nav-back">← Back to ReadWise</a>
+  <div class="nav-right">
+    <span id="navBadge" class="nav-badge"></span>
+  </div>
 </nav>
  
-<!-- APP -->
-<div class="app-wrap" id="app"></div>
+<div class="app" id="app"></div>
  
 <script>
-const API_URL = "https://api.anthropic.com/v1/messages";
+const API="https://api.anthropic.com/v1/messages";
  
-let state = {
-  screen: 'welcome',
-  name: '',
-  age: 8,
-  passage: null,
-  questions: [],
-  currentQ: 0,
-  answers: [],
-  currentAnswer: '',
-  diagnosis: null,
-  loadingMsg: '',
-  error: ''
+const LEVELS={
+  emergent:{label:"Emergent Reader",ages:"5–6",icon:"🌱",desc:"Simple sentences, picture book style"},
+  early:{label:"Early Reader",ages:"7–8",icon:"📗",desc:"Short paragraphs, familiar topics"},
+  developing:{label:"Developing Reader",ages:"9–10",icon:"📘",desc:"Richer text, inferential questions"},
+  fluent:{label:"Fluent Reader",ages:"11–12",icon:"📚",desc:"Complex ideas, critical evaluation"}
 };
  
-function setState(updates) {
-  state = { ...state, ...updates };
-  render();
+const PASSAGES={
+  emergent:{
+    title:"The Little Cloud",
+    text:"Sam the cloud lived high up in the sky. He was small and white and very fluffy. One day Sam saw some children playing in a park below. They looked very hot. Sam felt sad for them. He blew and blew until he made a cool, gentle rain. The children laughed and held out their hands to catch the drops. Sam smiled. Making others happy made him happy too.",
+    questions:[
+      {id:1,text:"Where did Sam the cloud live?",skill:"Literal Recall",guide:"In the sky / high up in the sky",hints:["Look back at the very first sentence.","The story says Sam lived up very high somewhere.","The first sentence says Sam lived high up in the sky."]},
+      {id:2,text:"Why did Sam feel sad?",skill:"Inference",guide:"He saw the children were hot and felt sorry for them",hints:["What did Sam see happening down below?","The children looked very hot. How might Sam have felt seeing that?","Sam saw children who looked very hot. He felt sad because he wanted to help them cool down."]},
+      {id:3,text:"What does 'gentle' mean when the story says 'a cool, gentle rain'?",skill:"Vocabulary",guide:"Soft / light / not hard or heavy",hints:["Think about what the children did — they laughed and caught drops. Does that sound like soft rain or a storm?","Gentle is the opposite of rough or hard.","Gentle means soft and light — not too strong."]},
+      {id:4,text:"What made Sam happy at the end?",skill:"Main Idea",guide:"Making others happy / helping the children",hints:["Read the very last sentence again.","What had Sam just done before he smiled?","The last line says making others happy made him happy too."]},
+      {id:5,text:"Do you think Sam is a kind cloud? Give one reason for your answer.",skill:"Critical Thinking",guide:"Any answer with a clear reason",hints:["Think about what Sam chose to do when he saw the children.","Did Sam have to help them? What does that tell us?","Sam saw a problem and chose to help without being asked. What does that show about his character?"]}
+    ]
+  },
+  early:{
+    title:"The Last Biscuit",
+    text:"Maya and her brother Leo were sitting at the kitchen table. There was one biscuit left on the plate. They both reached for it at exactly the same time. 'I saw it first,' said Leo. 'I was here first,' said Maya. Their mother walked in and saw their faces — both grumpy, both stubborn. She picked up the biscuit, broke it in half, and gave a piece to each of them. Maya looked at her half. It was still warm. Actually, it tasted better this way. She glanced at Leo. He was smiling too.",
+    questions:[
+      {id:1,text:"What were Maya and Leo arguing about?",skill:"Literal Recall",guide:"The last biscuit on the plate",hints:["Read the first three sentences again.","There was something left on the plate...","They were arguing about the last biscuit."]},
+      {id:2,text:"How did their mother know they were arguing without being told?",skill:"Inference",guide:"She could see from their faces / their expressions told her",hints:["What does the story say the mother saw when she walked in?","The story describes their faces. What were they like?","Their mother saw their faces — both grumpy and stubborn. She could tell just from looking at them."]},
+      {id:3,text:"What does 'stubborn' mean in this story?",skill:"Vocabulary",guide:"Refusing to give in / not willing to change their mind",hints:["Both children refused to give up their claim. What describes someone who won't back down?","Stubborn means you stick to what you want even when others disagree.","Stubborn means refusing to give in — both children were determined to get the biscuit."]},
+      {id:4,text:"Why do you think the biscuit tasted better after it was shared?",skill:"Inference",guide:"Sharing ended the argument / they felt better without the tension",hints:["What changed after they each got a piece?","Before sharing, how were they both feeling?","Before the share, they were grumpy. After, they were smiling. Sometimes how we feel changes how things taste."]},
+      {id:5,text:"What is the main lesson in this story?",skill:"Main Idea",guide:"Sharing is better than arguing / compromise leads to happiness",hints:["Think about what happened at the start compared to the end.","Were they happier before or after the biscuit was split?","The story shows that sharing — even something small — can make everyone happier than fighting over it."]}
+    ]
+  },
+  developing:{
+    title:"The Bridge Builder",
+    text:"In a small valley between two mountains lived two villages that had never spoken to each other. A river ran between them, too wide and too wild to cross. One autumn, a young girl named Petra decided this was ridiculous. She gathered stones, one by one, from the riverbed, day after day, until her hands were raw. The villagers on both sides watched but said nothing. Then, one morning, an old man from the eastern village waded in beside her without a word. Then two women from the west. Then children. By winter, the bridge was done. Nobody could remember who started it. Everyone remembered finishing it together.",
+    questions:[
+      {id:1,text:"Why had the two villages never spoken to each other?",skill:"Literal Recall",guide:"A river too wide and wild to cross separated them",hints:["What physical barrier is described?","The story describes something between the two villages.","A wild river ran between them that was too wide to cross."]},
+      {id:2,text:"Why does the author say Petra found the situation 'ridiculous'?",skill:"Inference",guide:"She thought it was silly they had never tried — the materials were right there",hints:["Think about what Petra used to build the bridge — where did the stones come from?","If the stones were already in the river, what does that suggest about solving the problem earlier?","Petra realised the materials were always there. Nobody had simply tried — which she found absurd."]},
+      {id:3,text:"What does 'her hands were raw' tell us about her effort?",skill:"Vocabulary",guide:"She worked so hard her hands were sore — shows extreme effort",hints:["What happens to your hands if you carry heavy stones for many days?","Raw skin is usually painful. What does this show about how hard she worked?","Raw hands means sore, worn skin. The author uses this detail to show just how much effort Petra put in alone."]},
+      {id:4,text:"Why do you think the others eventually joined in without being asked?",skill:"Inference",guide:"Inspired by her example / felt ashamed / saw it was possible",hints:["What did the villagers do while Petra worked alone?","The story says they 'watched but said nothing.' What might they have been feeling?","They watched her persist alone. Eventually her example inspired them — she showed them it was possible."]},
+      {id:5,text:"What is the deeper message of this story beyond just building a bridge?",skill:"Critical Thinking",guide:"One person's action can inspire others / division can be overcome / initiative matters",hints:["The bridge is real — but what else might it represent?","Think about the two villages. What changes between them besides the river?","The bridge connects the villages physically, but the real message is about what happens between people when someone is brave enough to act first."]}
+    ]
+  },
+  fluent:{
+    title:"The Algorithm That Chose",
+    text:"In 2031, every Year 7 student in the country was assigned a career pathway by an AI system called ARIA. The system analysed grades, social patterns, family income, and even facial micro-expressions during interviews. Proponents called it 'objective.' Critics called it a sentence. Mia's result: Agricultural Technician. She had wanted to be a surgeon. Her teacher, Ms. Okafor, read the report and set it face-down on her desk. 'ARIA has a 94% accuracy rate for life satisfaction at age 40,' she said quietly. 'But it has never been wrong in a way it could see.' Mia stared at her. 'What does that mean?' Ms. Okafor picked up the report and handed it back. 'It means the question isn't whether ARIA is right. It's whether being right is the only thing that matters.'",
+    questions:[
+      {id:1,text:"What data did ARIA use to assign career pathways?",skill:"Literal Recall",guide:"Grades, social patterns, family income, facial micro-expressions",hints:["The story lists the data types in one sentence.","Look for the sentence beginning 'The system analysed...'","ARIA analysed grades, social patterns, family income, and facial micro-expressions."]},
+      {id:2,text:"What does Ms. Okafor mean by 'ARIA has never been wrong in a way it could see'?",skill:"Inference",guide:"ARIA can only measure what it was designed to — things it can't see (passion, dignity, meaning) don't register as errors",hints:["Think about what ARIA measures versus what it cannot measure.","94% satisfaction sounds good — but whose definition of satisfaction? What might be missing?","ARIA might be statistically accurate for what it measures, but cannot measure personal meaning, freedom, or the value of pursuing a dream. It would never know it was wrong about those."]},
+      {id:3,text:"What is the difference between something being 'objective' and being 'just'?",skill:"Vocabulary",guide:"Objective means based on data without bias; just means morally fair — the story shows these aren't the same",hints:["Proponents said 'objective.' Critics said 'a sentence.' What's the difference in those views?","Can something be accurate but still unfair?","Objective means free from personal bias — but just means morally right. ARIA may process data neutrally yet still produce unfair outcomes."]},
+      {id:4,text:"Why do you think the author made Mia want to be a surgeon specifically?",skill:"Critical Thinking",guide:"Surgery requires empathy, human judgment, touch — things ARIA cannot assess. Makes the contrast stark.",hints:["What does a surgeon do that requires more than data?","If Mia had wanted to be a data analyst, would the story feel as powerful?","Surgery requires empathy and life-or-death human judgment — precisely what ARIA cannot assess. The contrast is intentional."]},
+      {id:5,text:"Do you agree that 'being right isn't the only thing that matters'? Argue your position with at least one reason.",skill:"Critical Thinking",guide:"Any well-reasoned position — agree: human dignity matters beyond data; disagree: better outcomes justify intervention",hints:["What things in life matter that cannot be measured by data?","Consider the other side: if ARIA genuinely makes people happier, is there a case for it?","Ms. Okafor suggests accuracy alone doesn't justify removing human choice. But someone could argue better outcomes serve the greater good. What do you think?"]}
+    ]
+  }
+};
+ 
+let S={
+  screen:'welcome',name:'',age:8,level:null,passage:null,
+  chat:[],messages:[],qIndex:0,hintLevel:0,loading:false,loadingMsg:'',
+  skills:freshSkills(),result:null,error:''
+};
+ 
+function freshSkills(){return{'Literal Recall':{score:0,attempts:0},'Vocabulary':{score:0,attempts:0},'Inference':{score:0,attempts:0},'Main Idea':{score:0,attempts:0},'Critical Thinking':{score:0,attempts:0}};}
+ 
+function set(u){S={...S,...u};render();}
+ 
+async function callAI(messages,system){
+  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system,messages})});
+  if(!r.ok)throw new Error('API');
+  const d=await r.json();
+  return d.content.map(b=>b.text||'').join('');
 }
  
-async function callAPI(prompt) {
-  const resp = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      messages: [{ role: 'user', content: prompt }]
-    })
+function tutorSystem(){
+  const q=S.passage.questions[S.qIndex];
+  return `You are ReadWise, a warm expert reading tutor for ${S.name}, age ${S.age} (${LEVELS[S.level].label}).
+ 
+CURRENT QUESTION: "${q.text}"
+SKILL: ${q.skill}
+GOOD ANSWER INCLUDES: ${q.guide}
+HINTS USED: ${S.hintLevel} of 3
+ 
+RULES:
+- If the child's answer is correct (even partially): celebrate specifically (not "Great job!" — say WHY it's right), then end with exactly [NEXT]
+- If incorrect: diagnose WHY with warmth (vocabulary? inference? didn't re-read?), ask ONE Socratic follow-up — never say "wrong"
+- Age ${S.age}: ${S.age<=7?'very simple warm playful words':S.age<=9?'friendly clear encouraging':S.age<=11?'conversational thoughtful':'mature intellectually engaged'}
+- MAX 3 sentences per response
+- If child is stuck after 2+ attempts, gently guide then [NEXT]
+- After ALL questions done signal [DONE]
+- Be specific and human — never generic`;
+}
+ 
+function diagnosisSystem(){
+  return `Generate a reading profile for ${S.name}, age ${S.age}.
+Passage: "${S.passage.title}"
+Skills: ${JSON.stringify(S.skills)}
+ 
+Return ONLY valid JSON (no markdown):
+{"levels":[{"name":"Literal Recall","score":0-100,"observation":"1-2 sentences specific to this child"},{"name":"Vocabulary","score":0-100,"observation":"..."},{"name":"Inference","score":0-100,"observation":"..."},{"name":"Main Idea","score":0-100,"observation":"..."},{"name":"Critical Thinking","score":0-100,"observation":"..."}],"superpower":"5-7 words: strongest skill","rootGap":"One sentence: most important thing to develop next","encouragement":"3 warm sentences direct to ${S.name} — personal and specific"}`;
+}
+ 
+function handleStart(){
+  if(!S.name.trim()){set({error:'Please enter your name first!'});return;}
+  const suggested=S.age<=6?'emergent':S.age<=8?'early':S.age<=10?'developing':'fluent';
+  set({error:'',level:suggested,screen:'level'});
+}
+ 
+function startSession(){
+  if(!S.level)return;
+  set({screen:'passage',passage:PASSAGES[S.level]});
+}
+ 
+async function beginTutoring(){
+  const q=S.passage.questions[0];
+  const opening=`Hi ${S.name}! I've read "${S.passage.title}" with you. Let's talk about it!\n\n**${q.text}**`;
+  set({
+    screen:'tutor',
+    chat:[{r:'t',text:opening,type:'q'}],
+    messages:[{role:'user',content:'Child is ready. Ask the first question warmly.'},{role:'assistant',content:opening}],
+    qIndex:0,hintLevel:0,skills:freshSkills(),result:null,loading:false
   });
-  if (!resp.ok) throw new Error('API error ' + resp.status);
-  const data = await resp.json();
-  const text = data.content.map(b => b.text || '').join('');
-  return JSON.parse(text.replace(/```json\n?|```\n?/g, '').trim());
 }
  
-async function startSession() {
-  const name = state.name.trim();
-  if (!name) { setState({ error: 'Please enter your name first!' }); return; }
-  setState({ screen: 'loading', loadingMsg: `Creating your story, ${name}!`, error: '' });
-  try {
-    const result = await callAPI(`Create a reading comprehension session for a ${state.age}-year-old child named ${name}.
- 
-Write a warm, engaging story (90-110 words, age-appropriate for ${state.age}) and 5 comprehension questions at different depths.
- 
-Return ONLY valid JSON, no markdown fences:
-{
-  "title": "Story Title Here",
-  "passage": "Full story text here. Make it genuinely interesting and age-appropriate. Avoid anything scary or sad.",
-  "questions": [
-    {"level": 1, "levelName": "Finding Facts", "question": "A literal question directly answered in the text"},
-    {"level": 2, "levelName": "Word Power", "question": "What does the word [pick a word from the story] mean in this story?"},
-    {"level": 3, "levelName": "Reading Between the Lines", "question": "An inference question about something implied but not stated"},
-    {"level": 4, "levelName": "Big Ideas", "question": "What is the main message or lesson of this story?"},
-    {"level": 5, "levelName": "Your Take", "question": "Do you agree with what a character did in the story? Why or why not?"}
-  ]
-}`);
-    setState({ passage: result, screen: 'reading', error: '' });
-  } catch(e) {
-    setState({ screen: 'welcome', error: 'Something went wrong. Please check your internet and try again.' });
-  }
+async function sendAnswer(answer){
+  if(!answer.trim()||S.loading)return;
+  const newChat=[...S.chat,{r:'c',text:answer}];
+  const newMsgs=[...S.messages,{role:'user',content:answer}];
+  set({chat:newChat,messages:newMsgs,loading:true});
+  showTyping();
+  try{
+    const resp=await callAI(newMsgs,tutorSystem());
+    const isDone=resp.includes('[DONE]');
+    const isNext=resp.includes('[NEXT]');
+    const clean=resp.replace('[NEXT]','').replace('[DONE]','').trim();
+    const updChat=[...newChat,{r:'t',text:clean,type:isNext?'correct':'feedback'}];
+    const updMsgs=[...newMsgs,{role:'assistant',content:clean}];
+    const updSkills={...S.skills};
+    const q=S.passage.questions[S.qIndex];
+    if(q.skill in updSkills){
+      if(isNext){const pen=S.hintLevel*15;const sc=Math.max(40,100-pen);updSkills[q.skill]={score:updSkills[q.skill].attempts===0?sc:Math.round((updSkills[q.skill].score+sc)/2),attempts:updSkills[q.skill].attempts+1};}
+      else{updSkills[q.skill]={score:Math.max(10,updSkills[q.skill].score-15),attempts:updSkills[q.skill].attempts+1};}
+    }
+    if(isDone||(isNext&&S.qIndex>=S.passage.questions.length-1)){
+      set({chat:updChat,messages:updMsgs,skills:updSkills,loading:true,screen:'loading',loadingMsg:`Building ${S.name}'s reading profile...`});
+      await generateResult(updMsgs,updSkills);
+    } else if(isNext){
+      const ni=S.qIndex+1;const nq=S.passage.questions[ni];
+      const trans=`**Question ${ni+1} of ${S.passage.questions.length}:**\n${nq.text}`;
+      set({chat:[...updChat,{r:'t',text:trans,type:'q'}],messages:[...updMsgs,{role:'assistant',content:trans}],qIndex:ni,hintLevel:0,skills:updSkills,loading:false});
+    } else{
+      set({chat:updChat,messages:updMsgs,skills:updSkills,loading:false});
+    }
+  }catch(e){set({loading:false,error:'Connection issue. Try again.'});}
 }
  
-async function runDiagnosis(answers) {
-  setState({ screen: 'loading', loadingMsg: 'Building your reading profile...' });
-  const qa = state.passage.questions.map((q, i) =>
-    `Level ${q.level} (${q.levelName}):\nQ: ${q.question}\nA: ${answers[i]}`
-  ).join('\n\n');
-  try {
-    const result = await callAPI(`A ${state.age}-year-old child named ${state.name} read this story:
- 
-"${state.passage.passage}"
- 
-Their answers to 5 comprehension questions:
-${qa}
- 
-Analyse their comprehension carefully and honestly. Be warm and encouraging but accurate.
- 
-Return ONLY valid JSON:
-{
-  "levels": [
-    {"level": 1, "name": "Finding Facts", "score": 85, "observation": "2 friendly sentences about their performance at this level"},
-    {"level": 2, "name": "Word Power", "score": 70, "observation": "2 friendly sentences"},
-    {"level": 3, "name": "Reading Between the Lines", "score": 45, "observation": "2 friendly sentences"},
-    {"level": 4, "name": "Big Ideas", "score": 35, "observation": "2 friendly sentences"},
-    {"level": 5, "name": "Your Take", "score": 60, "observation": "2 friendly sentences"}
-  ],
-  "superpower": "5 word phrase describing their strongest reading skill",
-  "rootGap": "One clear sentence: the most important comprehension skill to develop next",
-  "encouragement": "3 warm sentences written directly to ${state.name} — personal, specific to their answers, and genuinely motivating"
-}`);
-    setState({ diagnosis: result, screen: 'results', answers });
-  } catch(e) {
-    setState({ screen: 'questions', error: 'Could not create your profile. Please try again.' });
+async function generateResult(msgs,skills){
+  try{
+    const raw=await callAI(msgs,diagnosisSystem());
+    const result=JSON.parse(raw.replace(/```json\n?|```\n?/g,'').trim());
+    const sessions=JSON.parse(localStorage.getItem('rw_sessions')||'[]');
+    sessions.push({name:S.name,age:S.age,level:S.level,storyTitle:S.passage.title,date:new Date().toLocaleDateString('en-AU',{day:'numeric',month:'short'}),levels:result.levels,superpower:result.superpower,rootGap:result.rootGap});
+    localStorage.setItem('rw_sessions',JSON.stringify(sessions));
+    set({screen:'results',result,loading:false});
+  }catch(e){
+    const levels=Object.entries(skills).map(([name,d])=>({name,score:d.attempts>0?d.score:60,observation:d.attempts>0?`${S.name} worked through this skill.`:'Not assessed this session.'}));
+    set({screen:'results',result:{levels,superpower:'Dedicated and thoughtful reader',rootGap:'Continue reading varied texts to build all comprehension skills.',encouragement:`Well done, ${S.name}! You completed your reading session today. Every story makes you a stronger reader. Keep going!`},loading:false});
   }
 }
  
-function submitAnswer(skip) {
-  const ans = skip ? '(skipped)' : (state.currentAnswer.trim() || '(no answer)');
-  const newAnswers = [...state.answers, ans];
-  if (state.currentQ + 1 >= state.passage.questions.length) {
-    runDiagnosis(newAnswers);
-  } else {
-    setState({ answers: newAnswers, currentQ: state.currentQ + 1, currentAnswer: '', error: '' });
-  }
+function useHint(){
+  const q=S.passage.questions[S.qIndex];
+  const hi=Math.min(S.hintLevel,2);
+  const labels=['💡 Gentle nudge','🔍 Here\'s a clue','📖 Let me guide you'];
+  const msg=`${labels[hi]}: ${q.hints[hi]}`;
+  set({chat:[...S.chat,{r:'t',text:msg,type:'hint'}],hintLevel:S.hintLevel+1});
 }
  
-function getBarColor(score) {
-  if (score >= 70) return { fill: '#1D9E75', text: '#085041' };
-  if (score >= 45) return { fill: '#EF9F27', text: '#633806' };
-  return { fill: '#D85A30', text: '#993C1D' };
+function showTyping(){
+  const win=document.getElementById('cw');
+  if(!win)return;
+  const el=document.createElement('div');
+  el.id='typing';el.className='msg t';
+  el.innerHTML=`<div class="m-av ta">🦉</div><div class="typing-wrap"><div class="td"></div><div class="td"></div><div class="td"></div></div>`;
+  win.appendChild(el);win.scrollTop=win.scrollHeight;
 }
  
-function resetApp() {
-  setState({ screen: 'welcome', name: '', age: 8, passage: null, questions: [], currentQ: 0, answers: [], currentAnswer: '', diagnosis: null, error: '' });
-}
+function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>').replace(/\n/g,'<br>');}
  
-function render() {
-  const app = document.getElementById('app');
-  const s = state;
+function colFor(s){return s>=70?{f:'#1D9E75',t:'#085041'}:s>=45?{f:'#EF9F27',t:'#633806'}:{f:'#D85A30',t:'#993C1D'};}
  
-  // ── WELCOME ──
-  if (s.screen === 'welcome') {
-    app.innerHTML = `
-<div class="screen">
-  <div class="welcome-hero">
-    <span class="welcome-icon">📖</span>
-    <h1>Your Reading Adventure Starts Here</h1>
-    <p>A story made just for you, five questions, and a complete picture of your reading superpowers.</p>
-  </div>
+function render(){
+  const app=document.getElementById('app');
+  const badge=document.getElementById('navBadge');
+  if(S.level&&LEVELS[S.level]){badge.textContent=`${LEVELS[S.level].icon} ${LEVELS[S.level].label}`;badge.style.display='inline';}else{badge.style.display='none';}
  
-  <div class="welcome-card">
-    <label class="field-label" for="nameInput">What's your name?</label>
-    <input class="text-input" id="nameInput" type="text" placeholder="Type your name here..." value="${s.name}" maxlength="30" autocomplete="off"/>
- 
-    <div class="field-gap"></div>
- 
-    <label class="field-label">How old are you?</label>
-    <div class="age-row">
-      ${[5,6,7,8,9,10,11,12].map(a => `
-        <button class="age-btn ${s.age === a ? 'selected' : ''}" onclick="setState({age:${a}})">${a}</button>
-      `).join('')}
-    </div>
- 
-    ${s.error ? `<div class="error-box">${s.error}</div>` : ''}
- 
-    <div class="field-gap"></div>
-    <button class="btn-main" onclick="startSession()">Create my story →</button>
-  </div>
- 
-  <div class="how-it-works">
-    <div class="how-row">
-      <div class="how-num">1</div>
-      <div class="how-text"><strong>Read a story</strong> written just for your age</div>
-    </div>
-    <div class="how-row">
-      <div class="how-num">2</div>
-      <div class="how-text"><strong>Answer 5 questions</strong> about what you read</div>
-    </div>
-    <div class="how-row">
-      <div class="how-num">3</div>
-      <div class="how-text"><strong>Get your reading profile</strong> — your superpower and next step</div>
-    </div>
-  </div>
-</div>`;
-    const input = document.getElementById('nameInput');
-    input.addEventListener('input', e => { state.name = e.target.value; });
-    input.addEventListener('keydown', e => { if (e.key === 'Enter') startSession(); });
-    input.focus();
+  if(S.screen==='welcome'){
+    app.innerHTML=`<div class="screen">
+<div class="welcome-hero"><span class="welcome-emoji">📖</span><h1>Your Personal Reading Tutor</h1><p>A story made just for you, a real conversation about it, and a complete picture of your reading superpowers.</p></div>
+<div class="card">
+  <label class="field-label">What's your name?</label>
+  <input class="text-input" id="ni" type="text" placeholder="Type your name..." value="${S.name}" maxlength="30" autocomplete="off"/>
+  <div class="gap"></div>
+  <label class="field-label">How old are you?</label>
+  <div class="age-row">${[5,6,7,8,9,10,11,12].map(a=>`<button class="age-btn ${S.age===a?'sel':''}" onclick="set({age:${a}})">${a}</button>`).join('')}</div>
+  ${S.error?`<div class="error-box">${S.error}</div>`:''}
+  <div class="gap"></div>
+  <button class="btn-main" onclick="handleStart()">Let's go! →</button>
+</div></div>`;
+    const i=document.getElementById('ni');
+    i.addEventListener('input',e=>{S.name=e.target.value;});
+    i.addEventListener('keydown',e=>{if(e.key==='Enter')handleStart();});
+    i.focus();
   }
  
-  // ── LOADING ──
-  else if (s.screen === 'loading') {
-    app.innerHTML = `
-<div class="screen loading-wrap">
-  <div class="loading-icon">✨</div>
-  <h2>${s.loadingMsg}</h2>
-  <p>Just a moment${s.name ? ', ' + s.name : ''}...</p>
-  <div class="dots">
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </div>
-</div>`;
+  else if(S.screen==='level'){
+    app.innerHTML=`<div class="screen">
+<div class="welcome-hero" style="padding-top:1rem"><span class="welcome-emoji">🎯</span><h1>Choose your level!</h1><p>We've suggested one based on your age — but you can change it.</p></div>
+<div class="level-grid">${Object.entries(LEVELS).map(([k,lv])=>`<div class="level-card ${S.level===k?'sel':''}" onclick="set({level:'${k}'})"><div class="lc-icon">${lv.icon}</div><div class="lc-name">${lv.label}</div><div class="lc-desc">Ages ${lv.ages} · ${lv.desc}</div></div>`).join('')}</div>
+<button class="btn-main" onclick="startSession()">Start my story →</button></div>`;
   }
  
-  // ── READING ──
-  else if (s.screen === 'reading' && s.passage) {
-    app.innerHTML = `
-<div class="screen">
-  <div class="story-badge">📚 Your story</div>
-  <h2 class="story-title">${s.passage.title}</h2>
- 
-  <div class="story-card">
-    <p class="story-text">${s.passage.passage}</p>
-  </div>
- 
-  <div class="story-hint">
-    <p>💡 <strong>Read carefully!</strong> There will be ${s.passage.questions.length} questions about this story. You can come back and re-read it anytime during the questions.</p>
-  </div>
- 
-  <button class="btn-main" onclick="setState({screen:'questions', currentQ:0, answers:[], currentAnswer:'', error:''})">
-    I'm ready for the questions →
-  </button>
-</div>`;
+  else if(S.screen==='passage'){
+    const lv=LEVELS[S.level];
+    const fs=S.age<=7?'20px':S.age<=9?'17px':'16px';
+    const lh=S.age<=7?'2.1':'1.9';
+    app.innerHTML=`<div class="screen">
+<div class="passage-meta"><span class="badge b-teal">${lv.icon} ${lv.label}</span><span class="badge b-amber">📝 ${S.passage.questions.length} questions</span></div>
+<h2 class="passage-title">${S.passage.title}</h2>
+<div class="passage-card"><p class="passage-text" style="font-size:${fs};line-height:${lh}">${S.passage.text}</p></div>
+<div class="passage-tip"><span>💡</span><span>Read carefully! Your tutor will ask you ${S.passage.questions.length} questions. You can come back to re-read any time.</span></div>
+<button class="btn-forest" onclick="beginTutoring()">I'm ready — let's go! →</button></div>`;
   }
  
-  // ── QUESTIONS ──
-  else if (s.screen === 'questions' && s.passage) {
-    const q = s.passage.questions[s.currentQ];
-    const total = s.passage.questions.length;
-    const pct = Math.round((s.currentQ / total) * 100);
-    const isLast = s.currentQ + 1 >= total;
- 
-    app.innerHTML = `
-<div class="screen">
-  <div class="progress-header">
-    <div class="progress-meta">
-      <span>Question ${s.currentQ + 1} of ${total}</span>
-      <span class="progress-level">Level ${q.level} — ${q.levelName}</span>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" style="width:${pct}%"></div>
-    </div>
-  </div>
- 
-  <div class="question-card">
-    <div class="question-level-tag">Level ${q.level} · ${q.levelName}</div>
-    <p class="question-text">${q.question}</p>
-  </div>
- 
-  <textarea
-    class="answer-area"
-    id="answerBox"
-    placeholder="Write your answer here — there are no wrong answers, just write what you think..."
-  >${s.currentAnswer}</textarea>
- 
-  ${s.error ? `<div class="error-box" style="margin-top:8px">${s.error}</div>` : ''}
- 
-  <div class="btn-row">
-    <button class="btn-ghost" onclick="submitAnswer(true)">Skip</button>
-    <button class="btn-main" onclick="handleAnswer()">
-      ${isLast ? 'See my reading profile →' : 'Next question →'}
-    </button>
-  </div>
- 
-  <button class="reread-link" onclick="setState({screen:'reading'})">← Re-read the story</button>
-</div>`;
- 
-    const ta = document.getElementById('answerBox');
-    ta.addEventListener('input', e => { state.currentAnswer = e.target.value; });
-    ta.focus();
-  }
- 
-  // ── RESULTS ──
-  else if (s.screen === 'results' && s.diagnosis) {
-    const d = s.diagnosis;
-    const bars = d.levels.map(lv => {
-      const col = getBarColor(lv.score);
-      return `
-<div class="bar-row">
-  <div class="bar-meta">
-    <span class="bar-name">${lv.name}</span>
-    <span class="bar-score" style="color:${col.text}">${lv.score}%</span>
-  </div>
-  <div class="bar-track">
-    <div class="bar-fill" style="width:${lv.score}%;background:${col.fill}"></div>
-  </div>
-  <div class="bar-obs">${lv.observation}</div>
-</div>`;
+  else if(S.screen==='tutor'){
+    const q=S.passage.questions[S.qIndex];
+    const pct=Math.round((S.qIndex/S.passage.questions.length)*100);
+    const chatHTML=S.chat.map(m=>{
+      if(m.r==='t')return`<div class="msg t"><div class="m-av ta">🦉</div><div class="bubble">${fmt(m.text)}</div></div>`;
+      return`<div class="msg c"><div class="m-av ca">⭐</div><div class="bubble">${fmt(m.text)}</div></div>`;
+    }).join('');
+    const skillsHTML=Object.entries(S.skills).filter(([,d])=>d.attempts>0).map(([name,d])=>{
+      const col=colFor(d.score);
+      return`<div class="sk-row"><span class="sk-name">${name}</span><div class="sk-track"><div class="sk-fill" style="width:${d.score}%;background:${col.f}"></div></div><span class="sk-score" style="color:${col.t}">${d.score}%</span></div>`;
     }).join('');
  
-    app.innerHTML = `
-<div class="screen">
-  <div class="results-hero">
-    <span class="results-hero-icon">🌟</span>
-    <h2>${s.name}'s Reading Profile</h2>
-    <p>Here's what we discovered today</p>
-  </div>
- 
-  <div class="superpower-card">
-    <div class="sp-icon">⚡</div>
-    <div>
-      <div class="sp-label">Reading superpower</div>
-      <div class="sp-text">${d.superpower}</div>
-    </div>
-  </div>
- 
-  <div class="profile-card">
-    <div class="profile-card-title">Comprehension map</div>
-    ${bars}
-  </div>
- 
-  <div class="gap-card">
-    <div class="gap-label">→ Next adventure</div>
-    <div class="gap-text">${d.rootGap}</div>
-  </div>
- 
-  <div class="encourage-card">
-    <p>${d.encouragement}</p>
-  </div>
- 
-  <div class="results-actions">
-    <button class="btn-again" onclick="startNewStory()">Try another story →</button>
-    <a href="/" class="btn-home">← Back to ReadWise</a>
-  </div>
- 
-  <div class="elle-footer">
-    <div class="elle-footer-photo">
-      <img src="https://flyingstartfamilydaycare.com.au/wp-content/uploads/2026/03/Ladawans-Website-Photo.jpg" alt="Elle" onerror="this.style.display='none'"/>
-    </div>
-    <p><strong>From Elle at Flying Start:</strong> Well done for completing your reading adventure. Every session makes you a stronger reader. Keep going!</p>
-  </div>
+    app.innerHTML=`<div class="screen">
+<div class="tutor-header">
+  <div class="tutor-left"><div class="tutor-av">🦉</div><div><div class="tutor-name">ReadWise Tutor</div><div class="tutor-status">${S.loading?'Thinking...':'Ready'}</div></div></div>
+  <button class="reread-btn" onclick="set({screen:'passage'})">← Re-read</button>
+</div>
+<div class="progress-row"><span>Question ${S.qIndex+1} of ${S.passage.questions.length}</span><span class="badge b-teal" style="font-size:11px">${q.skill}</span></div>
+<div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
+<div class="chat-win" id="cw">${chatHTML}</div>
+<div class="input-wrap">
+  <textarea class="chat-in" id="ci" placeholder="Write your answer here..." rows="1" ${S.loading?'disabled':''}></textarea>
+  <button class="send-btn" onclick="doSend()" ${S.loading?'disabled':''}>→</button>
+</div>
+<div class="action-row">
+  ${S.hintLevel<3&&!S.loading?`<button class="action-btn" onclick="useHint()">💡 Hint (${3-S.hintLevel} left)</button>`:''}
+</div>
+${skillsHTML?`<div class="skill-map"><div class="sm-title">Your understanding map</div>${skillsHTML}</div>`:''}
 </div>`;
+    const cw=document.getElementById('cw');if(cw)cw.scrollTop=cw.scrollHeight;
+    const ci=document.getElementById('ci');
+    if(ci){
+      ci.addEventListener('input',()=>{ci.style.height='auto';ci.style.height=ci.scrollHeight+'px';});
+      ci.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();}});
+      if(!S.loading)ci.focus();
+    }
+  }
+ 
+  else if(S.screen==='loading'){
+    app.innerHTML=`<div class="loading"><div class="l-icon">✨</div><h2>${S.loadingMsg||'One moment...'}</h2><p>Just a moment, ${S.name}!</p><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+  }
+ 
+  else if(S.screen==='results'){
+    const d=S.result;
+    const bars=d.levels.map(lv=>{const col=colFor(lv.score);return`<div class="rb-row"><div class="rb-meta"><span class="rb-name">${lv.name}</span><span class="rb-score" style="color:${col.t}">${lv.score}%</span></div><div class="rb-track"><div class="rb-fill" style="width:${lv.score}%;background:${col.f}"></div></div><div class="rb-obs">${lv.observation}</div></div>`;}).join('');
+    app.innerHTML=`<div class="screen">
+<div class="r-hero"><span class="r-icon">🌟</span><h2>${S.name}'s Reading Profile</h2><p>From "${S.passage.title}"</p></div>
+<div class="sp-card"><div class="sp-icon">⚡</div><div><div class="sp-label">Reading Superpower</div><div class="sp-text">${d.superpower}</div></div></div>
+<div class="r-card"><div class="r-card-title">Comprehension Map</div>${bars}</div>
+<div class="gap-card"><div class="gap-lbl">→ Next Focus</div><div class="gap-txt">${d.rootGap}</div></div>
+<div class="enc-card"><p>"${d.encouragement}"</p></div>
+<div class="r-btns">
+  <button class="btn-again" onclick="tryAnother()">Try another story →</button>
+  <button class="btn-ghost" onclick="goHome()">Start over</button>
+</div></div>`;
   }
 }
  
-function handleAnswer() {
-  submitAnswer(false);
-}
+function doSend(){const ci=document.getElementById('ci');if(!ci)return;const v=ci.value.trim();if(!v||S.loading)return;ci.value='';ci.style.height='auto';sendAnswer(v);}
+function tryAnother(){set({screen:'level',passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});}
+function goHome(){set({screen:'welcome',level:null,passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});}
  
-function startNewStory() {
-  setState({ screen: 'loading', loadingMsg: `Creating a new story for you, ${state.name}!`, passage: null, questions: [], currentQ: 0, answers: [], currentAnswer: '', diagnosis: null, error: '' });
-  startSession();
-}
- 
-// kick it off
+const saved=localStorage.getItem('rw_child');
+if(saved){try{const c=JSON.parse(saved);S.name=c.name||'';S.age=c.age||8;}catch{}}
 render();
 </script>
 </body>
 </html>
- 
