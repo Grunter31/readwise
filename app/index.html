@@ -165,7 +165,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">Read<span>Wise</span></a>
+  <a href="#" class="nav-logo" onclick="return false;">Read<span>Wise</span></a>
   <div class="nav-right">
     <span id="navBadge" class="nav-badge"></span>
   </div>
@@ -326,6 +326,9 @@ const PASSAGES={
   ]
 };
 
+const SESSION_KEY='rw_in_progress';
+const CHILD_KEY='rw_child';
+
 let S={
   screen:'welcome',name:'',age:8,level:null,passage:null,
   chat:[],messages:[],qIndex:0,hintLevel:0,loading:false,loadingMsg:'',
@@ -334,7 +337,21 @@ let S={
 
 function freshSkills(){return{'Literal Recall':{score:0,attempts:0},'Vocabulary':{score:0,attempts:0},'Inference':{score:0,attempts:0},'Main Idea':{score:0,attempts:0},'Critical Thinking':{score:0,attempts:0}};}
 
-function set(u){S={...S,...u};render();}
+function saveState(){
+  try{
+    localStorage.setItem(CHILD_KEY,JSON.stringify({name:S.name,age:S.age}));
+    sessionStorage.setItem(SESSION_KEY,JSON.stringify(S));
+  }catch{}
+}
+
+function set(u){S={...S,...u};saveState();render();}
+
+function openPassage(){set({screen:'passage'});}
+function backToTutor(){set({screen:'tutor'});}
+
+function clearInProgress(){
+  try{sessionStorage.removeItem(SESSION_KEY);}catch{}
+}
 
 async function callAI(messages,system){
   const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system,messages})});
@@ -514,7 +531,7 @@ function render(){
 <div class="passage-tip"><span>💡</span><span>Read carefully! Your tutor will ask you ${S.passage.questions.length} questions. You can come back to re-read any time.</span></div>
 ${midSession
   ? `<div style="background:var(--forest-xlight);border-radius:11px;padding:0.85rem 1rem;margin-bottom:0.75rem;font-size:14px;color:var(--forest);font-weight:600">📍 You are on Question ${qNum} of ${totalQ}</div>
-     <button class="btn-forest" onclick="set({screen:'tutor'})">← Back to Question ${qNum}</button>`
+     <button class="btn-forest" onclick="backToTutor()">← Back to Question ${qNum}</button>`
   : `<button class="btn-forest" onclick="beginTutoring()">I'm ready — let's go! →</button>`
 }</div>`;
   }
@@ -535,7 +552,7 @@ ${midSession
     app.innerHTML=`<div class="screen">
 <div class="tutor-header">
   <div class="tutor-left"><div class="tutor-av">🦉</div><div><div class="tutor-name">ReadWise Tutor</div><div class="tutor-status">${S.loading?'Thinking...':'Ready'}</div></div></div>
-  <button class="reread-btn" onclick="set({screen:'passage'})">← Re-read</button>
+  <button class="reread-btn" onclick="openPassage()">← Re-read</button>
 </div>
 <div class="progress-row"><span>Question ${S.qIndex+1} of ${S.passage.questions.length}</span><span class="badge b-teal" style="font-size:11px">${q.skill}</span></div>
 <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
@@ -589,10 +606,31 @@ function doSend(){const ci=document.getElementById('ci');if(!ci)return;const v=c
 function tryAnother(){
   set({screen:'level',passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});
 }
-function goHome(){set({screen:'welcome',level:null,passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});}
+function goHome(){
+  clearInProgress();
+  set({screen:'welcome',level:null,passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});
+}
 
-const saved=localStorage.getItem('rw_child');
-if(saved){try{const c=JSON.parse(saved);S.name=c.name||'';S.age=c.age||8;}catch{}}
+try{
+  const savedChild=localStorage.getItem(CHILD_KEY);
+  if(savedChild){
+    const c=JSON.parse(savedChild);
+    S.name=c.name||'';
+    S.age=c.age||8;
+  }
+}catch{}
+
+try{
+  const savedSession=sessionStorage.getItem(SESSION_KEY);
+  if(savedSession){
+    const parsed=JSON.parse(savedSession);
+    if(parsed&&typeof parsed==='object'){
+      S={...S,...parsed};
+    }
+  }
+}catch{}
+
+saveState();
 render();
 </script>
 </body>
