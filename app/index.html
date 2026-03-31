@@ -242,8 +242,9 @@ function set(u){S={...S,...u};render();}
 
 async function callAI(messages,system){
   const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system,messages})});
-  if(!r.ok)throw new Error('API');
+  if(!r.ok){const err=await r.text();throw new Error(`Status ${r.status}: ${err}`);}
   const d=await r.json();
+  if(d.error)throw new Error(d.error.message||'API error');
   return d.content.map(b=>b.text||'').join('');
 }
 
@@ -329,7 +330,10 @@ async function sendAnswer(answer){
     } else{
       set({chat:updChat,messages:updMsgs,skills:updSkills,loading:false});
     }
-  }catch(e){set({loading:false,error:'Connection issue. Try again.'});}
+  }catch(e){
+    const errMsg=`Sorry, I had a connection problem. Error: ${e.message}. Please try again.`;
+    set({chat:[...newChat,{r:'t',text:errMsg,type:'error'}],messages:newMsgs,loading:false});
+  }
 }
 
 async function generateResult(msgs,skills){
@@ -402,12 +406,16 @@ function render(){
     const lv=LEVELS[S.level];
     const fs=S.age<=7?'20px':S.age<=9?'17px':'16px';
     const lh=S.age<=7?'2.1':'1.9';
+    const midSession=S.chat.length>0;
     app.innerHTML=`<div class="screen">
 <div class="passage-meta"><span class="badge b-teal">${lv.icon} ${lv.label}</span><span class="badge b-amber">📝 ${S.passage.questions.length} questions</span></div>
 <h2 class="passage-title">${S.passage.title}</h2>
 <div class="passage-card"><p class="passage-text" style="font-size:${fs};line-height:${lh}">${S.passage.text}</p></div>
 <div class="passage-tip"><span>💡</span><span>Read carefully! Your tutor will ask you ${S.passage.questions.length} questions. You can come back to re-read any time.</span></div>
-<button class="btn-forest" onclick="beginTutoring()">I'm ready — let's go! →</button></div>`;
+${midSession
+  ? `<button class="btn-forest" onclick="set({screen:'tutor'})">← Back to my questions</button>`
+  : `<button class="btn-forest" onclick="beginTutoring()">I'm ready — let's go! →</button>`
+}</div>`;
   }
 
   else if(S.screen==='tutor'){
