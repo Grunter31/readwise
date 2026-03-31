@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "functions": {
     "api/tutor.js": {
       "memory": 512,
