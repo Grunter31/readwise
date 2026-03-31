@@ -505,13 +505,16 @@ function render(){
     const fs=S.age<=7?'20px':S.age<=9?'17px':'16px';
     const lh=S.age<=7?'2.1':'1.9';
     const midSession=S.chat.length>0;
+    const qNum=S.qIndex+1;
+    const totalQ=S.passage.questions.length;
     app.innerHTML=`<div class="screen">
 <div class="passage-meta"><span class="badge b-teal">${lv.icon} ${lv.label}</span><span class="badge b-amber">📝 ${S.passage.questions.length} questions</span></div>
 <h2 class="passage-title">${S.passage.title}</h2>
 <div class="passage-card"><p class="passage-text" style="font-size:${fs};line-height:${lh}">${S.passage.text}</p></div>
 <div class="passage-tip"><span>💡</span><span>Read carefully! Your tutor will ask you ${S.passage.questions.length} questions. You can come back to re-read any time.</span></div>
 ${midSession
-  ? `<button class="btn-forest" onclick="set({screen:'tutor'})">← Back to my questions</button>`
+  ? `<div style="background:var(--forest-xlight);border-radius:11px;padding:0.85rem 1rem;margin-bottom:0.75rem;font-size:14px;color:var(--forest);font-weight:600">📍 You are on Question ${qNum} of ${totalQ}</div>
+     <button class="btn-forest" onclick="set({screen:'tutor'})">← Back to Question ${qNum}</button>`
   : `<button class="btn-forest" onclick="beginTutoring()">I'm ready — let's go! →</button>`
 }</div>`;
   }
@@ -545,7 +548,8 @@ ${midSession
 </div>
 ${skillsHTML?`<div class="skill-map"><div class="sm-title">Your understanding map</div>${skillsHTML}</div>`:''}
 </div>`;
-    const cw=document.getElementById('cw');if(cw)cw.scrollTop=cw.scrollHeight;
+    const cw=document.getElementById('cw');
+    if(cw) setTimeout(()=>{cw.scrollTop=cw.scrollHeight;},50);
     const ci=document.getElementById('ci');
     if(ci){
       ci.addEventListener('input',()=>{ci.style.height='auto';ci.style.height=ci.scrollHeight+'px';});
