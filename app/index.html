@@ -79,7 +79,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .progress-row{display:flex;justify-content:space-between;margin-bottom:5px;font-size:13px;color:var(--ink-soft)}
 .prog-track{height:5px;background:var(--cream-dark);border-radius:99px;overflow:hidden;margin-bottom:1rem}
 .prog-fill{height:100%;border-radius:99px;background:var(--teal);transition:width 0.4s ease}
-.chat-win{display:flex;flex-direction:column;gap:11px;margin-bottom:1rem;min-height:100px}
+.chat-win{display:flex;flex-direction:column;gap:11px;margin-bottom:1rem;min-height:100px;max-height:400px;overflow-y:auto;scroll-behavior:smooth}
 .msg{display:flex;gap:9px;align-items:flex-start;animation:msgIn 0.28s ease}
 @keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .msg.t{flex-direction:row}
@@ -549,7 +549,13 @@ ${midSession
 ${skillsHTML?`<div class="skill-map"><div class="sm-title">Your understanding map</div>${skillsHTML}</div>`:''}
 </div>`;
     const cw=document.getElementById('cw');
-    if(cw) setTimeout(()=>{cw.scrollTop=cw.scrollHeight;},50);
+    if(cw){
+      setTimeout(()=>{
+        cw.scrollTop=cw.scrollHeight;
+        const ci=document.getElementById('ci');
+        if(ci) ci.scrollIntoView({behavior:'smooth',block:'end'});
+      },100);
+    }
     const ci=document.getElementById('ci');
     if(ci){
       ci.addEventListener('input',()=>{ci.style.height='auto';ci.style.height=ci.scrollHeight+'px';});
