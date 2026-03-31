@@ -576,9 +576,7 @@ ${skillsHTML?`<div class="skill-map"><div class="sm-title">Your understanding ma
 
 function doSend(){const ci=document.getElementById('ci');if(!ci)return;const v=ci.value.trim();if(!v||S.loading)return;ci.value='';ci.style.height='auto';sendAnswer(v);}
 function tryAnother(){
-  const available=PASSAGES[S.level];
-  const passage=available[Math.floor(Math.random()*available.length)];
-  set({screen:'passage',passage,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});
+  set({screen:'level',passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});
 }
 function goHome(){set({screen:'welcome',level:null,passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});}
 
