@@ -1,6 +1,3 @@
-Index · HTML
-Copy
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +28,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .app{max-width:680px;margin:0 auto;padding:1.5rem 1rem 5rem}
 .screen{animation:fadeUp 0.35s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
- 
+
 /* WELCOME */
 .welcome-hero{text-align:center;padding:1.5rem 0 1.25rem}
 .welcome-emoji{font-size:52px;display:block;margin-bottom:0.75rem}
@@ -51,7 +48,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .btn-main:active{transform:scale(0.98)}
 .btn-main:disabled{opacity:0.4;cursor:not-allowed;transform:none}
 .error-box{background:#FAECE7;border-radius:9px;padding:9px 13px;color:#993C1D;font-size:14px;margin-top:9px}
- 
+
 /* LEVEL CARDS */
 .level-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:1rem}
 .level-card{background:var(--white);border:2px solid var(--border);border-radius:15px;padding:1.1rem;cursor:pointer;transition:all 0.18s;text-align:left}
@@ -60,7 +57,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .lc-icon{font-size:26px;margin-bottom:7px}
 .lc-name{font-family:'Baloo 2',cursive;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px}
 .lc-desc{font-size:12px;color:var(--ink-soft);line-height:1.45}
- 
+
 /* PASSAGE */
 .passage-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:99px;font-size:12px;font-weight:700}
@@ -72,7 +69,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .passage-tip{background:var(--amber-light);border-radius:11px;padding:0.85rem 1rem;margin-bottom:1rem;font-size:14px;color:#633806;display:flex;gap:9px}
 .btn-forest{width:100%;padding:15px;background:var(--forest);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(26,92,58,0.22)}
 .btn-forest:hover{background:var(--forest-mid);transform:translateY(-1px)}
- 
+
 /* TUTOR */
 .tutor-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.9rem}
 .tutor-left{display:flex;align-items:center;gap:9px}
@@ -109,7 +106,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .action-btn:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-light)}
 .reread-btn{padding:5px 13px;border-radius:99px;border:1px solid var(--border);background:var(--cream);font-size:12px;color:var(--ink-mid);cursor:pointer;transition:all 0.14s;font-family:'DM Sans',sans-serif}
 .reread-btn:hover{border-color:var(--forest);color:var(--forest)}
- 
+
 /* SKILL MAP */
 .skill-map{background:var(--white);border:1px solid var(--border);border-radius:15px;padding:1.1rem;margin-top:1rem}
 .sm-title{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:11px}
@@ -119,7 +116,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .sk-track{flex:1;height:6px;background:var(--cream-dark);border-radius:99px;overflow:hidden}
 .sk-fill{height:100%;border-radius:99px;transition:width 0.6s ease}
 .sk-score{font-size:11px;font-weight:700;width:28px;text-align:right;flex-shrink:0}
- 
+
 /* RESULTS */
 .r-hero{text-align:center;padding:1.25rem 0 0.75rem}
 .r-icon{font-size:52px;display:block;margin-bottom:0.6rem}
@@ -149,7 +146,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .btn-again:hover{background:var(--forest-mid);transform:translateY(-1px)}
 .btn-ghost{width:100%;padding:13px;background:transparent;color:var(--ink-mid);border:1.5px solid var(--border);border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all 0.14s}
 .btn-ghost:hover{background:var(--cream-dark)}
- 
+
 /* LOADING */
 .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;text-align:center}
 .l-icon{font-size:46px;animation:pulse 1.5s ease-in-out infinite;margin-bottom:0.9rem}
@@ -161,31 +158,31 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 .dot:nth-child(2){animation-delay:0.2s}
 .dot:nth-child(3){animation-delay:0.4s}
 @keyframes bounce{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
- 
+
 @media(max-width:500px){.level-grid{grid-template-columns:1fr}.sk-name{width:110px;font-size:11px}}
 </style>
 </head>
 <body>
- 
+
 <nav>
   <a href="/" class="nav-logo">Read<span>Wise</span></a>
   <div class="nav-right">
     <span id="navBadge" class="nav-badge"></span>
   </div>
 </nav>
- 
+
 <div class="app" id="app"></div>
- 
+
 <script>
 const API="https://api.anthropic.com/v1/messages";
- 
+
 const LEVELS={
   emergent:{label:"Emergent Reader",ages:"5–6",icon:"🌱",desc:"Simple sentences, picture book style"},
   early:{label:"Early Reader",ages:"7–8",icon:"📗",desc:"Short paragraphs, familiar topics"},
   developing:{label:"Developing Reader",ages:"9–10",icon:"📘",desc:"Richer text, inferential questions"},
   fluent:{label:"Fluent Reader",ages:"11–12",icon:"📚",desc:"Complex ideas, critical evaluation"}
 };
- 
+
 const PASSAGES={
   emergent:{
     title:"The Little Cloud",
@@ -232,63 +229,66 @@ const PASSAGES={
     ]
   }
 };
- 
+
 let S={
   screen:'welcome',name:'',age:8,level:null,passage:null,
   chat:[],messages:[],qIndex:0,hintLevel:0,loading:false,loadingMsg:'',
   skills:freshSkills(),result:null,error:''
 };
- 
+
 function freshSkills(){return{'Literal Recall':{score:0,attempts:0},'Vocabulary':{score:0,attempts:0},'Inference':{score:0,attempts:0},'Main Idea':{score:0,attempts:0},'Critical Thinking':{score:0,attempts:0}};}
- 
+
 function set(u){S={...S,...u};render();}
- 
+
 async function callAI(messages,system){
   const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system,messages})});
   if(!r.ok)throw new Error('API');
   const d=await r.json();
   return d.content.map(b=>b.text||'').join('');
 }
- 
+
 function tutorSystem(){
   const q=S.passage.questions[S.qIndex];
-  return `You are ReadWise, a warm expert reading tutor for ${S.name}, age ${S.age} (${LEVELS[S.level].label}).
- 
-CURRENT QUESTION: "${q.text}"
-SKILL: ${q.skill}
-GOOD ANSWER INCLUDES: ${q.guide}
-HINTS USED: ${S.hintLevel} of 3
- 
-RULES:
-- If the child's answer is correct (even partially): celebrate specifically (not "Great job!" — say WHY it's right), then end with exactly [NEXT]
-- If incorrect: diagnose WHY with warmth (vocabulary? inference? didn't re-read?), ask ONE Socratic follow-up — never say "wrong"
-- Age ${S.age}: ${S.age<=7?'very simple warm playful words':S.age<=9?'friendly clear encouraging':S.age<=11?'conversational thoughtful':'mature intellectually engaged'}
-- MAX 3 sentences per response
-- If child is stuck after 2+ attempts, gently guide then [NEXT]
-- After ALL questions done signal [DONE]
-- Be specific and human — never generic`;
+  const isLastQ=S.qIndex>=S.passage.questions.length-1;
+  return `You are ReadWise, a warm encouraging reading tutor for ${S.name}, age ${S.age}.
+
+QUESTION ASKED: "${q.text}"
+WHAT A CORRECT ANSWER LOOKS LIKE: ${q.guide}
+HINTS USED: ${S.hintLevel}
+THIS IS THE LAST QUESTION: ${isLastQ}
+
+CRITICAL RULES — READ CAREFULLY:
+1. Be VERY GENEROUS when marking correct. If the child shows they understood the key idea — even in simple words — that is CORRECT. Do not demand perfect wording.
+2. If answer shows understanding of the key concept → celebrate specifically WHY it is right, then write [NEXT] at the end.
+3. If answer is clearly wrong or way off → warmly diagnose why (wrong vocab? missed inference?) and ask ONE gentle follow-up question. Never say "wrong" or "incorrect".
+4. If child has attempted 2+ times or used hints → accept a partial answer, praise what they got right, gently add what was missing, then write [NEXT].
+5. If this is the last question AND answer is acceptable → end with [DONE] instead of [NEXT].
+6. Keep response to 2-3 sentences MAX.
+7. Language for age ${S.age}: ${S.age<=7?'very simple, warm, playful — like a kind teacher':S.age<=9?'friendly and clear — like a supportive tutor':S.age<=11?'encouraging and conversational':'thoughtful and intellectually engaged'}
+8. NEVER be picky about exact wording. The goal is comprehension, not recitation.
+9. Examples of what to accept: "the sky" = correct for "high up in the sky". "she helped them" = correct for "she wanted to help". "nice/kind" = correct for character analysis.`;
 }
- 
+
 function diagnosisSystem(){
   return `Generate a reading profile for ${S.name}, age ${S.age}.
 Passage: "${S.passage.title}"
 Skills: ${JSON.stringify(S.skills)}
- 
+
 Return ONLY valid JSON (no markdown):
 {"levels":[{"name":"Literal Recall","score":0-100,"observation":"1-2 sentences specific to this child"},{"name":"Vocabulary","score":0-100,"observation":"..."},{"name":"Inference","score":0-100,"observation":"..."},{"name":"Main Idea","score":0-100,"observation":"..."},{"name":"Critical Thinking","score":0-100,"observation":"..."}],"superpower":"5-7 words: strongest skill","rootGap":"One sentence: most important thing to develop next","encouragement":"3 warm sentences direct to ${S.name} — personal and specific"}`;
 }
- 
+
 function handleStart(){
   if(!S.name.trim()){set({error:'Please enter your name first!'});return;}
   const suggested=S.age<=6?'emergent':S.age<=8?'early':S.age<=10?'developing':'fluent';
   set({error:'',level:suggested,screen:'level'});
 }
- 
+
 function startSession(){
   if(!S.level)return;
   set({screen:'passage',passage:PASSAGES[S.level]});
 }
- 
+
 async function beginTutoring(){
   const q=S.passage.questions[0];
   const opening=`Hi ${S.name}! I've read "${S.passage.title}" with you. Let's talk about it!\n\n**${q.text}**`;
@@ -299,7 +299,7 @@ async function beginTutoring(){
     qIndex:0,hintLevel:0,skills:freshSkills(),result:null,loading:false
   });
 }
- 
+
 async function sendAnswer(answer){
   if(!answer.trim()||S.loading)return;
   const newChat=[...S.chat,{r:'c',text:answer}];
@@ -331,7 +331,7 @@ async function sendAnswer(answer){
     }
   }catch(e){set({loading:false,error:'Connection issue. Try again.'});}
 }
- 
+
 async function generateResult(msgs,skills){
   try{
     const raw=await callAI(msgs,diagnosisSystem());
@@ -345,7 +345,7 @@ async function generateResult(msgs,skills){
     set({screen:'results',result:{levels,superpower:'Dedicated and thoughtful reader',rootGap:'Continue reading varied texts to build all comprehension skills.',encouragement:`Well done, ${S.name}! You completed your reading session today. Every story makes you a stronger reader. Keep going!`},loading:false});
   }
 }
- 
+
 function useHint(){
   const q=S.passage.questions[S.qIndex];
   const hi=Math.min(S.hintLevel,2);
@@ -353,7 +353,7 @@ function useHint(){
   const msg=`${labels[hi]}: ${q.hints[hi]}`;
   set({chat:[...S.chat,{r:'t',text:msg,type:'hint'}],hintLevel:S.hintLevel+1});
 }
- 
+
 function showTyping(){
   const win=document.getElementById('cw');
   if(!win)return;
@@ -362,16 +362,16 @@ function showTyping(){
   el.innerHTML=`<div class="m-av ta">🦉</div><div class="typing-wrap"><div class="td"></div><div class="td"></div><div class="td"></div></div>`;
   win.appendChild(el);win.scrollTop=win.scrollHeight;
 }
- 
+
 function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>').replace(/\n/g,'<br>');}
- 
+
 function colFor(s){return s>=70?{f:'#1D9E75',t:'#085041'}:s>=45?{f:'#EF9F27',t:'#633806'}:{f:'#D85A30',t:'#993C1D'};}
- 
+
 function render(){
   const app=document.getElementById('app');
   const badge=document.getElementById('navBadge');
   if(S.level&&LEVELS[S.level]){badge.textContent=`${LEVELS[S.level].icon} ${LEVELS[S.level].label}`;badge.style.display='inline';}else{badge.style.display='none';}
- 
+
   if(S.screen==='welcome'){
     app.innerHTML=`<div class="screen">
 <div class="welcome-hero"><span class="welcome-emoji">📖</span><h1>Your Personal Reading Tutor</h1><p>A story made just for you, a real conversation about it, and a complete picture of your reading superpowers.</p></div>
@@ -390,14 +390,14 @@ function render(){
     i.addEventListener('keydown',e=>{if(e.key==='Enter')handleStart();});
     i.focus();
   }
- 
+
   else if(S.screen==='level'){
     app.innerHTML=`<div class="screen">
 <div class="welcome-hero" style="padding-top:1rem"><span class="welcome-emoji">🎯</span><h1>Choose your level!</h1><p>We've suggested one based on your age — but you can change it.</p></div>
 <div class="level-grid">${Object.entries(LEVELS).map(([k,lv])=>`<div class="level-card ${S.level===k?'sel':''}" onclick="set({level:'${k}'})"><div class="lc-icon">${lv.icon}</div><div class="lc-name">${lv.label}</div><div class="lc-desc">Ages ${lv.ages} · ${lv.desc}</div></div>`).join('')}</div>
 <button class="btn-main" onclick="startSession()">Start my story →</button></div>`;
   }
- 
+
   else if(S.screen==='passage'){
     const lv=LEVELS[S.level];
     const fs=S.age<=7?'20px':S.age<=9?'17px':'16px';
@@ -409,7 +409,7 @@ function render(){
 <div class="passage-tip"><span>💡</span><span>Read carefully! Your tutor will ask you ${S.passage.questions.length} questions. You can come back to re-read any time.</span></div>
 <button class="btn-forest" onclick="beginTutoring()">I'm ready — let's go! →</button></div>`;
   }
- 
+
   else if(S.screen==='tutor'){
     const q=S.passage.questions[S.qIndex];
     const pct=Math.round((S.qIndex/S.passage.questions.length)*100);
@@ -421,7 +421,7 @@ function render(){
       const col=colFor(d.score);
       return`<div class="sk-row"><span class="sk-name">${name}</span><div class="sk-track"><div class="sk-fill" style="width:${d.score}%;background:${col.f}"></div></div><span class="sk-score" style="color:${col.t}">${d.score}%</span></div>`;
     }).join('');
- 
+
     app.innerHTML=`<div class="screen">
 <div class="tutor-header">
   <div class="tutor-left"><div class="tutor-av">🦉</div><div><div class="tutor-name">ReadWise Tutor</div><div class="tutor-status">${S.loading?'Thinking...':'Ready'}</div></div></div>
@@ -447,11 +447,11 @@ ${skillsHTML?`<div class="skill-map"><div class="sm-title">Your understanding ma
       if(!S.loading)ci.focus();
     }
   }
- 
+
   else if(S.screen==='loading'){
     app.innerHTML=`<div class="loading"><div class="l-icon">✨</div><h2>${S.loadingMsg||'One moment...'}</h2><p>Just a moment, ${S.name}!</p><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
   }
- 
+
   else if(S.screen==='results'){
     const d=S.result;
     const bars=d.levels.map(lv=>{const col=colFor(lv.score);return`<div class="rb-row"><div class="rb-meta"><span class="rb-name">${lv.name}</span><span class="rb-score" style="color:${col.t}">${lv.score}%</span></div><div class="rb-track"><div class="rb-fill" style="width:${lv.score}%;background:${col.f}"></div></div><div class="rb-obs">${lv.observation}</div></div>`;}).join('');
@@ -467,11 +467,11 @@ ${skillsHTML?`<div class="skill-map"><div class="sm-title">Your understanding ma
 </div></div>`;
   }
 }
- 
+
 function doSend(){const ci=document.getElementById('ci');if(!ci)return;const v=ci.value.trim();if(!v||S.loading)return;ci.value='';ci.style.height='auto';sendAnswer(v);}
 function tryAnother(){set({screen:'level',passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});}
 function goHome(){set({screen:'welcome',level:null,passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});}
- 
+
 const saved=localStorage.getItem('rw_child');
 if(saved){try{const c=JSON.parse(saved);S.name=c.name||'';S.age=c.age||8;}catch{}}
 render();
