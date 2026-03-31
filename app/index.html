@@ -522,7 +522,8 @@ ${midSession
   else if(S.screen==='tutor'){
     const q=S.passage.questions[S.qIndex];
     const pct=Math.round((S.qIndex/S.passage.questions.length)*100);
-    const chatHTML=S.chat.map(m=>{
+    const visibleChat=S.chat.slice(-4);
+    const chatHTML=visibleChat.map(m=>{
       if(m.r==='t')return`<div class="msg t"><div class="m-av ta">🦉</div><div class="bubble">${fmt(m.text)}</div></div>`;
       return`<div class="msg c"><div class="m-av ca">⭐</div><div class="bubble">${fmt(m.text)}</div></div>`;
     }).join('');
