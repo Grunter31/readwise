@@ -1060,10 +1060,23 @@ function pickTwin(stage1Problem, level){
 
 /* AI call to Vercel proxy */
 async function callAI(messages,system){
-  const r=await fetch(API,{
+  // Trim conversation history to the last 6 turns to reduce input tokens.
+  const trimmedMsgs = messages.length > 6 ? messages.slice(-6) : messages;
+
+  // NOTE on prompt caching: Haiku 4.5 requires a 4,096-token minimum prefix to cache,
+  // and our system prompt is ~350 tokens. Caching is silently ignored below threshold.
+  // If we ever migrate to Sonnet 4.6+ (1,024 token min) or our prompt grows past 4,096,
+  // wrap `system` in [{type:'text',text:system,cache_control:{type:'ephemeral'}}] to enable.
+
+  const r = await fetch(API,{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:600,system,messages})
+    body:JSON.stringify({
+      model:'claude-haiku-4-5-20251001',
+      max_tokens:600,
+      system,
+      messages: trimmedMsgs
+    })
   });
   if(!r.ok){const err=await r.text();throw new Error(`Status ${r.status}: ${err}`);}
   const d=await r.json();
@@ -1103,51 +1116,36 @@ function tutorSystem(){
   const isLastPair = S.pIndex >= S.problems.length - 1;
   const isLast = isLastPair && isStage2;
   const wasCorrect = isStage2 ? !!S.skills[p.skill].stage2GotRight : !!S.skills[p.skill].gotRight;
-  const stageContext = isStage2
-    ? `\nSTAGE: 2 (Independent practice — child just worked through a similar problem step-by-step. This is their chance to apply it without scaffolding.)`
-    : `\nSTAGE: 1 (Single-stage problem — no step structure. Standard tutoring.)`;
 
-  // Determine if this skill benefits from "how did you work it out?"
-  const skillsThatBenefitFromMethod = ['Word Problems','Pattern & Logic'];
-  const methodQuestionAppropriate =
-    skillsThatBenefitFromMethod.includes(p.skill) &&
-    !p.vertical &&
-    !isStage2;
+  const skillsForMethod = ['Word Problems','Pattern & Logic'];
+  const askMethod = skillsForMethod.includes(p.skill) && !p.vertical && !isStage2;
 
-  return `You are Burrow, a warm thoughtful math tutor by White Rabbit Data Service. You're tutoring ${S.name||'a student'}.
+  return `You are Burrow, a warm thoughtful math tutor. Tutoring ${S.name||'a student'}.
 
-PROBLEM SHOWN: ${p.prompt}
-EXPECTED ANSWER: ${p.answer}
+PROBLEM: ${p.prompt}
+ANSWER: ${p.answer}
 SKILL: ${p.skill}
-HINTS USED SO FAR: ${S.hintLevel}
-IS LAST PROBLEM: ${isLast}
-ALREADY GOT IT RIGHT: ${wasCorrect}
-AWAITING METHOD EXPLANATION: ${S.awaitingMethod}
-METHOD QUESTION APPROPRIATE: ${methodQuestionAppropriate}${stageContext}
+HINTS USED: ${S.hintLevel}
+LAST PROBLEM: ${isLast}
+ALREADY CORRECT: ${wasCorrect}
+AWAITING METHOD: ${S.awaitingMethod}
+STAGE: ${isStage2 ? '2 (independent practice — they just did a guided version)' : '1'}
+ASK METHOD QUESTION: ${askMethod}
 
-CRITICAL RULES:
-1. Trust the context above — answer correctness has been pre-checked.
-
-2. If AWAITING METHOD EXPLANATION is true → student is explaining their thinking. Validate warmly in 1-2 sentences. End with [NEXT] (or [DONE] if last).
-
-3. If ALREADY GOT IT RIGHT is true → treat their message as a method explanation. Validate briefly, then [NEXT]/[DONE].
-
-4. If the answer is WRONG → diagnose the error type and ask ONE gentle Socratic question. Never say "wrong" or "incorrect". Maximum 2 sentences.
-
-5. If CORRECT and HINTS WERE USED → affirm warmly, briefly state the answer in context, then [NEXT] or [DONE]. DO NOT ask "how did you work it out?" — they used hints, the working has already been discussed.
-
-6. If CORRECT and NO HINTS USED:
-   - If METHOD QUESTION APPROPRIATE is true: warmly ask "How did you work it out?" — DO NOT add [NEXT] yet.
-   - If METHOD QUESTION APPROPRIATE is false (e.g., Mental Math, simple geometry facts, fraction comparisons, vertical-stack arithmetic): just affirm the answer in 1 sentence, then [NEXT] or [DONE]. DO NOT ask how they worked it out — the method is either obvious or already shown.
-   - Stage 2: praise the transfer ("Nice — you applied that beautifully!") and add [NEXT]/[DONE]. Don't ask method.
-
-7. If you've given the answer or method yourself (because student was stuck after 3+ attempts) → encourage them, [NEXT] or [DONE]. NEVER ask "how did you work it out?" after you just told them — that's nonsensical.
-
-8. Use $...$ for inline math (LaTeX). Examples: $7 \\times 8 = 56$, $\\frac{3}{4}$.
-
-9. Keep responses warm, brief (2-3 sentences max), respectful. Never patronising.
-
-10. Mathematical reasoning includes deductive logic. If a student questions whether a logic problem "is maths", gently affirm that logic IS part of maths — mathematicians use this kind of reasoning all the time — then refocus on the question.`;
+RULES:
+1. Correctness has been pre-checked — trust the context above.
+2. AWAITING METHOD true → student is explaining their thinking. Validate warmly, then [NEXT]/[DONE].
+3. ALREADY CORRECT true → treat their reply as method explanation. Validate, [NEXT]/[DONE].
+4. Wrong answer → diagnose error briefly (slip / wrong operation / misread / concept gap), ask ONE Socratic question. Never say "wrong". Max 2 sentences.
+5. Correct + hints used → affirm warmly, state answer briefly, [NEXT]/[DONE]. NEVER ask "how did you work it out?" after hints.
+6. Correct + no hints:
+   - ASK METHOD QUESTION true → warmly ask "How did you work it out?" Do NOT add [NEXT].
+   - ASK METHOD QUESTION false → 1-sentence affirmation, [NEXT]/[DONE]. Don't ask method.
+   - Stage 2 → praise the transfer, [NEXT]/[DONE].
+7. After 3+ failed attempts → give the answer/method, encourage, [NEXT]/[DONE]. NEVER ask "how did you work it out?" after revealing the answer.
+8. Math: use $...$ delimiters (LaTeX renders).
+9. Tone: warm, brief (2-3 sentences max), respectful.
+10. If a student questions whether logic "is maths" — affirm logic IS maths (mathematicians use this reasoning), then refocus.`;
 }
 
 function diagnosisSystem(){
