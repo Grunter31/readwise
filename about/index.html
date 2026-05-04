@@ -3,306 +3,888 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>About ReadWise — Why We Built This</title>
+<title>About Burrow — Why We Built This | White Rabbit Data Service</title>
+<meta name="description" content="Burrow exists because the way we measure children's maths ability is broken. A data company built the diagnostic we wished existed."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@400;500;600&display=swap"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght,SOFT@9..144,0,400;9..144,0,500;9..144,0,600;9..144,0,700;9..144,0,800;9..144,1,500;9..144,1,600;9..144,1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"/>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #FAF7F2; --cream-dark: #F0EBE1;
-    --forest: #1A5C3A; --forest-mid: #2A7A50;
-    --forest-light: #D6EDE0; --forest-xlight: #EDF7F2;
-    --amber: #D97706; --amber-light: #FEF3C7;
-    --ink: #1C1C1C; --ink-mid: #4A4A4A; --ink-soft: #7A7A7A;
-    --white: #FFFFFF; --border: rgba(28,28,28,0.09);
-  }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,247,242,0.93); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); padding: 0 6%; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .logo { font-family: 'Lora', serif; font-weight: 700; font-size: 22px; color: var(--forest); text-decoration: none; }
-  .logo span { color: var(--ink); }
-  nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
-  nav ul a { text-decoration: none; color: var(--ink-mid); font-size: 15px; font-weight: 500; transition: color 0.2s; }
-  nav ul a:hover { color: var(--ink); }
-  .nav-cta { background: var(--forest); color: var(--white) !important; padding: 9px 22px; border-radius: 99px; font-size: 14px; font-weight: 600; }
-  .nav-cta:hover { background: var(--forest-mid) !important; }
-  .hero { background: var(--ink); padding: 140px 6% 100px; text-align: center; }
-  .hero-inner { max-width: 800px; margin: 0 auto; }
-  .hero-eyebrow { display: inline-block; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); padding: 6px 16px; border-radius: 99px; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2rem; }
-  .hero h1 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(32px, 5vw, 60px); color: var(--white); line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
-  .hero h1 em { color: #9FE1CB; font-style: italic; }
-  .hero-lead { font-size: clamp(17px, 2vw, 21px); color: rgba(255,255,255,0.65); line-height: 1.75; max-width: 640px; margin: 0 auto; }
-  .crisis { background: var(--forest); padding: 90px 6%; }
-  .crisis-inner { max-width: 960px; margin: 0 auto; }
-  .crisis h2 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(26px, 3.5vw, 44px); color: var(--white); line-height: 1.2; margin-bottom: 1rem; max-width: 700px; }
-  .crisis-lead { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.75; max-width: 680px; margin-bottom: 3rem; }
-  .crisis-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 3rem; }
-  .crisis-stat { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 1.5rem; }
-  .crisis-stat-num { font-family: 'Lora', serif; font-size: 44px; font-weight: 700; color: #9FE1CB; line-height: 1; margin-bottom: 8px; }
-  .crisis-stat-label { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.55; }
-  .crisis-quote { background: rgba(255,255,255,0.06); border-left: 3px solid #9FE1CB; border-radius: 0 14px 14px 0; padding: 1.5rem 2rem; }
-  .crisis-quote p { font-size: 18px; color: rgba(255,255,255,0.85); line-height: 1.75; font-style: italic; margin-bottom: 0.75rem; }
-  .crisis-quote cite { font-size: 13px; color: rgba(255,255,255,0.45); font-style: normal; }
-  .real { padding: 90px 6%; }
-  .real-inner { max-width: 960px; margin: 0 auto; }
-  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--forest); margin-bottom: 12px; }
-  .section-title { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(26px, 3.5vw, 42px); line-height: 1.2; letter-spacing: -0.02em; color: var(--ink); max-width: 620px; margin-bottom: 1.25rem; }
-  .section-sub { font-size: 18px; color: var(--ink-mid); line-height: 1.75; max-width: 640px; margin-bottom: 2rem; }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; margin-top: 3rem; }
-  .prose p { font-size: 17px; color: var(--ink-mid); line-height: 1.8; margin-bottom: 1.25rem; }
-  .prose p:last-child { margin-bottom: 0; }
-  .prose strong { color: var(--ink); font-weight: 600; }
-  .callout { background: var(--forest-light); border-radius: 16px; padding: 1.75rem; }
-  .callout-label { font-size: 11px; font-weight: 700; color: var(--forest); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
-  .callout-text { font-size: 16px; color: #04342C; line-height: 1.7; }
-  .science { background: var(--cream-dark); padding: 90px 6%; }
-  .science-inner { max-width: 960px; margin: 0 auto; }
-  .bloom-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; margin-top: 3rem; display: grid; grid-template-columns: 1fr 1.6fr; gap: 60px; align-items: center; }
-  .bloom-visual { text-align: center; }
-  .sigma-display { font-family: 'Lora', serif; font-size: 100px; font-weight: 700; color: var(--forest); line-height: 1; margin-bottom: 8px; }
-  .sigma-label { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
-  .bloom-text h3 { font-family: 'Lora', serif; font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 1rem; line-height: 1.3; }
-  .bloom-text p { font-size: 16px; color: var(--ink-mid); line-height: 1.75; margin-bottom: 1rem; }
-  .bloom-text p:last-child { margin-bottom: 0; }
-  .bloom-text strong { color: var(--ink); font-weight: 600; }
-  .science-points { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 2.5rem; }
-  .science-point { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; border-top: 3px solid var(--forest); }
-  .science-point h4 { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
-  .science-point p { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
-  .solution { padding: 90px 6%; }
-  .solution-inner { max-width: 960px; margin: 0 auto; }
-  .solution-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 3rem; }
-  .solution-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
-  .solution-num { font-family: 'Lora', serif; font-size: 32px; font-weight: 700; color: var(--forest-light); line-height: 1; margin-bottom: 10px; }
-  .solution-card h3 { font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
-  .solution-card p { font-size: 14px; color: var(--ink-mid); line-height: 1.65; }
-  .mission { background: var(--forest); padding: 90px 6%; text-align: center; }
-  .mission-inner { max-width: 760px; margin: 0 auto; }
-  .mission h2 { font-family: 'Lora', serif; font-weight: 700; font-style: italic; font-size: clamp(28px, 4vw, 50px); color: var(--white); line-height: 1.2; margin-bottom: 1.5rem; }
-  .mission p { font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 1.25rem; }
-  .mission-values { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 3rem 0; text-align: left; }
-  .mission-value { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.25rem; }
-  .mission-value-icon { font-size: 22px; margin-bottom: 8px; }
-  .mission-value h4 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 5px; }
-  .mission-value p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
-  .cta-section { padding: 90px 6%; text-align: center; background: var(--cream-dark); }
-  .cta-inner { max-width: 600px; margin: 0 auto; }
-  .cta-inner h2 { font-family: 'Lora', serif; font-weight: 700; font-size: clamp(26px, 3.5vw, 42px); color: var(--ink); line-height: 1.2; margin-bottom: 1rem; }
-  .cta-inner p { font-size: 18px; color: var(--ink-mid); line-height: 1.7; margin-bottom: 2.5rem; }
-  .btn-primary { display: inline-block; background: var(--forest); color: var(--white); padding: 17px 44px; border-radius: 99px; font-size: 17px; font-weight: 600; text-decoration: none; box-shadow: 0 4px 24px rgba(26,92,58,0.28); transition: transform 0.15s, box-shadow 0.15s; }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(26,92,58,0.34); }
-  footer { background: var(--ink); padding: 40px 6%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  .footer-logo { font-family: 'Lora', serif; font-weight: 700; font-size: 18px; color: var(--white); text-decoration: none; }
-  footer p { font-size: 13px; color: rgba(255,255,255,0.35); }
-  footer nav ul { gap: 1.5rem; }
-  footer nav ul a { font-size: 13px; color: rgba(255,255,255,0.5); }
-  footer nav ul a:hover { color: rgba(255,255,255,0.8); }
-  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-  .fade-in.visible { opacity: 1; transform: translateY(0); }
-  @media (max-width: 720px) { .two-col, .bloom-card { grid-template-columns: 1fr; gap: 2rem; } nav ul { display: none; } }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --parchment:#F8F4EC;
+  --parchment-dark:#EFE9DC;
+  --parchment-deep:#E5DCC8;
+  --ink:#1A1815;
+  --ink-mid:#3F3B34;
+  --ink-soft:#76706A;
+  --ink-faint:#A39E96;
+  --rust:#B8451F;
+  --rust-dark:#8E3215;
+  --rust-light:#F4D9CC;
+  --rust-xlight:#FBEDE5;
+  --sage:#5A7A5C;
+  --sage-dark:#3E5A40;
+  --sage-light:#D6E2D2;
+  --sage-xlight:#EAF1E6;
+  --gold:#C99A2D;
+  --gold-light:#F4E5BA;
+  --rose:#9C5466;
+  --white:#FFFFFF;
+  --border:rgba(26,24,21,0.10);
+  --border-strong:rgba(26,24,21,0.18);
+  --shadow-sm:0 1px 2px rgba(26,24,21,0.06);
+  --shadow:0 4px 18px rgba(26,24,21,0.08);
+  --shadow-lg:0 12px 36px rgba(26,24,21,0.12);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--parchment);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","cv11";
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:rgba(248,244,236,0.9);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:0 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:66px;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.nav-logo-mark{width:32px;height:32px;flex-shrink:0}
+.nav-logo-text{font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:-0.01em}
+.nav-logo-text em{font-style:italic;font-weight:600;color:var(--rust)}
+nav ul{list-style:none;display:flex;gap:1.75rem;align-items:center}
+nav ul a{
+  text-decoration:none;
+  color:var(--ink-mid);
+  font-size:14px;
+  font-weight:500;
+  transition:color 0.18s;
+  letter-spacing:-0.005em;
+}
+nav ul a:hover{color:var(--ink)}
+nav ul a.active{color:var(--rust);font-weight:600}
+.nav-cta{
+  background:var(--rust);
+  color:var(--white)!important;
+  padding:9px 22px;
+  border-radius:99px;
+  font-size:14px;
+  font-weight:600;
+  transition:all 0.16s;
+  box-shadow:0 4px 14px rgba(184,69,31,0.22);
+}
+.nav-cta:hover{background:var(--rust-dark)!important;transform:translateY(-1px)}
+
+/* HERO */
+.hero{
+  background:var(--ink);
+  padding:160px 6% 110px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:-150px;
+  left:50%;
+  transform:translateX(-50%);
+  width:700px;
+  height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(184,69,31,0.13) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{
+  max-width:820px;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+.hero-eyebrow{
+  display:inline-block;
+  background:rgba(248,244,236,0.08);
+  color:rgba(248,244,236,0.7);
+  padding:7px 16px;
+  border-radius:99px;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  margin-bottom:2rem;
+}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(34px,5vw,62px);
+  color:var(--white);
+  line-height:1.1;
+  letter-spacing:-0.025em;
+  margin-bottom:1.75rem;
+}
+.hero h1 em{
+  color:var(--rust-light);
+  font-style:italic;
+  font-weight:600;
+}
+.hero-lead{
+  font-size:clamp(17px,2vw,21px);
+  color:rgba(248,244,236,0.7);
+  line-height:1.7;
+  max-width:660px;
+  margin:0 auto;
+  font-weight:400;
+}
+
+/* CRISIS / FOUNDING */
+.founding{
+  background:var(--rust-dark);
+  padding:90px 6%;
+  color:var(--white);
+}
+.founding-inner{max-width:960px;margin:0 auto}
+.founding h2{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(28px,3.5vw,46px);
+  line-height:1.15;
+  letter-spacing:-0.02em;
+  max-width:780px;
+  margin-bottom:1rem;
+}
+.founding-lead{
+  font-size:18px;
+  color:rgba(248,244,236,0.78);
+  line-height:1.7;
+  max-width:680px;
+  margin-bottom:3rem;
+  font-weight:400;
+}
+.crisis-stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-bottom:3rem;
+}
+.crisis-stat{
+  background:rgba(248,244,236,0.06);
+  border:1px solid rgba(248,244,236,0.12);
+  border-radius:16px;
+  padding:1.5rem 1.5rem 1.6rem;
+}
+.crisis-stat-num{
+  font-family:'Fraunces',serif;
+  font-size:46px;
+  font-weight:700;
+  color:var(--rust-light);
+  line-height:1;
+  margin-bottom:10px;
+  letter-spacing:-0.02em;
+}
+.crisis-stat-label{
+  font-size:14px;
+  color:rgba(248,244,236,0.78);
+  line-height:1.55;
+}
+.founding-quote{
+  background:rgba(248,244,236,0.05);
+  border-left:3px solid var(--rust-light);
+  border-radius:0 14px 14px 0;
+  padding:1.5rem 2rem;
+}
+.founding-quote p{
+  font-family:'Fraunces',serif;
+  font-size:19px;
+  color:rgba(248,244,236,0.92);
+  line-height:1.7;
+  font-style:italic;
+  margin-bottom:0.85rem;
+  font-weight:500;
+}
+.founding-quote cite{
+  font-size:13px;
+  color:rgba(248,244,236,0.55);
+  font-style:normal;
+}
+
+/* GENERIC SECTION */
+.section{padding:100px 6%}
+.section-inner{max-width:960px;margin:0 auto}
+.eyebrow{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.13em;
+  text-transform:uppercase;
+  color:var(--rust);
+  margin-bottom:14px;
+}
+.section-title{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(28px,3.5vw,44px);
+  line-height:1.15;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  max-width:680px;
+  margin-bottom:1.25rem;
+}
+.section-sub{
+  font-size:18px;
+  color:var(--ink-mid);
+  line-height:1.7;
+  max-width:660px;
+  margin-bottom:2rem;
+}
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:start;
+  margin-top:3rem;
+}
+.prose p{
+  font-size:17px;
+  color:var(--ink-mid);
+  line-height:1.8;
+  margin-bottom:1.25rem;
+}
+.prose p:last-child{margin-bottom:0}
+.prose strong{color:var(--ink);font-weight:600}
+.callout{
+  background:var(--parchment-dark);
+  border-radius:16px;
+  padding:1.75rem;
+  border:1px solid var(--border);
+}
+.callout-label{
+  font-size:11px;
+  font-weight:700;
+  color:var(--ink-soft);
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  margin-bottom:10px;
+}
+.callout-text{
+  font-size:16px;
+  color:var(--ink-mid);
+  line-height:1.7;
+}
+.callout.dark{
+  background:var(--ink);
+  border-color:transparent;
+}
+.callout.dark .callout-label{color:var(--rust-light)}
+.callout.dark .callout-text{color:rgba(248,244,236,0.85)}
+.callout.dark .callout-text strong{color:var(--white)}
+
+/* SCIENCE */
+.science{
+  background:var(--parchment-dark);
+  padding:100px 6%;
+}
+.science-inner{max-width:960px;margin:0 auto}
+.bloom-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:2.75rem;
+  margin-top:3rem;
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  gap:60px;
+  align-items:center;
+  box-shadow:var(--shadow);
+}
+.bloom-visual{text-align:center}
+.sigma-display{
+  font-family:'Fraunces',serif;
+  font-size:120px;
+  font-weight:700;
+  color:var(--rust);
+  line-height:1;
+  margin-bottom:10px;
+  letter-spacing:-0.04em;
+}
+.sigma-label{
+  font-size:14px;
+  color:var(--ink-soft);
+  line-height:1.6;
+  font-weight:500;
+}
+.sigma-label em{font-style:italic}
+.bloom-text h3{
+  font-family:'Fraunces',serif;
+  font-size:24px;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:1rem;
+  line-height:1.3;
+  letter-spacing:-0.015em;
+}
+.bloom-text p{
+  font-size:16px;
+  color:var(--ink-mid);
+  line-height:1.75;
+  margin-bottom:1rem;
+}
+.bloom-text p:last-child{margin-bottom:0}
+.bloom-text strong{color:var(--ink);font-weight:600}
+.science-points{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-top:2.5rem;
+}
+.science-point{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1.5rem;
+  border-top:3px solid var(--rust);
+}
+.science-point h4{
+  font-family:'Fraunces',serif;
+  font-size:17px;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:8px;
+  letter-spacing:-0.01em;
+}
+.science-point p{
+  font-size:14px;
+  color:var(--ink-mid);
+  line-height:1.65;
+}
+
+/* HOW IT WORKS */
+.how-it-works{padding:100px 6%}
+.how-inner{max-width:960px;margin:0 auto}
+.steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-top:2.75rem;
+}
+.step{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.5rem;
+  transition:transform 0.2s,box-shadow 0.2s;
+}
+.step:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.step-num{
+  width:36px;
+  height:36px;
+  border-radius:11px;
+  background:var(--rust-xlight);
+  color:var(--rust);
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:1rem;
+  letter-spacing:-0.01em;
+}
+.step h3{
+  font-family:'Fraunces',serif;
+  font-size:18px;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:8px;
+  letter-spacing:-0.01em;
+  line-height:1.3;
+}
+.step p{
+  font-size:14px;
+  color:var(--ink-mid);
+  line-height:1.65;
+}
+
+/* MISSION (dark with values) */
+.mission{
+  background:var(--ink);
+  padding:100px 6%;
+  text-align:center;
+  color:var(--white);
+  position:relative;
+  overflow:hidden;
+}
+.mission::before{
+  content:'';
+  position:absolute;
+  bottom:-200px;
+  right:-100px;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(90,122,92,0.15) 0%,transparent 70%);
+  pointer-events:none;
+}
+.mission-inner{max-width:780px;margin:0 auto;position:relative;z-index:1}
+.mission h2{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-style:italic;
+  font-size:clamp(28px,4vw,50px);
+  line-height:1.2;
+  margin-bottom:1.5rem;
+  letter-spacing:-0.02em;
+}
+.mission > .mission-inner > p{
+  font-size:18px;
+  color:rgba(248,244,236,0.7);
+  line-height:1.8;
+  margin-bottom:1.25rem;
+}
+.mission-values{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  margin:3rem 0;
+  text-align:left;
+}
+.mission-value{
+  background:rgba(248,244,236,0.06);
+  border:1px solid rgba(248,244,236,0.1);
+  border-radius:14px;
+  padding:1.4rem;
+}
+.mission-value-icon{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  background:rgba(184,69,31,0.18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:11px;
+}
+.mission-value-icon svg{width:18px;height:18px;stroke:var(--rust-light)}
+.mission-value h4{
+  font-family:'Fraunces',serif;
+  font-size:16px;
+  font-weight:700;
+  color:var(--white);
+  margin-bottom:6px;
+  letter-spacing:-0.005em;
+}
+.mission-value p{
+  font-size:13px;
+  color:rgba(248,244,236,0.6);
+  line-height:1.6;
+}
+
+/* WHITE RABBIT NOTE */
+.wr-note{
+  background:var(--parchment-dark);
+  padding:80px 6%;
+}
+.wr-note-inner{
+  max-width:760px;
+  margin:0 auto;
+  text-align:center;
+}
+.wr-note-mark{
+  width:70px;
+  height:70px;
+  margin:0 auto 1.25rem;
+}
+.wr-note h3{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(22px,3vw,34px);
+  color:var(--ink);
+  margin-bottom:1rem;
+  letter-spacing:-0.02em;
+  line-height:1.25;
+}
+.wr-note h3 em{font-style:italic;color:var(--rust)}
+.wr-note p{
+  font-size:16px;
+  color:var(--ink-mid);
+  line-height:1.75;
+  max-width:600px;
+  margin:0 auto 1rem;
+}
+.wr-note p:last-child{margin-bottom:0}
+.wr-note strong{color:var(--ink);font-weight:600}
+
+/* CLOSING CTA */
+.closing{
+  padding:100px 6%;
+  text-align:center;
+}
+.closing-inner{max-width:640px;margin:0 auto}
+.closing h2{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(26px,3.5vw,42px);
+  color:var(--ink);
+  line-height:1.2;
+  margin-bottom:1.25rem;
+  letter-spacing:-0.02em;
+}
+.closing h2 em{font-style:italic;color:var(--rust)}
+.closing p{
+  font-size:18px;
+  color:var(--ink-mid);
+  line-height:1.7;
+  margin-bottom:2.5rem;
+}
+.closing-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--rust);
+  color:var(--white);
+  padding:18px 42px;
+  border-radius:99px;
+  font-size:17px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 8px 32px rgba(184,69,31,0.32);
+  transition:all 0.18s;
+  letter-spacing:-0.005em;
+}
+.closing-cta:hover{
+  background:var(--rust-dark);
+  transform:translateY(-2px);
+  box-shadow:0 12px 38px rgba(184,69,31,0.4);
+}
+
+/* FOOTER */
+footer{
+  background:var(--ink);
+  padding:36px 6%;
+  border-top:1px solid rgba(248,244,236,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:14px;
+}
+.footer-brand{display:flex;align-items:center;gap:9px;text-decoration:none}
+.footer-mark{width:24px;height:24px}
+.footer-text{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:15px;
+  color:rgba(248,244,236,0.75);
+}
+.footer-text em{color:var(--rust-light);font-style:italic}
+footer p{font-size:12px;color:rgba(248,244,236,0.4)}
+footer p em{color:rgba(248,244,236,0.55);font-style:italic}
+.footer-links{display:flex;gap:1.4rem;list-style:none}
+.footer-links a{
+  font-size:13px;
+  color:rgba(248,244,236,0.55);
+  text-decoration:none;
+  transition:color 0.18s;
+}
+.footer-links a:hover{color:rgba(248,244,236,0.9)}
+
+.fade-in{opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:760px){
+  .two-col,.bloom-card{grid-template-columns:1fr;gap:2rem}
+  .bloom-card{padding:2rem}
+  .sigma-display{font-size:96px}
+  nav ul{gap:0.85rem}
+  nav ul li:not(:last-child){display:none}
+  .hero{padding:130px 6% 80px}
+  .founding,.section,.science,.how-it-works,.mission,.wr-note,.closing{padding:75px 6%}
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="/" class="logo">Read<span>Wise</span></a>
+  <a href="/" class="nav-logo" aria-label="Burrow home">
+    <svg class="nav-logo-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#1A1815"/>
+      <path d="M22 11 C21 11, 20.5 13, 20.5 16 L20.5 24 C20.5 26, 21 27, 22 27 C23 27, 23.5 26, 23.5 24 L23.5 16 C23.5 13, 23 11, 22 11 Z" fill="#B8451F"/>
+      <g transform="rotate(12 42 14)">
+        <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#1A1815"/>
+        <path d="M42 11 C41 11, 40.5 13, 40.5 16 L40.5 24 C40.5 26, 41 27, 42 27 C43 27, 43.5 26, 43.5 24 L43.5 16 C43.5 13, 43 11, 42 11 Z" fill="#B8451F"/>
+      </g>
+      <ellipse cx="32" cy="42" rx="17" ry="16" fill="#1A1815"/>
+      <circle cx="26" cy="40" r="1.6" fill="#F8F4EC"/>
+      <circle cx="38" cy="40" r="1.6" fill="#F8F4EC"/>
+      <ellipse cx="32" cy="46" rx="1.4" ry="1" fill="#B8451F"/>
+      <path d="M30 48 Q32 50 34 48" stroke="#F8F4EC" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span class="nav-logo-text">Bur<em>row</em></span>
+  </a>
   <ul>
     <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
+    <li><a href="/about" class="active">About</a></li>
+    <li><a href="/dashboard">Dashboard</a></li>
     <li><a href="/app" class="nav-cta">Try free →</a></li>
   </ul>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-eyebrow">Why ReadWise exists</div>
-    <h1>Australia has a reading crisis.<br/>We built the <em>solution.</em></h1>
-    <p class="hero-lead">One in three Australian children cannot read proficiently. Not because they aren't smart. Not because their parents don't care. Because we have been teaching them the wrong half of reading — and nobody built a tool to teach the other half. Until now.</p>
+    <div class="hero-eyebrow">Why Burrow exists</div>
+    <h1>Australia has a maths problem.<br/>We built the <em>diagnostic</em> for it.</h1>
+    <p class="hero-lead">For twenty years, Australian children have slipped further behind in mathematics. Not because they're less capable. Because we keep teaching them the wrong half of the subject — and nobody had built the tool to find what's missing. Until now.</p>
   </div>
 </section>
 
-<section class="crisis">
-  <div class="crisis-inner">
-    <h2>Eight children in your child's classroom can't read well. You probably don't know which ones.</h2>
-    <p class="crisis-lead">The 2024 NAPLAN report and the Grattan Institute's landmark Reading Guarantee study confirmed what teachers have known for years — Australia has a reading problem at scale, and it is getting worse.</p>
+<!-- FOUNDING / CRISIS -->
+<section class="founding">
+  <div class="founding-inner">
+    <h2>Eight children in your child's classroom can't reason mathematically. Right now, you don't know which eight.</h2>
+    <p class="founding-lead">The 2024 NAPLAN results and the OECD's 2022 PISA report told us what teachers have been saying quietly for a decade — Australian children's mathematical reasoning has been declining for a generation, and the curriculum hasn't caught up.</p>
     <div class="crisis-stats">
       <div class="crisis-stat fade-in">
         <div class="crisis-stat-num">1 in 3</div>
-        <div class="crisis-stat-label">Australian children cannot read proficiently for their age — that is 450,000 children right now</div>
+        <div class="crisis-stat-label">Australian students fail to meet numeracy standards on NAPLAN — roughly 450,000 children right now</div>
       </div>
       <div class="crisis-stat fade-in">
-        <div class="crisis-stat-num">$40B</div>
-        <div class="crisis-stat-label">The estimated lifetime cost to Australia of today's students who struggle with reading</div>
+        <div class="crisis-stat-num">16 mo</div>
+        <div class="crisis-stat-label">15-year-olds in 2022 score at the level expected of 14-year-olds twenty years earlier (OECD)</div>
       </div>
       <div class="crisis-stat fade-in">
-        <div class="crisis-stat-num">7%</div>
-        <div class="crisis-stat-label">Drop in children reading for pleasure between 2017 and 2022 — the trend is accelerating</div>
+        <div class="crisis-stat-num">37 pts</div>
+        <div class="crisis-stat-label">Drop in Australian PISA maths scores since 2000 — one of the steepest declines in the OECD</div>
       </div>
       <div class="crisis-stat fade-in">
-        <div class="crisis-stat-num">44%</div>
-        <div class="crisis-stat-label">Of Australian adults have low or very low literacy — the problem does not fix itself at school</div>
+        <div class="crisis-stat-num">2x</div>
+        <div class="crisis-stat-label">Improvement seen in a 2024 RCT of AI tutoring vs traditional classroom — in less time</div>
       </div>
     </div>
-    <div class="crisis-quote fade-in">
-      <p>"Australia is failing these children. And it is a preventable tragedy — the reason most of those students cannot read well enough is that we are not teaching them well enough. Australia needs a reading revolution."</p>
-      <cite>— Dr Jordana Hunter, Education Program Director, Grattan Institute, 2024</cite>
+    <div class="founding-quote fade-in">
+      <p>"There is a pattern of improvement in mathematics performance in comparable countries that just isn't replicated in Australia. We have observed continuing falls in our results since PISA began in 2000, and yet again the data tell us we have failed to lift our performance."</p>
+      <cite>— Dr Sue Thomson, Australian Council for Educational Research</cite>
     </div>
   </div>
 </section>
 
-<section class="real">
-  <div class="real-inner">
+<!-- INSIGHT -->
+<section class="section">
+  <div class="section-inner">
     <div class="eyebrow fade-in">The misunderstood problem</div>
-    <h2 class="section-title fade-in">Most children are being taught to read words. Almost none are being taught to understand them.</h2>
-    <p class="section-sub fade-in">This is the distinction that changes everything — and the one that almost every school, parent, and reading app gets wrong.</p>
+    <h2 class="section-title fade-in">Most children are being taught to compute. Almost none are being taught to think mathematically.</h2>
+    <p class="section-sub fade-in">This is the distinction that changes everything — and the one that almost every school, parent, and maths app gets wrong.</p>
     <div class="two-col">
       <div class="prose fade-in">
-        <p>For two decades, Australian education fought the <strong>"reading wars"</strong> — a debate between phonics and whole-language approaches. That debate was about decoding: how children learn to recognise and say words.</p>
-        <p>Phonics won, rightly. Systematic phonics instruction is clearly more effective at teaching children to decode text.</p>
-        <p>But here is what got lost: <strong>decoding is not reading.</strong> Decoding is the prerequisite for reading. Reading — genuine reading — is the act of comprehending what those decoded words actually mean.</p>
-        <p>A child can be a perfect decoder and a poor reader at the same time. They say every word correctly. They cannot tell you what the paragraph was about. This describes millions of Australian children — children whose parents believe they can read because they can say the words.</p>
-        <p>Schools test comprehension. Schools do not have the time to teach it individually. No app has built a serious diagnostic tool for it. Until ReadWise.</p>
+        <p>For two decades, Australian maths teaching has prioritised <strong>computation</strong>. The mechanical arithmetic. Times tables. Vertical addition. The drillable, testable, checkable skills.</p>
+        <p>Computation matters. It's the foundation that everything else sits on. But it isn't maths.</p>
+        <p><strong>Maths is reasoning.</strong> It's recognising a pattern. It's choosing the right operation when the problem doesn't tell you which one. It's working out that if a shirt was reduced by 30% to $42, the original price was $60 — and being able to explain the logic.</p>
+        <p>A child can be a perfect calculator and a poor mathematical thinker. They get every arithmetic question right and freeze when a problem becomes multi-step or worded. <strong>This describes hundreds of thousands of Australian children</strong> — children whose parents believe they're doing well because the worksheets come back ticked.</p>
+        <p>Schools assess reasoning. Schools rarely have time to teach it individually. No app has built a serious diagnostic tool for it. Until Burrow.</p>
       </div>
       <div class="fade-in">
-        <div class="callout" style="margin-bottom:16px">
-          <div class="callout-label">What decoding apps teach</div>
-          <div class="callout-text" style="color:#4A4A4A">Recognising letters, phonics, sounding out words, spelling, reading fluency. Essential — but only half the picture.</div>
+        <div class="callout" style="margin-bottom:14px">
+          <div class="callout-label">What computation apps teach</div>
+          <div class="callout-text">Drilling. Speed. Stars and badges for getting answers right. Essential mechanical skills — but only half the picture.</div>
         </div>
-        <div class="callout" style="background:var(--forest);margin-bottom:16px">
-          <div class="callout-label" style="color:rgba(255,255,255,0.6)">What ReadWise teaches</div>
-          <div class="callout-text" style="color:rgba(255,255,255,0.85)">Understanding what words mean in context. Reading between the lines. Finding the main idea. Forming and defending an opinion. The skills schools actually test.</div>
+        <div class="callout dark" style="margin-bottom:14px">
+          <div class="callout-label">What Burrow teaches</div>
+          <div class="callout-text">How to <strong>reason</strong> through unfamiliar problems. Choose the right approach. Recognise patterns. Explain thinking. The skills schools assess and life requires.</div>
         </div>
         <div class="callout">
-          <div class="callout-label">The gap ReadWise closes</div>
-          <div class="callout-text" style="color:#4A4A4A">In the typical Australian classroom, eight children cannot comprehend what they read — even if they say every word aloud. ReadWise finds exactly which eight and tells you precisely what is wrong.</div>
+          <div class="callout-label">The gap Burrow closes</div>
+          <div class="callout-text">In a typical classroom, the children who can't reason mathematically are often the same children who ace the worksheets. The gap stays invisible until it doesn't. Burrow finds it now, in 8 minutes.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- SCIENCE -->
 <section class="science">
   <div class="science-inner">
-    <div class="eyebrow fade-in">The science behind ReadWise</div>
-    <h2 class="section-title fade-in">40 years of research pointed to the same answer. We built it.</h2>
-    <p class="section-sub fade-in">ReadWise is not an opinion. Every part of how it works is grounded in peer-reviewed educational research going back to Benjamin Bloom's landmark 1984 study.</p>
+    <div class="eyebrow fade-in">The science behind Burrow</div>
+    <h2 class="section-title fade-in">Forty years of education research pointed to the same answer. We finally built it.</h2>
+    <p class="section-sub fade-in">Burrow isn't an opinion. Every part of how it works is grounded in peer-reviewed educational research stretching back to Benjamin Bloom's landmark 1984 study.</p>
     <div class="bloom-card fade-in">
       <div class="bloom-visual">
         <div class="sigma-display">2σ</div>
-        <div class="sigma-label">Standard deviations better<br/>The tutored student advantage<br/>— Bloom, 1984</div>
+        <div class="sigma-label">Standard deviations better<br/>The tutored student advantage<br/><em>Bloom, 1984</em></div>
       </div>
       <div class="bloom-text">
         <h3>Bloom's 2 Sigma Problem — and why AI finally solves it</h3>
         <p>In 1984, educational psychologist Benjamin Bloom published one of the most important findings in education history: <strong>the average student with a personal tutor performed two standard deviations better than classroom-taught peers.</strong></p>
         <p>That means the average tutored student outperformed 98% of classroom students. Bloom called it "an educational contribution of the greatest magnitude" — if we could scale it.</p>
-        <p>The problem was always cost. One-to-one tutoring was impossible to give every child. So for 40 years, the finding sat as an open challenge.</p>
-        <p><strong>A 2024 randomised study found that an AI tutor produced learning gains more than twice as large as traditional classroom instruction — in less time.</strong> The 2 sigma problem, after 40 years, is finally being solved. ReadWise is built on exactly this science.</p>
+        <p>The problem was always cost. One-to-one tutoring costs $60–$100 per hour. Out of reach for most families. So for forty years, the finding sat as an open challenge.</p>
+        <p><strong>A 2024 randomised controlled study found that AI tutoring produced learning gains more than twice as large as traditional classroom instruction — in less time.</strong> The 2 sigma problem, after four decades, is finally being solved at scale. Burrow is built on exactly this science.</p>
       </div>
     </div>
     <div class="science-points">
       <div class="science-point fade-in">
         <h4>Diagnostic-first design</h4>
-        <p>ReadWise does not just quiz — it diagnoses. Every session analyses the pattern of a child's answers to find the root cause of misunderstanding, not just the symptom.</p>
+        <p>Burrow doesn't just quiz — it diagnoses. Every session traces the reasoning behind each answer to find the root cause, not the symptom.</p>
       </div>
       <div class="science-point fade-in">
-        <h4>Five-level comprehension framework</h4>
-        <p>Based on decades of reading research, our five-level framework maps every dimension of understanding — from literal recall to critical evaluation.</p>
+        <h4>Six-skill reasoning framework</h4>
+        <p>Maths isn't a single skill. Burrow tracks six dimensions of mathematical reasoning, mapped to how children actually develop.</p>
       </div>
       <div class="science-point fade-in">
         <h4>Mastery-based progression</h4>
-        <p>Bloom's mastery learning — ensuring genuine understanding before moving forward — is the most evidence-backed educational approach ever studied.</p>
+        <p>Bloom's mastery learning — ensuring genuine understanding before progression — remains the most evidence-backed approach in education.</p>
       </div>
       <div class="science-point fade-in">
-        <h4>Personalised to each child</h4>
-        <p>Every story, every question, every piece of feedback is generated specifically for the child — their age, their level, their pattern of errors. No two children get the same experience.</p>
+        <h4>Personalised conversation</h4>
+        <p>Every problem, every hint, every piece of feedback is generated for the child in front of it — their level, their attempts, their pattern of errors.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="solution">
-  <div class="solution-inner">
-    <div class="eyebrow fade-in">How ReadWise works</div>
-    <h2 class="section-title fade-in">The personal reading tutor every child deserves — at a price every family can afford</h2>
-    <p class="section-sub fade-in">The research said one-to-one tutoring changes outcomes. The problem was always scale and cost. ReadWise solves both.</p>
-    <div class="solution-grid">
-      <div class="solution-card fade-in">
-        <div class="solution-num">01</div>
-        <h3>A story written for your child</h3>
-        <p>Every session begins with an engaging story generated specifically for your child's age — genuinely interesting, not a school worksheet.</p>
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+  <div class="how-inner">
+    <div class="eyebrow fade-in">How it works</div>
+    <h2 class="section-title fade-in">The personal maths coach every child deserves — at a price every family can afford.</h2>
+    <p class="section-sub fade-in">The research said one-to-one tutoring transforms outcomes. The problem was always scale and cost. Burrow solves both.</p>
+    <div class="steps">
+      <div class="step fade-in">
+        <div class="step-num">1</div>
+        <h3>Pick a level</h3>
+        <p>Foundations to Advanced. No age brackets — children develop unevenly, and Burrow respects that.</p>
       </div>
-      <div class="solution-card fade-in">
-        <div class="solution-num">02</div>
-        <h3>Five layered questions</h3>
-        <p>Not multiple choice. Open answers across five comprehension levels — revealing exactly how deeply your child understood what they read.</p>
+      <div class="step fade-in">
+        <div class="step-num">2</div>
+        <h3>Six fresh problems</h3>
+        <p>One from each reasoning skill, every session. Open-text answers, not multiple choice — because guessing isn't reasoning.</p>
       </div>
-      <div class="solution-card fade-in">
-        <div class="solution-num">03</div>
-        <h3>AI diagnostic analysis</h3>
-        <p>ReadWise analyses the pattern across all five answers to find the exact comprehension layer breaking down — the root cause, not the symptom.</p>
+      <div class="step fade-in">
+        <div class="step-num">3</div>
+        <h3>Real conversation</h3>
+        <p>When a child answers, Burrow responds. Wrong answers get diagnosed warmly, not marked. Right answers get genuine engagement.</p>
       </div>
-      <div class="solution-card fade-in">
-        <div class="solution-num">04</div>
-        <h3>A complete reading profile</h3>
-        <p>Scores across all five levels, their reading superpower, their most important gap, and a personalised next step — after just one session.</p>
+      <div class="step fade-in">
+        <div class="step-num">4</div>
+        <h3>A complete profile</h3>
+        <p>Scores across all six skills, their math superpower, their root gap, and a level recommendation — after one session.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- MISSION + VALUES -->
 <section class="mission">
   <div class="mission-inner">
-    <h2>Every child deserves a reading coach — not just the ones whose parents can afford one.</h2>
-    <p>A private tutor who genuinely diagnoses comprehension gaps costs $60–$100 an hour. ReadWise makes that diagnostic power available to every child, everywhere, for the cost of a coffee a week.</p>
-    <p>We built ReadWise because the research was clear, the problem was urgent, and nobody had built the solution yet.</p>
+    <h2>Every child deserves a maths coach — not just the ones whose parents can afford one.</h2>
+    <p>A private maths tutor who genuinely diagnoses reasoning gaps costs $60–$100 an hour. Burrow makes that diagnostic power available to every child, everywhere, for the cost of a coffee a week.</p>
+    <p>We built Burrow because the research was clear, the problem is urgent, and nobody else had built the solution.</p>
     <div class="mission-values">
       <div class="mission-value fade-in">
-        <div class="mission-value-icon">🔬</div>
+        <div class="mission-value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v6m0 8v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/></svg>
+        </div>
         <h4>Science-led</h4>
-        <p>Every design decision is grounded in peer-reviewed educational research, not opinion or trend.</p>
+        <p>Every design decision is grounded in peer-reviewed research, not opinion or trend.</p>
       </div>
       <div class="mission-value fade-in">
-        <div class="mission-value-icon">🎯</div>
+        <div class="mission-value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+        </div>
         <h4>Diagnostic-first</h4>
-        <p>We find the root cause of misunderstanding — not just whether the answer was right or wrong.</p>
+        <p>We find the root cause of misunderstanding — not just whether the answer was right.</p>
       </div>
       <div class="mission-value fade-in">
-        <div class="mission-value-icon">❤️</div>
+        <div class="mission-value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
         <h4>Child-centred</h4>
-        <p>Every story, every question, every word of feedback is written with the child's experience first.</p>
+        <p>Every problem, every word of feedback is written with the child's experience first.</p>
       </div>
       <div class="mission-value fade-in">
-        <div class="mission-value-icon">🌏</div>
+        <div class="mission-value-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
         <h4>Access for all</h4>
-        <p>World-class reading support should not be a privilege. We are building it for every Australian family.</p>
+        <p>World-class maths support shouldn't be a privilege. We're building it for every Australian family.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cta-section">
-  <div class="cta-inner">
-    <h2 class="fade-in">See what ReadWise finds in your child — in 8 minutes, for free.</h2>
-    <p class="fade-in">No credit card. No setup. Just a story, five honest questions, and the truth about where your child really is with reading comprehension.</p>
-    <a href="/app" class="btn-primary fade-in">Start the free diagnostic →</a>
+<!-- WHITE RABBIT NOTE -->
+<section class="wr-note">
+  <div class="wr-note-inner">
+    <svg class="wr-note-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#1A1815"/>
+      <path d="M22 11 C21 11, 20.5 13, 20.5 16 L20.5 24 C20.5 26, 21 27, 22 27 C23 27, 23.5 26, 23.5 24 L23.5 16 C23.5 13, 23 11, 22 11 Z" fill="#B8451F"/>
+      <g transform="rotate(12 42 14)">
+        <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#1A1815"/>
+        <path d="M42 11 C41 11, 40.5 13, 40.5 16 L40.5 24 C40.5 26, 41 27, 42 27 C43 27, 43.5 26, 43.5 24 L43.5 16 C43.5 13, 43 11, 42 11 Z" fill="#B8451F"/>
+      </g>
+      <ellipse cx="32" cy="42" rx="17" ry="16" fill="#1A1815"/>
+      <circle cx="26" cy="40" r="1.6" fill="#F8F4EC"/>
+      <circle cx="38" cy="40" r="1.6" fill="#F8F4EC"/>
+      <ellipse cx="32" cy="46" rx="1.4" ry="1" fill="#B8451F"/>
+      <path d="M30 48 Q32 50 34 48" stroke="#F8F4EC" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+    </svg>
+    <h3>A note on <em>White Rabbit</em>.</h3>
+    <p>Burrow is built by White Rabbit Data Service — a data and analytics company that believes the way we measure children's learning is broken.</p>
+    <p>We spent years watching organisations measure the wrong things, miss the real signal, and conclude their data was telling them something it wasn't. That's exactly what's happening in maths education. Children get ticks for computation and the gap in their reasoning stays invisible.</p>
+    <p><strong>So we built the diagnostic we wished existed.</strong> One that asks not just whether the answer was right, but how the child got there — and what that tells us about how they think.</p>
   </div>
 </section>
 
+<!-- CLOSING CTA -->
+<section class="closing">
+  <div class="closing-inner">
+    <h2>See how your child <em>actually thinks</em> — in 8 minutes, free.</h2>
+    <p>No credit card. No setup. Just six problems, a real conversation, and the truth about where your child's reasoning is right now.</p>
+    <a href="/app" class="closing-cta">
+      Start the free diagnostic
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <a href="/" class="footer-logo">ReadWise</a>
-  <nav><ul>
+  <a href="/" class="footer-brand">
+    <svg class="footer-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#F8F4EC"/>
+      <g transform="rotate(12 42 14)">
+        <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#F8F4EC"/>
+      </g>
+      <ellipse cx="32" cy="42" rx="17" ry="16" fill="#F8F4EC"/>
+    </svg>
+    <span class="footer-text">Bur<em>row</em></span>
+  </a>
+  <ul class="footer-links">
     <li><a href="/">Home</a></li>
     <li><a href="/about">About</a></li>
     <li><a href="/app">Try free</a></li>
     <li><a href="/dashboard">Dashboard</a></li>
-  </ul></nav>
-  <p>© 2026 ReadWise. Built for Australian families.</p>
+  </ul>
+  <p>© 2026 <em>Burrow</em>, by White Rabbit Data Service.</p>
 </footer>
 
 <script>
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.12 });
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.12});
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
