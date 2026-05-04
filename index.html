@@ -3,482 +3,911 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ReadWise — Your Personal Reading Tutor</title>
+<title>Burrow — A Math Tutor That Tests Reasoning, Not Just Answers</title>
+<meta name="description" content="Burrow is a free AI math tutor for ages 5–12. It diagnoses how your child thinks, not just what they got right. By White Rabbit Data Service."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght,SOFT@9..144,0,400;9..144,0,500;9..144,0,600;9..144,0,700;9..144,0,800;9..144,1,500;9..144,1,600;9..144,1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --cream:#FAF7F2;--cream-dark:#F0EBE1;
-  --forest:#1A5C3A;--forest-mid:#2A7A50;--forest-light:#D6EDE0;--forest-xlight:#EDF7F2;
-  --amber:#D97706;--amber-light:#FEF3C7;
-  --ink:#1C1C1C;--ink-mid:#4A4A4A;--ink-soft:#7A7A7A;
-  --white:#FFFFFF;--border:rgba(28,28,28,0.09);
-  --teal:#1D9E75;--teal-dark:#0F6E56;
-  --orange:#EF9F27;--red:#D85A30;
-  --purple:#7C3AED;--purple-light:#EDE9FE;
+  --parchment:#F8F4EC;
+  --parchment-dark:#EFE9DC;
+  --parchment-deep:#E5DCC8;
+  --ink:#1A1815;
+  --ink-mid:#3F3B34;
+  --ink-soft:#76706A;
+  --ink-faint:#A39E96;
+  --rust:#B8451F;
+  --rust-dark:#8E3215;
+  --rust-light:#F4D9CC;
+  --rust-xlight:#FBEDE5;
+  --sage:#5A7A5C;
+  --sage-dark:#3E5A40;
+  --sage-light:#D6E2D2;
+  --sage-xlight:#EAF1E6;
+  --gold:#C99A2D;
+  --gold-light:#F4E5BA;
+  --rose:#9C5466;
+  --white:#FFFFFF;
+  --border:rgba(26,24,21,0.10);
+  --border-strong:rgba(26,24,21,0.18);
+  --shadow-sm:0 1px 2px rgba(26,24,21,0.06);
+  --shadow:0 4px 18px rgba(26,24,21,0.08);
+  --shadow-lg:0 12px 36px rgba(26,24,21,0.12);
 }
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
-nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100}
-.nav-logo{font-family:'Baloo 2',cursive;font-weight:800;font-size:22px;color:var(--forest);text-decoration:none}
-.nav-logo span{color:var(--ink)}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-badge{background:var(--forest-light);color:var(--forest);padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;display:none}
-.app{max-width:680px;margin:0 auto;padding:1.5rem 1rem 5rem}
-.screen{animation:fadeUp 0.35s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--parchment);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  font-feature-settings:"ss01","cv11";
+}
 
-/* WELCOME */
-.welcome-hero{text-align:center;padding:1.5rem 0 1.25rem}
-.welcome-emoji{font-size:52px;display:block;margin-bottom:0.75rem}
-.welcome-hero h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(24px,5vw,34px);color:var(--ink);margin-bottom:0.4rem;line-height:1.2}
-.welcome-hero p{font-size:16px;color:var(--ink-mid);max-width:420px;margin:0 auto;line-height:1.65}
-.card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:1.5rem;margin-bottom:1rem}
-.field-label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:7px}
-.text-input{width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:17px;border:1.5px solid var(--border);border-radius:11px;background:var(--cream);color:var(--ink);outline:none;transition:border-color 0.2s}
-.text-input:focus{border-color:var(--teal);background:var(--white)}
-.age-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px}
-.age-btn{padding:8px 15px;border-radius:9px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink-mid);font-family:'Baloo 2',cursive;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.14s}
-.age-btn:hover{border-color:var(--teal);color:var(--teal)}
-.age-btn.sel{background:var(--teal);color:var(--white);border-color:var(--teal)}
-.gap{height:16px}
-.btn-main{width:100%;padding:15px;background:var(--teal);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(29,158,117,0.26)}
-.btn-main:hover{background:var(--teal-dark);transform:translateY(-1px)}
-.btn-main:active{transform:scale(0.98)}
-.btn-main:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-.error-box{background:#FAECE7;border-radius:9px;padding:9px 13px;color:#993C1D;font-size:14px;margin-top:9px}
+/* NAV */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:rgba(248,244,236,0.9);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:0 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:66px;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.nav-logo-mark{width:32px;height:32px;flex-shrink:0}
+.nav-logo-text{font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:-0.01em}
+.nav-logo-text em{font-style:italic;font-weight:600;color:var(--rust)}
+nav ul{list-style:none;display:flex;gap:1.75rem;align-items:center}
+nav ul a{
+  text-decoration:none;
+  color:var(--ink-mid);
+  font-size:14px;
+  font-weight:500;
+  transition:color 0.18s;
+  letter-spacing:-0.005em;
+}
+nav ul a:hover{color:var(--ink)}
+.nav-cta{
+  background:var(--rust);
+  color:var(--white)!important;
+  padding:9px 22px;
+  border-radius:99px;
+  font-size:14px;
+  font-weight:600;
+  transition:all 0.16s;
+  box-shadow:0 4px 14px rgba(184,69,31,0.22);
+}
+.nav-cta:hover{background:var(--rust-dark)!important;transform:translateY(-1px)}
 
-/* LEVEL CARDS */
-.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:1rem}
-.level-card{background:var(--white);border:2px solid var(--border);border-radius:15px;padding:1.1rem;cursor:pointer;transition:all 0.18s;text-align:left}
-.level-card:hover{border-color:var(--teal);transform:translateY(-2px)}
-.level-card.sel{border-color:var(--teal);background:var(--forest-xlight)}
-.lc-icon{font-size:26px;margin-bottom:7px}
-.lc-name{font-family:'Baloo 2',cursive;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px}
-.lc-desc{font-size:12px;color:var(--ink-soft);line-height:1.45}
+/* HERO */
+.hero{
+  background:var(--ink);
+  padding:160px 6% 110px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  top:-100px;
+  right:-150px;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(184,69,31,0.18) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-inner{
+  max-width:880px;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+.hero-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(248,244,236,0.08);
+  color:rgba(248,244,236,0.7);
+  padding:7px 16px;
+  border-radius:99px;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.04em;
+  margin-bottom:2rem;
+}
+.hero-eyebrow svg{width:14px;height:14px}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(36px,5.5vw,68px);
+  color:var(--white);
+  line-height:1.05;
+  letter-spacing:-0.025em;
+  margin-bottom:1.75rem;
+  max-width:14ch;
+}
+.hero h1 em{
+  color:var(--rust-light);
+  font-style:italic;
+  font-weight:600;
+}
+.hero-lead{
+  font-size:clamp(17px,2vw,22px);
+  color:rgba(248,244,236,0.7);
+  line-height:1.65;
+  max-width:640px;
+  margin-bottom:2.75rem;
+  font-weight:400;
+}
+.hero-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--rust);
+  color:var(--white);
+  padding:18px 38px;
+  border-radius:99px;
+  font-size:17px;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 8px 32px rgba(184,69,31,0.34);
+  transition:all 0.18s;
+  letter-spacing:-0.005em;
+}
+.hero-cta:hover{
+  background:var(--rust-dark);
+  transform:translateY(-2px);
+  box-shadow:0 12px 38px rgba(184,69,31,0.42);
+}
+.hero-meta{
+  font-size:13px;
+  color:rgba(248,244,236,0.5);
+  margin-top:1.1rem;
+  font-weight:500;
+  letter-spacing:0.005em;
+}
 
-/* PASSAGE */
-.passage-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:99px;font-size:12px;font-weight:700}
-.b-teal{background:var(--forest-light);color:var(--forest)}
-.b-amber{background:var(--amber-light);color:var(--amber)}
-.passage-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:22px;color:var(--ink);line-height:1.2;margin-bottom:1rem}
-.passage-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--teal);border-radius:15px;padding:1.5rem;margin-bottom:1rem}
-.passage-text{color:var(--ink)}
-.passage-tip{background:var(--amber-light);border-radius:11px;padding:0.85rem 1rem;margin-bottom:1rem;font-size:14px;color:#633806;display:flex;gap:9px}
-.btn-forest{width:100%;padding:15px;background:var(--forest);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(26,92,58,0.22)}
-.btn-forest:hover{background:var(--forest-mid);transform:translateY(-1px)}
+/* CRISIS */
+.crisis{
+  background:var(--rust-dark);
+  padding:90px 6%;
+  color:var(--white);
+}
+.crisis-inner{max-width:1000px;margin:0 auto}
+.crisis-eyebrow{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.13em;
+  text-transform:uppercase;
+  color:rgba(248,244,236,0.7);
+  margin-bottom:14px;
+}
+.crisis h2{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(28px,3.5vw,46px);
+  line-height:1.15;
+  letter-spacing:-0.02em;
+  max-width:780px;
+  margin-bottom:1rem;
+}
+.crisis-lead{
+  font-size:18px;
+  color:rgba(248,244,236,0.78);
+  line-height:1.7;
+  max-width:720px;
+  margin-bottom:3rem;
+  font-weight:400;
+}
+.crisis-stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-bottom:3rem;
+}
+.crisis-stat{
+  background:rgba(248,244,236,0.06);
+  border:1px solid rgba(248,244,236,0.12);
+  border-radius:16px;
+  padding:1.5rem 1.5rem 1.6rem;
+}
+.crisis-stat-num{
+  font-family:'Fraunces',serif;
+  font-size:46px;
+  font-weight:700;
+  color:var(--rust-light);
+  line-height:1;
+  margin-bottom:10px;
+  letter-spacing:-0.02em;
+}
+.crisis-stat-label{
+  font-size:14px;
+  color:rgba(248,244,236,0.78);
+  line-height:1.55;
+}
+.crisis-quote{
+  background:rgba(248,244,236,0.05);
+  border-left:3px solid var(--rust-light);
+  border-radius:0 14px 14px 0;
+  padding:1.5rem 2rem;
+}
+.crisis-quote p{
+  font-family:'Fraunces',serif;
+  font-size:19px;
+  color:rgba(248,244,236,0.92);
+  line-height:1.7;
+  font-style:italic;
+  margin-bottom:0.85rem;
+  font-weight:500;
+}
+.crisis-quote cite{
+  font-size:13px;
+  color:rgba(248,244,236,0.55);
+  font-style:normal;
+  letter-spacing:0.005em;
+}
 
-/* TUTOR */
-.tutor-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.9rem}
-.tutor-left{display:flex;align-items:center;gap:9px}
-.tutor-av{width:38px;height:38px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.tutor-name{font-size:14px;font-weight:700;color:var(--ink)}
-.tutor-status{font-size:12px;color:var(--teal);font-weight:500}
-.progress-row{display:flex;justify-content:space-between;margin-bottom:5px;font-size:13px;color:var(--ink-soft)}
-.prog-track{height:5px;background:var(--cream-dark);border-radius:99px;overflow:hidden;margin-bottom:1rem}
-.prog-fill{height:100%;border-radius:99px;background:var(--teal);transition:width 0.4s ease}
-.chat-win{display:flex;flex-direction:column;gap:11px;margin-bottom:1rem;min-height:100px}
-.msg{display:flex;gap:9px;align-items:flex-start;animation:msgIn 0.28s ease}
-@keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.msg.t{flex-direction:row}
-.msg.c{flex-direction:row-reverse}
-.m-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
-.m-av.ta{background:var(--forest);color:var(--white)}
-.m-av.ca{background:var(--amber-light);color:var(--amber)}
-.bubble{max-width:84%;padding:9px 13px;border-radius:13px;font-size:15px;line-height:1.58}
-.msg.t .bubble{background:var(--white);border:1px solid var(--border);border-radius:3px 13px 13px 13px;color:var(--ink)}
-.msg.c .bubble{background:var(--teal);color:var(--white);border-radius:13px 3px 13px 13px}
-.typing-wrap{background:var(--white);border:1px solid var(--border);border-radius:3px 13px 13px 13px;padding:9px 13px;display:flex;gap:5px;align-items:center;width:56px}
-.td{width:7px;height:7px;border-radius:50%;background:var(--ink-soft);animation:tb 1.2s infinite}
-.td:nth-child(2){animation-delay:0.2s}
-.td:nth-child(3){animation-delay:0.4s}
-@keyframes tb{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.15)}}
-.input-wrap{background:var(--white);border:1.5px solid var(--border);border-radius:15px;padding:10px;display:flex;gap:9px;align-items:flex-end}
-.chat-in{flex:1;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:transparent;resize:none;min-height:22px;max-height:110px;line-height:1.5}
-.chat-in::placeholder{color:var(--ink-soft)}
-.send-btn{width:38px;height:38px;border-radius:50%;background:var(--teal);color:var(--white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.14s;font-size:15px}
-.send-btn:hover{background:var(--teal-dark);transform:scale(1.06)}
-.send-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-.action-row{display:flex;gap:7px;margin-top:7px;flex-wrap:wrap}
-.action-btn{padding:5px 13px;border-radius:99px;border:1px solid var(--border);background:var(--cream);font-size:12px;color:var(--ink-mid);cursor:pointer;transition:all 0.14s;font-family:'DM Sans',sans-serif}
-.action-btn:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-light)}
-.reread-btn{padding:5px 13px;border-radius:99px;border:1px solid var(--border);background:var(--cream);font-size:12px;color:var(--ink-mid);cursor:pointer;transition:all 0.14s;font-family:'DM Sans',sans-serif}
-.reread-btn:hover{border-color:var(--forest);color:var(--forest)}
+/* INSIGHT (the "real problem" section) */
+.insight{padding:100px 6%}
+.insight-inner{max-width:1000px;margin:0 auto}
+.eyebrow{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.13em;
+  text-transform:uppercase;
+  color:var(--rust);
+  margin-bottom:14px;
+}
+.section-title{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(28px,3.5vw,44px);
+  line-height:1.15;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  max-width:680px;
+  margin-bottom:1.25rem;
+}
+.section-sub{
+  font-size:18px;
+  color:var(--ink-mid);
+  line-height:1.7;
+  max-width:660px;
+  margin-bottom:2rem;
+}
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:64px;
+  align-items:start;
+  margin-top:3rem;
+}
+.prose p{
+  font-size:17px;
+  color:var(--ink-mid);
+  line-height:1.8;
+  margin-bottom:1.25rem;
+}
+.prose p:last-child{margin-bottom:0}
+.prose strong{color:var(--ink);font-weight:600}
+.callout{
+  background:var(--parchment-dark);
+  border-radius:16px;
+  padding:1.75rem;
+  border:1px solid var(--border);
+}
+.callout-label{
+  font-size:11px;
+  font-weight:700;
+  color:var(--ink-soft);
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  margin-bottom:10px;
+}
+.callout-text{
+  font-size:16px;
+  color:var(--ink-mid);
+  line-height:1.7;
+}
+.callout.dark{
+  background:var(--ink);
+  border-color:transparent;
+}
+.callout.dark .callout-label{color:var(--rust-light)}
+.callout.dark .callout-text{color:rgba(248,244,236,0.85)}
+.callout.dark .callout-text strong{color:var(--white)}
 
-/* SKILL MAP */
-.skill-map{background:var(--white);border:1px solid var(--border);border-radius:15px;padding:1.1rem;margin-top:1rem}
-.sm-title{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:11px}
-.sk-row{display:flex;align-items:center;gap:9px;margin-bottom:8px}
-.sk-row:last-child{margin-bottom:0}
-.sk-name{font-size:12px;font-weight:600;color:var(--ink);width:140px;flex-shrink:0}
-.sk-track{flex:1;height:6px;background:var(--cream-dark);border-radius:99px;overflow:hidden}
-.sk-fill{height:100%;border-radius:99px;transition:width 0.6s ease}
-.sk-score{font-size:11px;font-weight:700;width:28px;text-align:right;flex-shrink:0}
+/* SCIENCE */
+.science{
+  background:var(--parchment-dark);
+  padding:100px 6%;
+}
+.science-inner{max-width:1000px;margin:0 auto}
+.bloom-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:2.75rem;
+  margin-top:3rem;
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  gap:60px;
+  align-items:center;
+  box-shadow:var(--shadow);
+}
+.bloom-visual{text-align:center}
+.sigma-display{
+  font-family:'Fraunces',serif;
+  font-size:120px;
+  font-weight:700;
+  color:var(--rust);
+  line-height:1;
+  margin-bottom:10px;
+  letter-spacing:-0.04em;
+}
+.sigma-label{
+  font-size:14px;
+  color:var(--ink-soft);
+  line-height:1.6;
+  font-weight:500;
+}
+.bloom-text h3{
+  font-family:'Fraunces',serif;
+  font-size:24px;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:1rem;
+  line-height:1.3;
+  letter-spacing:-0.015em;
+}
+.bloom-text p{
+  font-size:16px;
+  color:var(--ink-mid);
+  line-height:1.75;
+  margin-bottom:1rem;
+}
+.bloom-text p:last-child{margin-bottom:0}
+.bloom-text strong{color:var(--ink);font-weight:600}
+.science-points{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:14px;
+  margin-top:2.5rem;
+}
+.science-point{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1.5rem;
+  border-top:3px solid var(--rust);
+}
+.science-point h4{
+  font-family:'Fraunces',serif;
+  font-size:17px;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:8px;
+  letter-spacing:-0.01em;
+}
+.science-point p{
+  font-size:14px;
+  color:var(--ink-mid);
+  line-height:1.65;
+}
 
-/* RESULTS */
-.r-hero{text-align:center;padding:1.25rem 0 0.75rem}
-.r-icon{font-size:52px;display:block;margin-bottom:0.6rem}
-.r-hero h2{font-family:'Baloo 2',cursive;font-weight:800;font-size:26px;color:var(--ink);margin-bottom:3px}
-.r-hero p{font-size:14px;color:var(--ink-soft)}
-.sp-card{background:var(--amber-light);border-radius:15px;padding:1.1rem 1.4rem;margin-bottom:0.9rem;display:flex;align-items:center;gap:12px}
-.sp-icon{font-size:26px;flex-shrink:0}
-.sp-label{font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:2px}
-.sp-text{font-size:16px;font-weight:700;color:#412402}
-.r-card{background:var(--white);border:1px solid var(--border);border-radius:17px;padding:1.4rem;margin-bottom:0.9rem}
-.r-card-title{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:1.1rem}
-.rb-row{margin-bottom:13px}
-.rb-row:last-child{margin-bottom:0}
-.rb-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
-.rb-name{font-size:13px;font-weight:600;color:var(--ink)}
-.rb-score{font-size:12px;font-weight:700}
-.rb-track{height:7px;background:var(--cream-dark);border-radius:99px;overflow:hidden}
-.rb-fill{height:100%;border-radius:99px;transition:width 0.8s ease}
-.rb-obs{font-size:12px;color:var(--ink-soft);line-height:1.5;margin-top:4px}
-.gap-card{background:var(--forest-xlight);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:0.9rem}
-.gap-lbl{font-size:11px;font-weight:700;color:var(--forest);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
-.gap-txt{font-size:15px;color:#04342C;line-height:1.6;font-weight:500}
-.enc-card{background:var(--white);border:1px solid var(--border);border-radius:17px;padding:1.4rem;margin-bottom:1.4rem}
-.enc-card p{font-size:15px;color:var(--ink-mid);line-height:1.8;font-style:italic}
-.r-btns{display:flex;flex-direction:column;gap:9px}
-.btn-again{width:100%;padding:14px;background:var(--forest);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:16px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(26,92,58,0.2)}
-.btn-again:hover{background:var(--forest-mid);transform:translateY(-1px)}
-.btn-ghost{width:100%;padding:13px;background:transparent;color:var(--ink-mid);border:1.5px solid var(--border);border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all 0.14s}
-.btn-ghost:hover{background:var(--cream-dark)}
+/* LEVELS */
+.levels-section{padding:100px 6%}
+.levels-inner{max-width:1000px;margin:0 auto}
+.levels-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  margin-top:2.75rem;
+}
+.lv-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.5rem 1.4rem;
+  transition:transform 0.2s,box-shadow 0.2s;
+  position:relative;
+}
+.lv-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.lv-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:600;
+  color:var(--ink-faint);
+  letter-spacing:0.08em;
+  margin-bottom:8px;
+}
+.lv-name{
+  font-family:'Fraunces',serif;
+  font-size:19px;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:7px;
+  letter-spacing:-0.01em;
+}
+.lv-desc{
+  font-size:14px;
+  color:var(--ink-mid);
+  line-height:1.55;
+}
 
-/* LOADING */
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;text-align:center}
-.l-icon{font-size:46px;animation:pulse 1.5s ease-in-out infinite;margin-bottom:0.9rem}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-.loading h2{font-family:'Baloo 2',cursive;font-weight:700;font-size:21px;color:var(--ink);margin-bottom:5px}
-.loading p{font-size:14px;color:var(--ink-soft)}
-.dots{display:flex;gap:5px;justify-content:center;margin-top:1.2rem}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:bounce 1.2s ease-in-out infinite}
-.dot:nth-child(2){animation-delay:0.2s}
-.dot:nth-child(3){animation-delay:0.4s}
-@keyframes bounce{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
+/* SOLUTION / PROFILE PREVIEW */
+.solution{
+  background:var(--sage-xlight);
+  padding:100px 6%;
+}
+.solution-inner{max-width:1100px;margin:0 auto}
+.profile-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:64px;
+  align-items:center;
+  margin-top:2.75rem;
+}
+.profile-points{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:13px;
+}
+.profile-points li{
+  display:flex;
+  align-items:flex-start;
+  gap:13px;
+  font-size:16px;
+  color:var(--ink-mid);
+  line-height:1.6;
+}
+.profile-points li::before{
+  content:'';
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  background:var(--sage);
+  flex-shrink:0;
+  margin-top:2px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='5 12 10 17 19 7'/%3E%3C/svg%3E");
+  background-size:60% 60%;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.profile-preview{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:1.75rem;
+  box-shadow:0 16px 48px rgba(26,24,21,0.10);
+}
+.profile-preview-header{
+  font-size:11px;
+  font-weight:700;
+  color:var(--ink-soft);
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  margin-bottom:1.2rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.preview-bar{margin-bottom:13px}
+.preview-bar:last-child{margin-bottom:0}
+.preview-bar-label{display:flex;justify-content:space-between;margin-bottom:5px}
+.preview-bar-label span:first-child{font-size:13px;font-weight:600;color:var(--ink)}
+.preview-bar-label span:last-child{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600}
+.preview-bar-track{height:7px;background:var(--parchment-dark);border-radius:99px;overflow:hidden}
+.preview-bar-fill{height:100%;border-radius:99px}
+.superpower-tag{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  background:var(--gold-light);
+  color:#7a5d18;
+  padding:11px 14px;
+  border-radius:11px;
+  font-size:13px;
+  font-weight:600;
+  margin-top:1.1rem;
+}
+.gap-tag{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  background:var(--sage-light);
+  color:var(--sage-dark);
+  padding:11px 14px;
+  border-radius:11px;
+  font-size:13px;
+  font-weight:600;
+  margin-top:8px;
+}
 
-@media(max-width:500px){.level-grid{grid-template-columns:1fr}.sk-name{width:110px;font-size:11px}}
+/* CLOSING */
+.closing{
+  background:var(--ink);
+  padding:110px 6%;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.closing::before{
+  content:'';
+  position:absolute;
+  bottom:-200px;
+  left:-100px;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(184,69,31,0.16) 0%,transparent 65%);
+  pointer-events:none;
+}
+.closing-inner{max-width:720px;margin:0 auto;position:relative;z-index:1}
+.closing h2{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-style:italic;
+  font-size:clamp(28px,4vw,52px);
+  color:var(--white);
+  line-height:1.15;
+  margin-bottom:1.5rem;
+  letter-spacing:-0.02em;
+}
+.closing p{
+  font-size:18px;
+  color:rgba(248,244,236,0.65);
+  line-height:1.75;
+  margin-bottom:2.75rem;
+}
+.closing-note{
+  font-size:13px;
+  color:rgba(248,244,236,0.4);
+  margin-top:1rem;
+  font-weight:500;
+}
+
+/* FOOTER */
+footer{
+  background:var(--ink);
+  padding:36px 6%;
+  border-top:1px solid rgba(248,244,236,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:14px;
+}
+.footer-brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  text-decoration:none;
+}
+.footer-mark{width:24px;height:24px}
+.footer-text{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:15px;
+  color:rgba(248,244,236,0.75);
+}
+.footer-text em{color:var(--rust-light);font-style:italic}
+footer p{font-size:12px;color:rgba(248,244,236,0.4)}
+footer p em{color:rgba(248,244,236,0.55);font-style:italic}
+footer nav-links{display:flex;gap:1.4rem}
+.footer-links{
+  display:flex;
+  gap:1.4rem;
+  list-style:none;
+}
+.footer-links a{
+  font-size:13px;
+  color:rgba(248,244,236,0.55);
+  text-decoration:none;
+  transition:color 0.18s;
+}
+.footer-links a:hover{color:rgba(248,244,236,0.9)}
+
+/* FADE-IN */
+.fade-in{opacity:0;transform:translateY(18px);transition:opacity 0.55s ease,transform 0.55s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:760px){
+  .two-col,.bloom-card,.profile-grid{grid-template-columns:1fr;gap:2rem}
+  .bloom-card{padding:2rem}
+  .sigma-display{font-size:96px}
+  nav ul{gap:0.85rem}
+  nav ul li:not(:last-child){display:none}
+  .hero{padding:130px 6% 80px}
+  .crisis{padding:70px 6%}
+  .insight,.science,.levels-section,.solution{padding:75px 6%}
+  .closing{padding:80px 6%}
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">Read<span>Wise</span></a>
-  <div class="nav-right">
-    <span id="navBadge" class="nav-badge"></span>
-  </div>
+  <a href="/" class="nav-logo" aria-label="Burrow home">
+    <svg class="nav-logo-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#1A1815"/>
+      <path d="M22 11 C21 11, 20.5 13, 20.5 16 L20.5 24 C20.5 26, 21 27, 22 27 C23 27, 23.5 26, 23.5 24 L23.5 16 C23.5 13, 23 11, 22 11 Z" fill="#B8451F"/>
+      <g transform="rotate(12 42 14)">
+        <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#1A1815"/>
+        <path d="M42 11 C41 11, 40.5 13, 40.5 16 L40.5 24 C40.5 26, 41 27, 42 27 C43 27, 43.5 26, 43.5 24 L43.5 16 C43.5 13, 43 11, 42 11 Z" fill="#B8451F"/>
+      </g>
+      <ellipse cx="32" cy="42" rx="17" ry="16" fill="#1A1815"/>
+      <circle cx="26" cy="40" r="1.6" fill="#F8F4EC"/>
+      <circle cx="38" cy="40" r="1.6" fill="#F8F4EC"/>
+      <ellipse cx="32" cy="46" rx="1.4" ry="1" fill="#B8451F"/>
+      <path d="M30 48 Q32 50 34 48" stroke="#F8F4EC" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span class="nav-logo-text">Bur<em>row</em></span>
+  </a>
+  <ul>
+    <li><a href="/about">About</a></li>
+    <li><a href="/dashboard">Dashboard</a></li>
+    <li><a href="/app" class="nav-cta">Try free →</a></li>
+  </ul>
 </nav>
 
-<div class="app" id="app"></div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><circle cx="12" cy="16" r="0.6" fill="currentColor"/></svg>
+      Why Burrow exists
+    </div>
+    <h1>Your child can do the math.<br/>But are they <em>thinking</em>?</h1>
+    <p class="hero-lead">There's a difference between getting the right answer and reasoning through a problem. Most apps drill computation. Burrow diagnoses how your child actually thinks — and shows you exactly where their reasoning breaks down.</p>
+    <a href="/app" class="hero-cta">
+      Start the free diagnostic
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <p class="hero-meta">Free · No signup · Takes 8 minutes · Ages 5–12</p>
+  </div>
+</section>
+
+<!-- CRISIS -->
+<section class="crisis">
+  <div class="crisis-inner">
+    <div class="crisis-eyebrow">The Australian math problem</div>
+    <h2>One in three Australian children isn't meeting numeracy standards. The decline is a generation deep.</h2>
+    <p class="crisis-lead">This isn't a new problem. It's a slow one — twenty years of falling international rankings, a curriculum that prizes computation over reasoning, and millions of children growing up convinced they're "not a maths person."</p>
+    <div class="crisis-stats">
+      <div class="crisis-stat fade-in">
+        <div class="crisis-stat-num">1 in 3</div>
+        <div class="crisis-stat-label">Australian students fail to meet numeracy standards on NAPLAN — that's roughly 450,000 children right now</div>
+      </div>
+      <div class="crisis-stat fade-in">
+        <div class="crisis-stat-num">16 mo</div>
+        <div class="crisis-stat-label">15-year-olds in 2022 are scoring at the level expected of 14-year-olds twenty years earlier (OECD)</div>
+      </div>
+      <div class="crisis-stat fade-in">
+        <div class="crisis-stat-num">37 pts</div>
+        <div class="crisis-stat-label">Drop in Australian PISA maths scores since 2000 — one of the steepest declines in the OECD</div>
+      </div>
+      <div class="crisis-stat fade-in">
+        <div class="crisis-stat-num">Age 9</div>
+        <div class="crisis-stat-label">The age at which many children start telling themselves they're "bad at maths" — and stop trying</div>
+      </div>
+    </div>
+    <div class="crisis-quote fade-in">
+      <p>"15-year-olds in 2022 scored at a level that would have been expected of 14-year-olds, twenty years earlier. There is a pattern of improvement in maths performance in comparable countries that just isn't replicated in Australia."</p>
+      <cite>— OECD PISA Report 2022 / Dr Sue Thomson, Australian Council for Educational Research</cite>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHT -->
+<section class="insight">
+  <div class="insight-inner">
+    <div class="eyebrow fade-in">The misunderstood problem</div>
+    <h2 class="section-title fade-in">Most apps test whether children got the answer. None of them test how they got there.</h2>
+    <p class="section-sub fade-in">This is the distinction that changes everything — and the one nearly every maths app has wrong.</p>
+    <div class="two-col">
+      <div class="prose fade-in">
+        <p>For two decades, Australian maths education has obsessed over <strong>computation</strong>. Times tables. Vertical addition. Long division. The mechanical skills.</p>
+        <p>Computation matters. It's the foundation. But it's not maths.</p>
+        <p><strong>Maths is reasoning.</strong> It's noticing a pattern. It's choosing the right operation when the problem doesn't tell you which one. It's working out that if a shirt was reduced 30% to $42, the original price wasn't $54.60 — and being able to explain why.</p>
+        <p>A child can be a perfect calculator and a poor mathematical thinker at the same time. They get every arithmetic question right and freeze the moment a problem becomes multi-step or word-based. <strong>This describes millions of Australian children</strong> — children whose parents believe they're doing well because the worksheets come back ticked.</p>
+        <p>Schools test reasoning. Schools rarely have time to teach it individually. No app has built a serious diagnostic for it. Until Burrow.</p>
+      </div>
+      <div class="fade-in">
+        <div class="callout" style="margin-bottom:14px">
+          <div class="callout-label">What most maths apps teach</div>
+          <div class="callout-text">Drill, drill, drill. Speed. Stars and badges for getting answers right. Essential mechanical skills — but only half the picture.</div>
+        </div>
+        <div class="callout dark" style="margin-bottom:14px">
+          <div class="callout-label">What Burrow teaches</div>
+          <div class="callout-text">How to <strong>reason</strong> through problems. Choose the right approach. Recognise patterns. Solve unfamiliar problems. Explain your thinking. The skills schools actually test.</div>
+        </div>
+        <div class="callout">
+          <div class="callout-label">The gap Burrow closes</div>
+          <div class="callout-text">In a typical classroom, the children who can't reason mathematically are usually the same children who can solve the worksheets. The gap stays invisible — until it doesn't. Burrow finds it now, in 8 minutes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCIENCE -->
+<section class="science">
+  <div class="science-inner">
+    <div class="eyebrow fade-in">The science behind Burrow</div>
+    <h2 class="section-title fade-in">Forty years of research pointed to the same answer. We finally built it.</h2>
+    <p class="section-sub fade-in">Burrow isn't an opinion. Every part of how it works is grounded in peer-reviewed educational research stretching back to Benjamin Bloom's landmark 1984 study.</p>
+    <div class="bloom-card fade-in">
+      <div class="bloom-visual">
+        <div class="sigma-display">2σ</div>
+        <div class="sigma-label">Standard deviations better<br/>The tutored student advantage<br/><em style="font-style:italic">Bloom, 1984</em></div>
+      </div>
+      <div class="bloom-text">
+        <h3>Bloom's 2 Sigma Problem — and why AI finally solves it</h3>
+        <p>In 1984, educational psychologist Benjamin Bloom published one of the most important findings in education history: <strong>the average student with a personal tutor performed two standard deviations better than classroom-taught peers.</strong></p>
+        <p>That means the average tutored student outperformed 98% of classroom students. Bloom called it "an educational contribution of the greatest magnitude" — if we could scale it.</p>
+        <p>The problem was always cost. One-to-one tutoring costs $60–$100 per hour. Out of reach for most families. So for forty years, the finding sat as an open challenge.</p>
+        <p><strong>A 2024 randomised controlled study found that AI tutoring produced learning gains more than twice as large as traditional classroom instruction — in less time.</strong> Bloom's challenge, after four decades, is finally being solved at scale. Burrow is built on exactly this science.</p>
+      </div>
+    </div>
+    <div class="science-points">
+      <div class="science-point fade-in">
+        <h4>Diagnostic-first</h4>
+        <p>Burrow doesn't just quiz — it diagnoses. Every session traces the reasoning behind each answer to find the root cause, not just the symptom.</p>
+      </div>
+      <div class="science-point fade-in">
+        <h4>Six skills, not one</h4>
+        <p>Maths isn't a single skill. Burrow tracks six: number sense, word problems, pattern logic, geometry, fractions, and mental fluency.</p>
+      </div>
+      <div class="science-point fade-in">
+        <h4>Mastery, not speed</h4>
+        <p>Bloom's mastery learning — ensuring genuine understanding before progression — remains the most evidence-backed approach in education.</p>
+      </div>
+      <div class="science-point fade-in">
+        <h4>You're at a level, not an age</h4>
+        <p>A nine-year-old confident with fractions belongs at Stretching, not where their school year says they belong. Burrow respects that.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEVELS -->
+<section class="levels-section">
+  <div class="levels-inner">
+    <div class="eyebrow fade-in">Four levels, no ages</div>
+    <h2 class="section-title fade-in">You're at a level. Not in a grade. Not stuck in an age bracket.</h2>
+    <p class="section-sub fade-in">Children develop unevenly. A bright six-year-old might be ready for Building. A nervous ten-year-old might want to start at Foundations to build confidence. <strong>Both are exactly right.</strong></p>
+    <div class="levels-grid">
+      <div class="lv-card fade-in">
+        <div class="lv-num">LEVEL 01</div>
+        <div class="lv-name">Foundations</div>
+        <div class="lv-desc">Counting, simple addition and subtraction, halves, basic shapes.</div>
+      </div>
+      <div class="lv-card fade-in">
+        <div class="lv-num">LEVEL 02</div>
+        <div class="lv-name">Building</div>
+        <div class="lv-desc">Times tables, simple word problems, basic fractions, perimeter.</div>
+      </div>
+      <div class="lv-card fade-in">
+        <div class="lv-num">LEVEL 03</div>
+        <div class="lv-name">Stretching</div>
+        <div class="lv-desc">Multi-step problems, area, decimals, equivalent fractions, patterns.</div>
+      </div>
+      <div class="lv-card fade-in">
+        <div class="lv-num">LEVEL 04</div>
+        <div class="lv-name">Advanced</div>
+        <div class="lv-desc">Algebra, ratios, percentages, abstract reasoning, multi-step proof.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE / SOLUTION -->
+<section class="solution">
+  <div class="solution-inner">
+    <div class="eyebrow fade-in">What you receive</div>
+    <h2 class="section-title fade-in">After one session — a complete map of how your child reasons.</h2>
+    <div class="profile-grid">
+      <div>
+        <p style="font-size:17px;color:var(--ink-mid);line-height:1.7;margin-bottom:1.75rem" class="fade-in">Not a score out of ten. A precise picture — exactly which kinds of mathematical thinking your child has mastered, exactly where the reasoning breaks down, and the single most important thing to focus on next.</p>
+        <ul class="profile-points fade-in">
+          <li>Scores across all six reasoning skills</li>
+          <li>Their <strong>math superpower</strong> — what they do naturally well</li>
+          <li>The <strong>single most important gap</strong> to focus on next</li>
+          <li>A guided level recommendation — stay, level up, or consolidate</li>
+          <li>Personal encouragement written directly to your child</li>
+          <li>Progress tracked session by session, over time</li>
+        </ul>
+      </div>
+      <div class="profile-preview fade-in">
+        <div class="profile-preview-header">
+          <span>Sample profile</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11px;color:var(--ink-faint)">MIA · STRETCHING</span>
+        </div>
+        <div class="preview-bar">
+          <div class="preview-bar-label"><span>Number Sense</span><span style="color:#2E4530">88%</span></div>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:88%;background:#5A7A5C"></div></div>
+        </div>
+        <div class="preview-bar">
+          <div class="preview-bar-label"><span>Word Problems</span><span style="color:#7A5D18">52%</span></div>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:52%;background:#C99A2D"></div></div>
+        </div>
+        <div class="preview-bar">
+          <div class="preview-bar-label"><span>Pattern &amp; Logic</span><span style="color:#2E4530">81%</span></div>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:81%;background:#5A7A5C"></div></div>
+        </div>
+        <div class="preview-bar">
+          <div class="preview-bar-label"><span>Geometry &amp; Measurement</span><span style="color:#7A5D18">64%</span></div>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:64%;background:#C99A2D"></div></div>
+        </div>
+        <div class="preview-bar">
+          <div class="preview-bar-label"><span>Fractions &amp; Decimals</span><span style="color:#8E3215">34%</span></div>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:34%;background:#B8451F"></div></div>
+        </div>
+        <div class="preview-bar">
+          <div class="preview-bar-label"><span>Mental Math</span><span style="color:#2E4530">76%</span></div>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:76%;background:#5A7A5C"></div></div>
+        </div>
+        <div class="superpower-tag">⚡ Superpower — Strong number sense and pattern recognition</div>
+        <div class="gap-tag">→ Next focus — Fractions: connecting parts to wholes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="closing-inner">
+    <h2>"Maths anxiety isn't a personality. It's a story children tell themselves — usually because no one ever showed them how they actually think."</h2>
+    <p>Burrow takes 8 minutes. It's free for your first sessions. And in less time than it takes to drive to a tutor's house, it tells you more about how your child actually reasons than a year of school reports.</p>
+    <a href="/app" class="hero-cta">
+      Start the free diagnostic
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <p class="closing-note">Free · No signup · Ages 5–12</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="/" class="footer-brand">
+    <svg class="footer-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#F8F4EC"/>
+      <g transform="rotate(12 42 14)">
+        <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#F8F4EC"/>
+      </g>
+      <ellipse cx="32" cy="42" rx="17" ry="16" fill="#F8F4EC"/>
+    </svg>
+    <span class="footer-text">Bur<em>row</em></span>
+  </a>
+  <ul class="footer-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/app">Try free</a></li>
+    <li><a href="/dashboard">Dashboard</a></li>
+  </ul>
+  <p>© 2026 <em>Burrow</em>, by White Rabbit Data Service.</p>
+</footer>
 
 <script>
-const API="/api/tutor";
-
-const LEVELS={
-  emergent:{label:"Emergent Reader",ages:"5–6",icon:"🌱",desc:"Simple sentences, picture book style"},
-  early:{label:"Early Reader",ages:"7–8",icon:"📗",desc:"Short paragraphs, familiar topics"},
-  developing:{label:"Developing Reader",ages:"9–10",icon:"📘",desc:"Richer text, inferential questions"},
-  fluent:{label:"Fluent Reader",ages:"11–12",icon:"📚",desc:"Complex ideas, critical evaluation"}
-};
-
-const PASSAGES={
-  emergent:{
-    title:"The Little Cloud",
-    text:"Sam the cloud lived high up in the sky. He was small and white and very fluffy. One day Sam saw some children playing in a park below. They looked very hot. Sam felt sad for them. He blew and blew until he made a cool, gentle rain. The children laughed and held out their hands to catch the drops. Sam smiled. Making others happy made him happy too.",
-    questions:[
-      {id:1,text:"Where did Sam the cloud live?",skill:"Literal Recall",guide:"In the sky / high up in the sky",hints:["Look back at the very first sentence.","The story says Sam lived up very high somewhere.","The first sentence says Sam lived high up in the sky."]},
-      {id:2,text:"Why did Sam feel sad?",skill:"Inference",guide:"He saw the children were hot and felt sorry for them",hints:["What did Sam see happening down below?","The children looked very hot. How might Sam have felt seeing that?","Sam saw children who looked very hot. He felt sad because he wanted to help them cool down."]},
-      {id:3,text:"What does 'gentle' mean when the story says 'a cool, gentle rain'?",skill:"Vocabulary",guide:"Soft / light / not hard or heavy",hints:["Think about what the children did — they laughed and caught drops. Does that sound like soft rain or a storm?","Gentle is the opposite of rough or hard.","Gentle means soft and light — not too strong."]},
-      {id:4,text:"What made Sam happy at the end?",skill:"Main Idea",guide:"Making others happy / helping the children",hints:["Read the very last sentence again.","What had Sam just done before he smiled?","The last line says making others happy made him happy too."]},
-      {id:5,text:"Do you think Sam is a kind cloud? Give one reason for your answer.",skill:"Critical Thinking",guide:"Any answer with a clear reason",hints:["Think about what Sam chose to do when he saw the children.","Did Sam have to help them? What does that tell us?","Sam saw a problem and chose to help without being asked. What does that show about his character?"]}
-    ]
-  },
-  early:{
-    title:"The Last Biscuit",
-    text:"Maya and her brother Leo were sitting at the kitchen table. There was one biscuit left on the plate. They both reached for it at exactly the same time. 'I saw it first,' said Leo. 'I was here first,' said Maya. Their mother walked in and saw their faces — both grumpy, both stubborn. She picked up the biscuit, broke it in half, and gave a piece to each of them. Maya looked at her half. It was still warm. Actually, it tasted better this way. She glanced at Leo. He was smiling too.",
-    questions:[
-      {id:1,text:"What were Maya and Leo arguing about?",skill:"Literal Recall",guide:"The last biscuit on the plate",hints:["Read the first three sentences again.","There was something left on the plate...","They were arguing about the last biscuit."]},
-      {id:2,text:"How did their mother know they were arguing without being told?",skill:"Inference",guide:"She could see from their faces / their expressions told her",hints:["What does the story say the mother saw when she walked in?","The story describes their faces. What were they like?","Their mother saw their faces — both grumpy and stubborn. She could tell just from looking at them."]},
-      {id:3,text:"What does 'stubborn' mean in this story?",skill:"Vocabulary",guide:"Refusing to give in / not willing to change their mind",hints:["Both children refused to give up their claim. What describes someone who won't back down?","Stubborn means you stick to what you want even when others disagree.","Stubborn means refusing to give in — both children were determined to get the biscuit."]},
-      {id:4,text:"Why do you think the biscuit tasted better after it was shared?",skill:"Inference",guide:"Sharing ended the argument / they felt better without the tension",hints:["What changed after they each got a piece?","Before sharing, how were they both feeling?","Before the share, they were grumpy. After, they were smiling. Sometimes how we feel changes how things taste."]},
-      {id:5,text:"What is the main lesson in this story?",skill:"Main Idea",guide:"Sharing is better than arguing / compromise leads to happiness",hints:["Think about what happened at the start compared to the end.","Were they happier before or after the biscuit was split?","The story shows that sharing — even something small — can make everyone happier than fighting over it."]}
-    ]
-  },
-  developing:{
-    title:"The Bridge Builder",
-    text:"In a small valley between two mountains lived two villages that had never spoken to each other. A river ran between them, too wide and too wild to cross. One autumn, a young girl named Petra decided this was ridiculous. She gathered stones, one by one, from the riverbed, day after day, until her hands were raw. The villagers on both sides watched but said nothing. Then, one morning, an old man from the eastern village waded in beside her without a word. Then two women from the west. Then children. By winter, the bridge was done. Nobody could remember who started it. Everyone remembered finishing it together.",
-    questions:[
-      {id:1,text:"Why had the two villages never spoken to each other?",skill:"Literal Recall",guide:"A river too wide and wild to cross separated them",hints:["What physical barrier is described?","The story describes something between the two villages.","A wild river ran between them that was too wide to cross."]},
-      {id:2,text:"Why does the author say Petra found the situation 'ridiculous'?",skill:"Inference",guide:"She thought it was silly they had never tried — the materials were right there",hints:["Think about what Petra used to build the bridge — where did the stones come from?","If the stones were already in the river, what does that suggest about solving the problem earlier?","Petra realised the materials were always there. Nobody had simply tried — which she found absurd."]},
-      {id:3,text:"What does 'her hands were raw' tell us about her effort?",skill:"Vocabulary",guide:"She worked so hard her hands were sore — shows extreme effort",hints:["What happens to your hands if you carry heavy stones for many days?","Raw skin is usually painful. What does this show about how hard she worked?","Raw hands means sore, worn skin. The author uses this detail to show just how much effort Petra put in alone."]},
-      {id:4,text:"Why do you think the others eventually joined in without being asked?",skill:"Inference",guide:"Inspired by her example / felt ashamed / saw it was possible",hints:["What did the villagers do while Petra worked alone?","The story says they 'watched but said nothing.' What might they have been feeling?","They watched her persist alone. Eventually her example inspired them — she showed them it was possible."]},
-      {id:5,text:"What is the deeper message of this story beyond just building a bridge?",skill:"Critical Thinking",guide:"One person's action can inspire others / division can be overcome / initiative matters",hints:["The bridge is real — but what else might it represent?","Think about the two villages. What changes between them besides the river?","The bridge connects the villages physically, but the real message is about what happens between people when someone is brave enough to act first."]}
-    ]
-  },
-  fluent:{
-    title:"The Algorithm That Chose",
-    text:"In 2031, every Year 7 student in the country was assigned a career pathway by an AI system called ARIA. The system analysed grades, social patterns, family income, and even facial micro-expressions during interviews. Proponents called it 'objective.' Critics called it a sentence. Mia's result: Agricultural Technician. She had wanted to be a surgeon. Her teacher, Ms. Okafor, read the report and set it face-down on her desk. 'ARIA has a 94% accuracy rate for life satisfaction at age 40,' she said quietly. 'But it has never been wrong in a way it could see.' Mia stared at her. 'What does that mean?' Ms. Okafor picked up the report and handed it back. 'It means the question isn't whether ARIA is right. It's whether being right is the only thing that matters.'",
-    questions:[
-      {id:1,text:"What data did ARIA use to assign career pathways?",skill:"Literal Recall",guide:"Grades, social patterns, family income, facial micro-expressions",hints:["The story lists the data types in one sentence.","Look for the sentence beginning 'The system analysed...'","ARIA analysed grades, social patterns, family income, and facial micro-expressions."]},
-      {id:2,text:"What does Ms. Okafor mean by 'ARIA has never been wrong in a way it could see'?",skill:"Inference",guide:"ARIA can only measure what it was designed to — things it can't see (passion, dignity, meaning) don't register as errors",hints:["Think about what ARIA measures versus what it cannot measure.","94% satisfaction sounds good — but whose definition of satisfaction? What might be missing?","ARIA might be statistically accurate for what it measures, but cannot measure personal meaning, freedom, or the value of pursuing a dream. It would never know it was wrong about those."]},
-      {id:3,text:"What is the difference between something being 'objective' and being 'just'?",skill:"Vocabulary",guide:"Objective means based on data without bias; just means morally fair — the story shows these aren't the same",hints:["Proponents said 'objective.' Critics said 'a sentence.' What's the difference in those views?","Can something be accurate but still unfair?","Objective means free from personal bias — but just means morally right. ARIA may process data neutrally yet still produce unfair outcomes."]},
-      {id:4,text:"Why do you think the author made Mia want to be a surgeon specifically?",skill:"Critical Thinking",guide:"Surgery requires empathy, human judgment, touch — things ARIA cannot assess. Makes the contrast stark.",hints:["What does a surgeon do that requires more than data?","If Mia had wanted to be a data analyst, would the story feel as powerful?","Surgery requires empathy and life-or-death human judgment — precisely what ARIA cannot assess. The contrast is intentional."]},
-      {id:5,text:"Do you agree that 'being right isn't the only thing that matters'? Argue your position with at least one reason.",skill:"Critical Thinking",guide:"Any well-reasoned position — agree: human dignity matters beyond data; disagree: better outcomes justify intervention",hints:["What things in life matter that cannot be measured by data?","Consider the other side: if ARIA genuinely makes people happier, is there a case for it?","Ms. Okafor suggests accuracy alone doesn't justify removing human choice. But someone could argue better outcomes serve the greater good. What do you think?"]}
-    ]
-  }
-};
-
-let S={
-  screen:'welcome',name:'',age:8,level:null,passage:null,
-  chat:[],messages:[],qIndex:0,hintLevel:0,loading:false,loadingMsg:'',
-  skills:freshSkills(),result:null,error:''
-};
-
-function freshSkills(){return{'Literal Recall':{score:0,attempts:0},'Vocabulary':{score:0,attempts:0},'Inference':{score:0,attempts:0},'Main Idea':{score:0,attempts:0},'Critical Thinking':{score:0,attempts:0}};}
-
-function set(u){S={...S,...u};render();}
-
-async function callAI(messages,system){
-  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system,messages})});
-  if(!r.ok){const err=await r.text();throw new Error(`Status ${r.status}: ${err}`);}
-  const d=await r.json();
-  if(d.error)throw new Error(d.error.message||'API error');
-  return d.content.map(b=>b.text||'').join('');
-}
-
-function tutorSystem(){
-  const q=S.passage.questions[S.qIndex];
-  const isLastQ=S.qIndex>=S.passage.questions.length-1;
-  return `You are ReadWise, a warm encouraging reading tutor for ${S.name}, age ${S.age}.
-
-QUESTION ASKED: "${q.text}"
-WHAT A CORRECT ANSWER LOOKS LIKE: ${q.guide}
-HINTS USED: ${S.hintLevel}
-THIS IS THE LAST QUESTION: ${isLastQ}
-
-CRITICAL RULES — READ CAREFULLY:
-1. Be VERY GENEROUS when marking correct. If the child shows they understood the key idea — even in simple words — that is CORRECT. Do not demand perfect wording.
-2. If answer shows understanding of the key concept → celebrate specifically WHY it is right, then write [NEXT] at the end.
-3. If answer is clearly wrong or way off → warmly diagnose why (wrong vocab? missed inference?) and ask ONE gentle follow-up question. Never say "wrong" or "incorrect".
-4. If child has attempted 2+ times or used hints → accept a partial answer, praise what they got right, gently add what was missing, then write [NEXT].
-5. If this is the last question AND answer is acceptable → end with [DONE] instead of [NEXT].
-6. Keep response to 2-3 sentences MAX.
-7. Language for age ${S.age}: ${S.age<=7?'very simple, warm, playful — like a kind teacher':S.age<=9?'friendly and clear — like a supportive tutor':S.age<=11?'encouraging and conversational':'thoughtful and intellectually engaged'}
-8. NEVER be picky about exact wording. The goal is comprehension, not recitation.
-9. Examples of what to accept: "the sky" = correct for "high up in the sky". "she helped them" = correct for "she wanted to help". "nice/kind" = correct for character analysis.`;
-}
-
-function diagnosisSystem(){
-  return `Generate a reading profile for ${S.name}, age ${S.age}.
-Passage: "${S.passage.title}"
-Skills: ${JSON.stringify(S.skills)}
-
-Return ONLY valid JSON (no markdown):
-{"levels":[{"name":"Literal Recall","score":0-100,"observation":"1-2 sentences specific to this child"},{"name":"Vocabulary","score":0-100,"observation":"..."},{"name":"Inference","score":0-100,"observation":"..."},{"name":"Main Idea","score":0-100,"observation":"..."},{"name":"Critical Thinking","score":0-100,"observation":"..."}],"superpower":"5-7 words: strongest skill","rootGap":"One sentence: most important thing to develop next","encouragement":"3 warm sentences direct to ${S.name} — personal and specific"}`;
-}
-
-function handleStart(){
-  if(!S.name.trim()){set({error:'Please enter your name first!'});return;}
-  const suggested=S.age<=6?'emergent':S.age<=8?'early':S.age<=10?'developing':'fluent';
-  set({error:'',level:suggested,screen:'level'});
-}
-
-function startSession(){
-  if(!S.level)return;
-  set({screen:'passage',passage:PASSAGES[S.level]});
-}
-
-async function beginTutoring(){
-  const q=S.passage.questions[0];
-  const opening=`Hi ${S.name}! I've read "${S.passage.title}" with you. Let's talk about it!\n\n**${q.text}**`;
-  set({
-    screen:'tutor',
-    chat:[{r:'t',text:opening,type:'q'}],
-    messages:[{role:'user',content:'Child is ready. Ask the first question warmly.'},{role:'assistant',content:opening}],
-    qIndex:0,hintLevel:0,skills:freshSkills(),result:null,loading:false
-  });
-}
-
-async function sendAnswer(answer){
-  if(!answer.trim()||S.loading)return;
-  const newChat=[...S.chat,{r:'c',text:answer}];
-  const newMsgs=[...S.messages,{role:'user',content:answer}];
-  set({chat:newChat,messages:newMsgs,loading:true});
-  showTyping();
-  try{
-    const resp=await callAI(newMsgs,tutorSystem());
-    const isDone=resp.includes('[DONE]');
-    const isNext=resp.includes('[NEXT]');
-    const clean=resp.replace('[NEXT]','').replace('[DONE]','').trim();
-    const updChat=[...newChat,{r:'t',text:clean,type:isNext?'correct':'feedback'}];
-    const updMsgs=[...newMsgs,{role:'assistant',content:clean}];
-    const updSkills={...S.skills};
-    const q=S.passage.questions[S.qIndex];
-    if(q.skill in updSkills){
-      if(isNext){const pen=S.hintLevel*15;const sc=Math.max(40,100-pen);updSkills[q.skill]={score:updSkills[q.skill].attempts===0?sc:Math.round((updSkills[q.skill].score+sc)/2),attempts:updSkills[q.skill].attempts+1};}
-      else{updSkills[q.skill]={score:Math.max(10,updSkills[q.skill].score-15),attempts:updSkills[q.skill].attempts+1};}
-    }
-    if(isDone||(isNext&&S.qIndex>=S.passage.questions.length-1)){
-      set({chat:updChat,messages:updMsgs,skills:updSkills,loading:true,screen:'loading',loadingMsg:`Building ${S.name}'s reading profile...`});
-      await generateResult(updMsgs,updSkills);
-    } else if(isNext){
-      const ni=S.qIndex+1;const nq=S.passage.questions[ni];
-      const trans=`**Question ${ni+1} of ${S.passage.questions.length}:**\n${nq.text}`;
-      set({chat:[...updChat,{r:'t',text:trans,type:'q'}],messages:[...updMsgs,{role:'assistant',content:trans}],qIndex:ni,hintLevel:0,skills:updSkills,loading:false});
-    } else{
-      set({chat:updChat,messages:updMsgs,skills:updSkills,loading:false});
-    }
-  }catch(e){
-    const errMsg=`Sorry, I had a connection problem. Error: ${e.message}. Please try again.`;
-    set({chat:[...newChat,{r:'t',text:errMsg,type:'error'}],messages:newMsgs,loading:false});
-  }
-}
-
-async function generateResult(msgs,skills){
-  try{
-    const raw=await callAI(msgs,diagnosisSystem());
-    const result=JSON.parse(raw.replace(/```json\n?|```\n?/g,'').trim());
-    const sessions=JSON.parse(localStorage.getItem('rw_sessions')||'[]');
-    sessions.push({name:S.name,age:S.age,level:S.level,storyTitle:S.passage.title,date:new Date().toLocaleDateString('en-AU',{day:'numeric',month:'short'}),levels:result.levels,superpower:result.superpower,rootGap:result.rootGap});
-    localStorage.setItem('rw_sessions',JSON.stringify(sessions));
-    set({screen:'results',result,loading:false});
-  }catch(e){
-    const levels=Object.entries(skills).map(([name,d])=>({name,score:d.attempts>0?d.score:60,observation:d.attempts>0?`${S.name} worked through this skill.`:'Not assessed this session.'}));
-    set({screen:'results',result:{levels,superpower:'Dedicated and thoughtful reader',rootGap:'Continue reading varied texts to build all comprehension skills.',encouragement:`Well done, ${S.name}! You completed your reading session today. Every story makes you a stronger reader. Keep going!`},loading:false});
-  }
-}
-
-function useHint(){
-  const q=S.passage.questions[S.qIndex];
-  const hi=Math.min(S.hintLevel,2);
-  const labels=['💡 Gentle nudge','🔍 Here\'s a clue','📖 Let me guide you'];
-  const msg=`${labels[hi]}: ${q.hints[hi]}`;
-  set({chat:[...S.chat,{r:'t',text:msg,type:'hint'}],hintLevel:S.hintLevel+1});
-}
-
-function showTyping(){
-  const win=document.getElementById('cw');
-  if(!win)return;
-  const el=document.createElement('div');
-  el.id='typing';el.className='msg t';
-  el.innerHTML=`<div class="m-av ta">🦉</div><div class="typing-wrap"><div class="td"></div><div class="td"></div><div class="td"></div></div>`;
-  win.appendChild(el);win.scrollTop=win.scrollHeight;
-}
-
-function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>').replace(/\n/g,'<br>');}
-
-function colFor(s){return s>=70?{f:'#1D9E75',t:'#085041'}:s>=45?{f:'#EF9F27',t:'#633806'}:{f:'#D85A30',t:'#993C1D'};}
-
-function render(){
-  const app=document.getElementById('app');
-  const badge=document.getElementById('navBadge');
-  if(S.level&&LEVELS[S.level]){badge.textContent=`${LEVELS[S.level].icon} ${LEVELS[S.level].label}`;badge.style.display='inline';}else{badge.style.display='none';}
-
-  if(S.screen==='welcome'){
-    app.innerHTML=`<div class="screen">
-<div class="welcome-hero"><span class="welcome-emoji">📖</span><h1>Your Personal Reading Tutor</h1><p>A story made just for you, a real conversation about it, and a complete picture of your reading superpowers.</p></div>
-<div class="card">
-  <label class="field-label">What's your name?</label>
-  <input class="text-input" id="ni" type="text" placeholder="Type your name..." value="${S.name}" maxlength="30" autocomplete="off"/>
-  <div class="gap"></div>
-  <label class="field-label">How old are you?</label>
-  <div class="age-row">${[5,6,7,8,9,10,11,12].map(a=>`<button class="age-btn ${S.age===a?'sel':''}" onclick="set({age:${a}})">${a}</button>`).join('')}</div>
-  ${S.error?`<div class="error-box">${S.error}</div>`:''}
-  <div class="gap"></div>
-  <button class="btn-main" onclick="handleStart()">Let's go! →</button>
-</div></div>`;
-    const i=document.getElementById('ni');
-    i.addEventListener('input',e=>{S.name=e.target.value;});
-    i.addEventListener('keydown',e=>{if(e.key==='Enter')handleStart();});
-    i.focus();
-  }
-
-  else if(S.screen==='level'){
-    app.innerHTML=`<div class="screen">
-<div class="welcome-hero" style="padding-top:1rem"><span class="welcome-emoji">🎯</span><h1>Choose your level!</h1><p>We've suggested one based on your age — but you can change it.</p></div>
-<div class="level-grid">${Object.entries(LEVELS).map(([k,lv])=>`<div class="level-card ${S.level===k?'sel':''}" onclick="set({level:'${k}'})"><div class="lc-icon">${lv.icon}</div><div class="lc-name">${lv.label}</div><div class="lc-desc">Ages ${lv.ages} · ${lv.desc}</div></div>`).join('')}</div>
-<button class="btn-main" onclick="startSession()">Start my story →</button></div>`;
-  }
-
-  else if(S.screen==='passage'){
-    const lv=LEVELS[S.level];
-    const fs=S.age<=7?'20px':S.age<=9?'17px':'16px';
-    const lh=S.age<=7?'2.1':'1.9';
-    app.innerHTML=`<div class="screen">
-<div class="passage-meta"><span class="badge b-teal">${lv.icon} ${lv.label}</span><span class="badge b-amber">📝 ${S.passage.questions.length} questions</span></div>
-<h2 class="passage-title">${S.passage.title}</h2>
-<div class="passage-card"><p class="passage-text" style="font-size:${fs};line-height:${lh}">${S.passage.text}</p></div>
-<div class="passage-tip"><span>💡</span><span>Read carefully! Your tutor will ask you ${S.passage.questions.length} questions. You can come back to re-read any time.</span></div>
-<button class="btn-forest" onclick="beginTutoring()">I'm ready — let's go! →</button></div>`;
-  }
-
-  else if(S.screen==='tutor'){
-    const q=S.passage.questions[S.qIndex];
-    const pct=Math.round((S.qIndex/S.passage.questions.length)*100);
-    const chatHTML=S.chat.map(m=>{
-      if(m.r==='t')return`<div class="msg t"><div class="m-av ta">🦉</div><div class="bubble">${fmt(m.text)}</div></div>`;
-      return`<div class="msg c"><div class="m-av ca">⭐</div><div class="bubble">${fmt(m.text)}</div></div>`;
-    }).join('');
-    const skillsHTML=Object.entries(S.skills).filter(([,d])=>d.attempts>0).map(([name,d])=>{
-      const col=colFor(d.score);
-      return`<div class="sk-row"><span class="sk-name">${name}</span><div class="sk-track"><div class="sk-fill" style="width:${d.score}%;background:${col.f}"></div></div><span class="sk-score" style="color:${col.t}">${d.score}%</span></div>`;
-    }).join('');
-
-    app.innerHTML=`<div class="screen">
-<div class="tutor-header">
-  <div class="tutor-left"><div class="tutor-av">🦉</div><div><div class="tutor-name">ReadWise Tutor</div><div class="tutor-status">${S.loading?'Thinking...':'Ready'}</div></div></div>
-  <button class="reread-btn" onclick="set({screen:'passage'})">← Re-read</button>
-</div>
-<div class="progress-row"><span>Question ${S.qIndex+1} of ${S.passage.questions.length}</span><span class="badge b-teal" style="font-size:11px">${q.skill}</span></div>
-<div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
-<div class="chat-win" id="cw">${chatHTML}</div>
-<div class="input-wrap">
-  <textarea class="chat-in" id="ci" placeholder="Write your answer here..." rows="1" ${S.loading?'disabled':''}></textarea>
-  <button class="send-btn" onclick="doSend()" ${S.loading?'disabled':''}>→</button>
-</div>
-<div class="action-row">
-  ${S.hintLevel<3&&!S.loading?`<button class="action-btn" onclick="useHint()">💡 Hint (${3-S.hintLevel} left)</button>`:''}
-</div>
-${skillsHTML?`<div class="skill-map"><div class="sm-title">Your understanding map</div>${skillsHTML}</div>`:''}
-</div>`;
-    const cw=document.getElementById('cw');if(cw)cw.scrollTop=cw.scrollHeight;
-    const ci=document.getElementById('ci');
-    if(ci){
-      ci.addEventListener('input',()=>{ci.style.height='auto';ci.style.height=ci.scrollHeight+'px';});
-      ci.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();}});
-      if(!S.loading)ci.focus();
-    }
-  }
-
-  else if(S.screen==='loading'){
-    app.innerHTML=`<div class="loading"><div class="l-icon">✨</div><h2>${S.loadingMsg||'One moment...'}</h2><p>Just a moment, ${S.name}!</p><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
-  }
-
-  else if(S.screen==='results'){
-    const d=S.result;
-    const bars=d.levels.map(lv=>{const col=colFor(lv.score);return`<div class="rb-row"><div class="rb-meta"><span class="rb-name">${lv.name}</span><span class="rb-score" style="color:${col.t}">${lv.score}%</span></div><div class="rb-track"><div class="rb-fill" style="width:${lv.score}%;background:${col.f}"></div></div><div class="rb-obs">${lv.observation}</div></div>`;}).join('');
-    app.innerHTML=`<div class="screen">
-<div class="r-hero"><span class="r-icon">🌟</span><h2>${S.name}'s Reading Profile</h2><p>From "${S.passage.title}"</p></div>
-<div class="sp-card"><div class="sp-icon">⚡</div><div><div class="sp-label">Reading Superpower</div><div class="sp-text">${d.superpower}</div></div></div>
-<div class="r-card"><div class="r-card-title">Comprehension Map</div>${bars}</div>
-<div class="gap-card"><div class="gap-lbl">→ Next Focus</div><div class="gap-txt">${d.rootGap}</div></div>
-<div class="enc-card"><p>"${d.encouragement}"</p></div>
-<div class="r-btns">
-  <button class="btn-again" onclick="tryAnother()">Try another story →</button>
-  <button class="btn-ghost" onclick="goHome()">Start over</button>
-</div></div>`;
-  }
-}
-
-function doSend(){const ci=document.getElementById('ci');if(!ci)return;const v=ci.value.trim();if(!v||S.loading)return;ci.value='';ci.style.height='auto';sendAnswer(v);}
-function tryAnother(){set({screen:'level',passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});}
-function goHome(){set({screen:'welcome',level:null,passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});}
-
-const saved=localStorage.getItem('rw_child');
-if(saved){try{const c=JSON.parse(saved);S.name=c.name||'';S.age=c.age||8;}catch{}}
-render();
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
