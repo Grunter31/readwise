@@ -3,170 +3,660 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ReadWise — Your Personal Reading Tutor</title>
+<title>Burrow — Your Personal Math Tutor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500;9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --cream:#FAF7F2;--cream-dark:#F0EBE1;
-  --forest:#1A5C3A;--forest-mid:#2A7A50;--forest-light:#D6EDE0;--forest-xlight:#EDF7F2;
-  --amber:#D97706;--amber-light:#FEF3C7;
-  --ink:#1C1C1C;--ink-mid:#4A4A4A;--ink-soft:#7A7A7A;
-  --white:#FFFFFF;--border:rgba(28,28,28,0.09);
-  --teal:#1D9E75;--teal-dark:#0F6E56;
-  --orange:#EF9F27;--red:#D85A30;
-  --purple:#7C3AED;--purple-light:#EDE9FE;
+  --parchment:#F8F4EC;
+  --parchment-dark:#EFE9DC;
+  --parchment-deep:#E5DCC8;
+  --ink:#1A1815;
+  --ink-mid:#3F3B34;
+  --ink-soft:#76706A;
+  --ink-faint:#A39E96;
+  --rust:#B8451F;
+  --rust-dark:#8E3215;
+  --rust-light:#F4D9CC;
+  --rust-xlight:#FBEDE5;
+  --sage:#5A7A5C;
+  --sage-dark:#3E5A40;
+  --sage-light:#D6E2D2;
+  --sage-xlight:#EAF1E6;
+  --gold:#C99A2D;
+  --gold-light:#F4E5BA;
+  --rose:#9C5466;
+  --white:#FFFFFF;
+  --border:rgba(26,24,21,0.10);
+  --border-strong:rgba(26,24,21,0.18);
+  --shadow-sm:0 1px 2px rgba(26,24,21,0.06);
+  --shadow:0 4px 18px rgba(26,24,21,0.08);
+  --shadow-lg:0 12px 36px rgba(26,24,21,0.12);
 }
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
-nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100}
-.nav-logo{font-family:'Baloo 2',cursive;font-weight:800;font-size:22px;color:var(--forest);text-decoration:none}
-.nav-logo span{color:var(--ink)}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-badge{background:var(--forest-light);color:var(--forest);padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;display:none}
-.app{max-width:680px;margin:0 auto;padding:1.5rem 1rem 5rem}
-.screen{animation:fadeUp 0.35s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--parchment);
+  color:var(--ink);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  font-feature-settings:"ss01","cv11";
+}
+
+/* NAV */
+nav{
+  background:rgba(248,244,236,0.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  padding:0 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:62px;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.nav-logo-mark{width:30px;height:30px;flex-shrink:0}
+.nav-logo-text{font-family:'Fraunces',serif;font-weight:700;font-size:21px;letter-spacing:-0.01em}
+.nav-logo-text em{font-style:italic;font-weight:600;color:var(--rust)}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-link{font-size:14px;color:var(--ink-soft);text-decoration:none;font-weight:500;transition:color 0.18s}
+.nav-link:hover{color:var(--ink)}
+.nav-badge{
+  background:var(--sage-light);
+  color:var(--sage-dark);
+  padding:5px 12px;
+  border-radius:99px;
+  font-size:12px;
+  font-weight:600;
+  display:none;
+  letter-spacing:0.01em;
+}
+
+.app{max-width:680px;margin:0 auto;padding:1.75rem 1.25rem 5rem}
+.screen{animation:fadeUp 0.4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
 /* WELCOME */
-.welcome-hero{text-align:center;padding:1.5rem 0 1.25rem}
-.welcome-emoji{font-size:52px;display:block;margin-bottom:0.75rem}
-.welcome-hero h1{font-family:'Baloo 2',cursive;font-weight:800;font-size:clamp(24px,5vw,34px);color:var(--ink);margin-bottom:0.4rem;line-height:1.2}
-.welcome-hero p{font-size:16px;color:var(--ink-mid);max-width:420px;margin:0 auto;line-height:1.65}
-.card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:1.5rem;margin-bottom:1rem}
-.field-label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:7px}
-.text-input{width:100%;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:17px;border:1.5px solid var(--border);border-radius:11px;background:var(--cream);color:var(--ink);outline:none;transition:border-color 0.2s}
-.text-input:focus{border-color:var(--teal);background:var(--white)}
-.age-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px}
-.age-btn{padding:8px 15px;border-radius:9px;border:1.5px solid var(--border);background:var(--cream);color:var(--ink-mid);font-family:'Baloo 2',cursive;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.14s}
-.age-btn:hover{border-color:var(--teal);color:var(--teal)}
-.age-btn.sel{background:var(--teal);color:var(--white);border-color:var(--teal)}
-.gap{height:16px}
-.btn-main{width:100%;padding:15px;background:var(--teal);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(29,158,117,0.26)}
-.btn-main:hover{background:var(--teal-dark);transform:translateY(-1px)}
-.btn-main:active{transform:scale(0.98)}
+.welcome-hero{text-align:center;padding:1.25rem 0 1.5rem}
+.welcome-mark{width:72px;height:72px;margin:0 auto 1rem}
+.welcome-hero h1{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(28px,5.5vw,40px);
+  color:var(--ink);
+  margin-bottom:0.6rem;
+  line-height:1.1;
+  letter-spacing:-0.02em;
+}
+.welcome-hero h1 em{font-style:italic;font-weight:600;color:var(--rust)}
+.welcome-hero p{font-size:16px;color:var(--ink-mid);max-width:430px;margin:0 auto;line-height:1.65}
+
+.card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:1.75rem;
+  margin-bottom:1rem;
+  box-shadow:var(--shadow-sm);
+}
+.field-label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  color:var(--ink-soft);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:8px;
+}
+.text-input{
+  width:100%;
+  padding:13px 16px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:17px;
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  background:var(--parchment);
+  color:var(--ink);
+  outline:none;
+  transition:border-color 0.18s,background 0.18s;
+}
+.text-input:focus{border-color:var(--rust);background:var(--white)}
+.gap{height:18px}
+.btn-main{
+  width:100%;
+  padding:15px;
+  background:var(--rust);
+  color:var(--white);
+  border:none;
+  border-radius:13px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;
+  font-size:16px;
+  cursor:pointer;
+  transition:all 0.16s;
+  box-shadow:0 4px 18px rgba(184,69,31,0.24);
+  letter-spacing:-0.005em;
+}
+.btn-main:hover{background:var(--rust-dark);transform:translateY(-1px);box-shadow:0 8px 22px rgba(184,69,31,0.3)}
+.btn-main:active{transform:scale(0.99)}
 .btn-main:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-.error-box{background:#FAECE7;border-radius:9px;padding:9px 13px;color:#993C1D;font-size:14px;margin-top:9px}
+.error-box{
+  background:var(--rust-xlight);
+  border:1px solid var(--rust-light);
+  border-radius:10px;
+  padding:10px 14px;
+  color:var(--rust-dark);
+  font-size:14px;
+  margin-top:10px;
+}
 
 /* LEVEL CARDS */
-.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:1rem}
-.level-card{background:var(--white);border:2px solid var(--border);border-radius:15px;padding:1.1rem;cursor:pointer;transition:all 0.18s;text-align:left}
-.level-card:hover{border-color:var(--teal);transform:translateY(-2px)}
-.level-card.sel{border-color:var(--teal);background:var(--forest-xlight)}
-.lc-icon{font-size:26px;margin-bottom:7px}
-.lc-name{font-family:'Baloo 2',cursive;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:2px}
-.lc-desc{font-size:12px;color:var(--ink-soft);line-height:1.45}
+.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem}
+.level-card{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:15px;
+  padding:1.2rem 1.1rem;
+  cursor:pointer;
+  transition:all 0.18s;
+  text-align:left;
+  position:relative;
+}
+.level-card:hover{border-color:var(--rust);transform:translateY(-2px);box-shadow:var(--shadow)}
+.level-card.sel{border-color:var(--rust);background:var(--rust-xlight)}
+.level-card.sel::after{
+  content:'';
+  position:absolute;
+  top:11px;
+  right:11px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:var(--rust);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='5 12 10 17 19 7'/%3E%3C/svg%3E");
+  background-size:60% 60%;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+.lc-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:600;
+  color:var(--ink-faint);
+  letter-spacing:0.08em;
+  margin-bottom:6px;
+}
+.lc-name{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:17px;
+  color:var(--ink);
+  margin-bottom:4px;
+  line-height:1.2;
+  letter-spacing:-0.01em;
+}
+.lc-desc{font-size:13px;color:var(--ink-soft);line-height:1.5}
 
-/* PASSAGE */
-.passage-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:99px;font-size:12px;font-weight:700}
-.b-teal{background:var(--forest-light);color:var(--forest)}
-.b-amber{background:var(--amber-light);color:var(--amber)}
-.passage-title{font-family:'Baloo 2',cursive;font-weight:800;font-size:22px;color:var(--ink);line-height:1.2;margin-bottom:1rem}
-.passage-card{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--teal);border-radius:15px;padding:1.5rem;margin-bottom:1rem}
-.passage-text{color:var(--ink)}
-.passage-tip{background:var(--amber-light);border-radius:11px;padding:0.85rem 1rem;margin-bottom:1rem;font-size:14px;color:#633806;display:flex;gap:9px}
-.btn-forest{width:100%;padding:15px;background:var(--forest);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:17px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(26,92,58,0.22)}
-.btn-forest:hover{background:var(--forest-mid);transform:translateY(-1px)}
+/* PROBLEM SCREEN */
+.problem-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:5px 12px;
+  border-radius:99px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.01em;
+}
+.b-rust{background:var(--rust-light);color:var(--rust-dark)}
+.b-sage{background:var(--sage-light);color:var(--sage-dark)}
+.b-gold{background:var(--gold-light);color:#7a5d18}
+.problem-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-left:3px solid var(--rust);
+  border-radius:14px;
+  padding:1.75rem 1.75rem;
+  margin-bottom:1rem;
+  box-shadow:var(--shadow-sm);
+}
+.problem-skill-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:600;
+  color:var(--ink-faint);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.problem-text{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:21px;
+  color:var(--ink);
+  line-height:1.4;
+  letter-spacing:-0.005em;
+}
+.problem-text .katex{font-size:1.1em}
 
 /* TUTOR */
-.tutor-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.9rem}
-.tutor-left{display:flex;align-items:center;gap:9px}
-.tutor-av{width:38px;height:38px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.tutor-name{font-size:14px;font-weight:700;color:var(--ink)}
-.tutor-status{font-size:12px;color:var(--teal);font-weight:500}
-.progress-row{display:flex;justify-content:space-between;margin-bottom:5px;font-size:13px;color:var(--ink-soft)}
-.prog-track{height:5px;background:var(--cream-dark);border-radius:99px;overflow:hidden;margin-bottom:1rem}
-.prog-fill{height:100%;border-radius:99px;background:var(--teal);transition:width 0.4s ease}
-.chat-win{display:flex;flex-direction:column;gap:11px;margin-bottom:1rem;min-height:100px;max-height:400px;overflow-y:auto;scroll-behavior:smooth}
-.msg{display:flex;gap:9px;align-items:flex-start;animation:msgIn 0.28s ease}
-@keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.tutor-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.tutor-left{display:flex;align-items:center;gap:11px}
+.tutor-av{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--ink);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  padding:5px;
+}
+.tutor-av svg{width:100%;height:100%}
+.tutor-name{font-size:14px;font-weight:700;color:var(--ink);font-family:'Fraunces',serif;letter-spacing:-0.005em}
+.tutor-status{font-size:12px;color:var(--sage);font-weight:600}
+.tutor-status.thinking{color:var(--rust)}
+.progress-row{display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:var(--ink-soft);font-weight:500}
+.prog-track{
+  height:5px;
+  background:var(--parchment-dark);
+  border-radius:99px;
+  overflow:hidden;
+  margin-bottom:1.25rem;
+}
+.prog-fill{
+  height:100%;
+  border-radius:99px;
+  background:linear-gradient(to right,var(--rust),var(--gold));
+  transition:width 0.5s ease;
+}
+
+.chat-win{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-bottom:1rem;
+  min-height:80px;
+  max-height:380px;
+  overflow-y:auto;
+  scroll-behavior:smooth;
+  padding-right:4px;
+}
+.chat-win::-webkit-scrollbar{width:6px}
+.chat-win::-webkit-scrollbar-thumb{background:var(--parchment-deep);border-radius:99px}
+
+.msg{display:flex;gap:10px;align-items:flex-start;animation:msgIn 0.3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .msg.t{flex-direction:row}
 .msg.c{flex-direction:row-reverse}
-.m-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
-.m-av.ta{background:var(--forest);color:var(--white)}
-.m-av.ca{background:var(--amber-light);color:var(--amber)}
-.bubble{max-width:84%;padding:9px 13px;border-radius:13px;font-size:15px;line-height:1.58}
-.msg.t .bubble{background:var(--white);border:1px solid var(--border);border-radius:3px 13px 13px 13px;color:var(--ink)}
-.msg.c .bubble{background:var(--teal);color:var(--white);border-radius:13px 3px 13px 13px}
-.typing-wrap{background:var(--white);border:1px solid var(--border);border-radius:3px 13px 13px 13px;padding:9px 13px;display:flex;gap:5px;align-items:center;width:56px}
-.td{width:7px;height:7px;border-radius:50%;background:var(--ink-soft);animation:tb 1.2s infinite}
-.td:nth-child(2){animation-delay:0.2s}
-.td:nth-child(3){animation-delay:0.4s}
-@keyframes tb{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.15)}}
-.input-wrap{background:var(--white);border:1.5px solid var(--border);border-radius:15px;padding:10px;display:flex;gap:9px;align-items:flex-end}
-.chat-in{flex:1;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);background:transparent;resize:none;min-height:22px;max-height:110px;line-height:1.5}
-.chat-in::placeholder{color:var(--ink-soft)}
-.send-btn{width:38px;height:38px;border-radius:50%;background:var(--teal);color:var(--white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.14s;font-size:15px}
-.send-btn:hover{background:var(--teal-dark);transform:scale(1.06)}
-.send-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-.action-row{display:flex;gap:7px;margin-top:7px;flex-wrap:wrap}
-.action-btn{padding:5px 13px;border-radius:99px;border:1px solid var(--border);background:var(--cream);font-size:12px;color:var(--ink-mid);cursor:pointer;transition:all 0.14s;font-family:'DM Sans',sans-serif}
-.action-btn:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-light)}
-.reread-btn{padding:5px 13px;border-radius:99px;border:1px solid var(--border);background:var(--cream);font-size:12px;color:var(--ink-mid);cursor:pointer;transition:all 0.14s;font-family:'DM Sans',sans-serif}
-.reread-btn:hover{border-color:var(--forest);color:var(--forest)}
+.m-av{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:4px;
+}
+.m-av.ta{background:var(--ink)}
+.m-av.ta svg{width:100%;height:100%}
+.m-av.ca{background:var(--gold-light);color:var(--gold);font-weight:700;font-size:14px}
+.bubble{
+  max-width:84%;
+  padding:11px 15px;
+  border-radius:13px;
+  font-size:15px;
+  line-height:1.6;
+  letter-spacing:-0.005em;
+}
+.msg.t .bubble{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:3px 14px 14px 14px;
+  color:var(--ink);
+  box-shadow:var(--shadow-sm);
+}
+.msg.c .bubble{
+  background:var(--rust);
+  color:var(--white);
+  border-radius:14px 3px 14px 14px;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:500;
+}
+.msg.c .bubble.long{font-family:'Plus Jakarta Sans',sans-serif;font-weight:500}
+
+.typing-wrap{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:3px 14px 14px 14px;
+  padding:11px 15px;
+  display:flex;
+  gap:5px;
+  align-items:center;
+  width:60px;
+  box-shadow:var(--shadow-sm);
+}
+.td{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--ink-faint);
+  animation:tb 1.2s infinite;
+}
+.td:nth-child(2){animation-delay:0.18s}
+.td:nth-child(3){animation-delay:0.36s}
+@keyframes tb{0%,100%{opacity:0.3;transform:scale(0.85)}50%{opacity:1;transform:scale(1.15)}}
+
+.input-wrap{
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:15px;
+  padding:10px;
+  display:flex;
+  gap:9px;
+  align-items:flex-end;
+  transition:border-color 0.18s;
+}
+.input-wrap:focus-within{border-color:var(--rust)}
+.chat-in{
+  flex:1;
+  border:none;
+  outline:none;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:15px;
+  color:var(--ink);
+  background:transparent;
+  resize:none;
+  min-height:24px;
+  max-height:120px;
+  line-height:1.5;
+  padding:4px 6px;
+}
+.chat-in::placeholder{color:var(--ink-faint)}
+.send-btn{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--rust);
+  color:var(--white);
+  border:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  transition:all 0.16s;
+  font-size:16px;
+  font-weight:700;
+}
+.send-btn:hover{background:var(--rust-dark);transform:scale(1.06)}
+.send-btn:disabled{opacity:0.35;cursor:not-allowed;transform:none}
+
+.action-row{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}
+.action-btn{
+  padding:6px 14px;
+  border-radius:99px;
+  border:1px solid var(--border);
+  background:var(--white);
+  font-size:12px;
+  color:var(--ink-soft);
+  cursor:pointer;
+  transition:all 0.16s;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:500;
+}
+.action-btn:hover{border-color:var(--gold);color:#7a5d18;background:var(--gold-light)}
 
 /* SKILL MAP */
-.skill-map{background:var(--white);border:1px solid var(--border);border-radius:15px;padding:1.1rem;margin-top:1rem}
-.sm-title{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:11px}
-.sk-row{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.skill-map{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:1.25rem;
+  margin-top:1rem;
+  box-shadow:var(--shadow-sm);
+}
+.sm-title{
+  font-size:11px;
+  font-weight:700;
+  color:var(--ink-soft);
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  margin-bottom:14px;
+}
+.sk-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
 .sk-row:last-child{margin-bottom:0}
-.sk-name{font-size:12px;font-weight:600;color:var(--ink);width:140px;flex-shrink:0}
-.sk-track{flex:1;height:6px;background:var(--cream-dark);border-radius:99px;overflow:hidden}
-.sk-fill{height:100%;border-radius:99px;transition:width 0.6s ease}
-.sk-score{font-size:11px;font-weight:700;width:28px;text-align:right;flex-shrink:0}
+.sk-name{font-size:12px;font-weight:600;color:var(--ink);width:155px;flex-shrink:0;letter-spacing:-0.005em}
+.sk-track{flex:1;height:6px;background:var(--parchment-dark);border-radius:99px;overflow:hidden}
+.sk-fill{height:100%;border-radius:99px;transition:width 0.7s ease}
+.sk-score{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  font-weight:600;
+  width:34px;
+  text-align:right;
+  flex-shrink:0;
+}
 
 /* RESULTS */
 .r-hero{text-align:center;padding:1.25rem 0 0.75rem}
-.r-icon{font-size:52px;display:block;margin-bottom:0.6rem}
-.r-hero h2{font-family:'Baloo 2',cursive;font-weight:800;font-size:26px;color:var(--ink);margin-bottom:3px}
+.r-mark{width:64px;height:64px;margin:0 auto 0.75rem}
+.r-hero h2{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:28px;
+  color:var(--ink);
+  margin-bottom:4px;
+  letter-spacing:-0.02em;
+}
 .r-hero p{font-size:14px;color:var(--ink-soft)}
-.sp-card{background:var(--amber-light);border-radius:15px;padding:1.1rem 1.4rem;margin-bottom:0.9rem;display:flex;align-items:center;gap:12px}
-.sp-icon{font-size:26px;flex-shrink:0}
-.sp-label{font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:2px}
-.sp-text{font-size:16px;font-weight:700;color:#412402}
-.r-card{background:var(--white);border:1px solid var(--border);border-radius:17px;padding:1.4rem;margin-bottom:0.9rem}
-.r-card-title{font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:1.1rem}
-.rb-row{margin-bottom:13px}
+.sp-card{
+  background:linear-gradient(135deg,var(--gold-light) 0%,#FAF0CD 100%);
+  border-radius:15px;
+  padding:1.2rem 1.5rem;
+  margin-bottom:1rem;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  border:1px solid rgba(201,154,45,0.25);
+}
+.sp-icon{font-size:28px;flex-shrink:0;line-height:1}
+.sp-label{
+  font-size:11px;
+  font-weight:700;
+  color:#7a5d18;
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  margin-bottom:3px;
+}
+.sp-text{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:#3d2e0a;letter-spacing:-0.01em}
+.r-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:1.5rem;
+  margin-bottom:1rem;
+  box-shadow:var(--shadow-sm);
+}
+.r-card-title{
+  font-size:11px;
+  font-weight:700;
+  color:var(--ink-soft);
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  margin-bottom:1.2rem;
+}
+.rb-row{margin-bottom:14px}
 .rb-row:last-child{margin-bottom:0}
-.rb-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.rb-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
 .rb-name{font-size:13px;font-weight:600;color:var(--ink)}
-.rb-score{font-size:12px;font-weight:700}
-.rb-track{height:7px;background:var(--cream-dark);border-radius:99px;overflow:hidden}
-.rb-fill{height:100%;border-radius:99px;transition:width 0.8s ease}
-.rb-obs{font-size:12px;color:var(--ink-soft);line-height:1.5;margin-top:4px}
-.gap-card{background:var(--forest-xlight);border-radius:14px;padding:1.1rem 1.3rem;margin-bottom:0.9rem}
-.gap-lbl{font-size:11px;font-weight:700;color:var(--forest);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
-.gap-txt{font-size:15px;color:#04342C;line-height:1.6;font-weight:500}
-.enc-card{background:var(--white);border:1px solid var(--border);border-radius:17px;padding:1.4rem;margin-bottom:1.4rem}
-.enc-card p{font-size:15px;color:var(--ink-mid);line-height:1.8;font-style:italic}
-.r-btns{display:flex;flex-direction:column;gap:9px}
-.btn-again{width:100%;padding:14px;background:var(--forest);color:var(--white);border:none;border-radius:13px;font-family:'Baloo 2',cursive;font-weight:700;font-size:16px;cursor:pointer;transition:all 0.14s;box-shadow:0 4px 18px rgba(26,92,58,0.2)}
-.btn-again:hover{background:var(--forest-mid);transform:translateY(-1px)}
-.btn-ghost{width:100%;padding:13px;background:transparent;color:var(--ink-mid);border:1.5px solid var(--border);border-radius:13px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;transition:all 0.14s}
-.btn-ghost:hover{background:var(--cream-dark)}
+.rb-score{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600}
+.rb-track{height:8px;background:var(--parchment-dark);border-radius:99px;overflow:hidden}
+.rb-fill{height:100%;border-radius:99px;transition:width 0.9s ease}
+.rb-obs{font-size:13px;color:var(--ink-soft);line-height:1.55;margin-top:5px}
+.gap-card{
+  background:var(--sage-xlight);
+  border:1px solid var(--sage-light);
+  border-radius:14px;
+  padding:1.2rem 1.4rem;
+  margin-bottom:1rem;
+}
+.gap-lbl{
+  font-size:11px;
+  font-weight:700;
+  color:var(--sage-dark);
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  margin-bottom:6px;
+}
+.gap-txt{font-size:15px;color:#1F3320;line-height:1.6;font-weight:500}
+.level-suggest{
+  background:var(--rust-xlight);
+  border:1px solid var(--rust-light);
+  border-radius:14px;
+  padding:1.2rem 1.4rem;
+  margin-bottom:1rem;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.level-suggest-icon{font-size:24px;flex-shrink:0}
+.level-suggest-lbl{
+  font-size:11px;
+  font-weight:700;
+  color:var(--rust-dark);
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+  margin-bottom:3px;
+}
+.level-suggest-text{font-size:14px;color:#3F1810;line-height:1.55;font-weight:500}
+.enc-card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:1.5rem;
+  margin-bottom:1.5rem;
+  box-shadow:var(--shadow-sm);
+}
+.enc-card p{
+  font-family:'Fraunces',serif;
+  font-size:16px;
+  color:var(--ink-mid);
+  line-height:1.75;
+  font-style:italic;
+  font-weight:500;
+}
+.r-btns{display:flex;flex-direction:column;gap:10px}
+.btn-sage{
+  width:100%;
+  padding:14px;
+  background:var(--sage);
+  color:var(--white);
+  border:none;
+  border-radius:13px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+  transition:all 0.16s;
+  box-shadow:0 4px 16px rgba(90,122,92,0.22);
+}
+.btn-sage:hover{background:var(--sage-dark);transform:translateY(-1px)}
+.btn-ghost{
+  width:100%;
+  padding:13px;
+  background:transparent;
+  color:var(--ink-soft);
+  border:1.5px solid var(--border);
+  border-radius:13px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:600;
+  font-size:14px;
+  cursor:pointer;
+  transition:all 0.16s;
+}
+.btn-ghost:hover{background:var(--parchment-dark);color:var(--ink)}
 
 /* LOADING */
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;text-align:center}
-.l-icon{font-size:46px;animation:pulse 1.5s ease-in-out infinite;margin-bottom:0.9rem}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-.loading h2{font-family:'Baloo 2',cursive;font-weight:700;font-size:21px;color:var(--ink);margin-bottom:5px}
+.loading{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:55vh;
+  text-align:center;
+}
+.l-mark{width:80px;height:80px;animation:hop 1.6s ease-in-out infinite;margin-bottom:1rem}
+@keyframes hop{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+.loading h2{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:22px;
+  color:var(--ink);
+  margin-bottom:6px;
+  letter-spacing:-0.01em;
+}
 .loading p{font-size:14px;color:var(--ink-soft)}
-.dots{display:flex;gap:5px;justify-content:center;margin-top:1.2rem}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:bounce 1.2s ease-in-out infinite}
-.dot:nth-child(2){animation-delay:0.2s}
-.dot:nth-child(3){animation-delay:0.4s}
-@keyframes bounce{0%,100%{opacity:0.3;transform:scale(0.8)}50%{opacity:1;transform:scale(1.2)}}
+.dots{display:flex;gap:6px;justify-content:center;margin-top:1.4rem}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--rust);animation:bounce 1.2s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:0.18s}
+.dot:nth-child(3){animation-delay:0.36s}
+@keyframes bounce{0%,100%{opacity:0.3;transform:scale(0.85)}50%{opacity:1;transform:scale(1.15)}}
 
-@media(max-width:500px){.level-grid{grid-template-columns:1fr}.sk-name{width:110px;font-size:11px}}
+@media(max-width:500px){
+  .level-grid{grid-template-columns:1fr}
+  .sk-name{width:118px;font-size:11px}
+  .nav-link.hide-sm{display:none}
+}
+
+/* KaTeX tweaks */
+.katex{font-size:1em}
+.katex-display{margin:0.4em 0}
+.bubble .katex{font-size:1.05em}
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="/" class="nav-logo">Read<span>Wise</span></a>
+  <a href="/" class="nav-logo" aria-label="Burrow home">
+    <svg class="nav-logo-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Left ear -->
+      <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#1A1815"/>
+      <path d="M22 11 C21 11, 20.5 13, 20.5 16 L20.5 24 C20.5 26, 21 27, 22 27 C23 27, 23.5 26, 23.5 24 L23.5 16 C23.5 13, 23 11, 22 11 Z" fill="#B8451F"/>
+      <!-- Right ear (slightly tilted) -->
+      <g transform="rotate(12 42 14)">
+        <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#1A1815"/>
+        <path d="M42 11 C41 11, 40.5 13, 40.5 16 L40.5 24 C40.5 26, 41 27, 42 27 C43 27, 43.5 26, 43.5 24 L43.5 16 C43.5 13, 43 11, 42 11 Z" fill="#B8451F"/>
+      </g>
+      <!-- Head -->
+      <ellipse cx="32" cy="42" rx="17" ry="16" fill="#1A1815"/>
+      <!-- Eyes -->
+      <circle cx="26" cy="40" r="1.6" fill="#F8F4EC"/>
+      <circle cx="38" cy="40" r="1.6" fill="#F8F4EC"/>
+      <!-- Nose -->
+      <ellipse cx="32" cy="46" rx="1.4" ry="1" fill="#B8451F"/>
+      <!-- Mouth -->
+      <path d="M30 48 Q32 50 34 48" stroke="#F8F4EC" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span class="nav-logo-text">Bur<em>row</em></span>
+  </a>
   <div class="nav-right">
+    <a href="/dashboard" class="nav-link hide-sm">Dashboard</a>
     <span id="navBadge" class="nav-badge"></span>
   </div>
 </nav>
@@ -176,425 +666,802 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;d
 <script>
 const API="/api/tutor";
 
+/* Rabbit SVG used in messages */
+const RABBIT_SVG = `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#F8F4EC"/>
+  <path d="M22 11 C21 11, 20.5 13, 20.5 16 L20.5 24 C20.5 26, 21 27, 22 27 C23 27, 23.5 26, 23.5 24 L23.5 16 C23.5 13, 23 11, 22 11 Z" fill="#B8451F"/>
+  <g transform="rotate(12 42 14)">
+    <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#F8F4EC"/>
+    <path d="M42 11 C41 11, 40.5 13, 40.5 16 L40.5 24 C40.5 26, 41 27, 42 27 C43 27, 43.5 26, 43.5 24 L43.5 16 C43.5 13, 43 11, 42 11 Z" fill="#B8451F"/>
+  </g>
+  <ellipse cx="32" cy="42" rx="17" ry="16" fill="#F8F4EC"/>
+  <circle cx="26" cy="40" r="1.6" fill="#1A1815"/>
+  <circle cx="38" cy="40" r="1.6" fill="#1A1815"/>
+  <ellipse cx="32" cy="46" rx="1.4" ry="1" fill="#B8451F"/>
+  <path d="M30 48 Q32 50 34 48" stroke="#1A1815" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+</svg>`;
+
 const LEVELS={
-  emergent:{label:"Emergent Reader",ages:"5–6",icon:"🌱",desc:"Simple sentences, picture book style"},
-  early:{label:"Early Reader",ages:"7–8",icon:"📗",desc:"Short paragraphs, familiar topics"},
-  developing:{label:"Developing Reader",ages:"9–10",icon:"📘",desc:"Richer text, inferential questions"},
-  fluent:{label:"Fluent Reader",ages:"11–12",icon:"📚",desc:"Complex ideas, critical evaluation"}
+  foundations:{label:"Foundations",num:"01",icon:"🌱",desc:"Counting, simple add & subtract, halves, basic shapes"},
+  building:{label:"Building",num:"02",icon:"🧱",desc:"Times tables, simple word problems, basic fractions"},
+  stretching:{label:"Stretching",num:"03",icon:"🌿",desc:"Multi-step problems, area, decimals, patterns"},
+  advanced:{label:"Advanced",num:"04",icon:"⭐",desc:"Algebra, ratios, percentages, abstract reasoning"}
 };
 
-const PASSAGES={
-  emergent:[
-    {
-      title:"The Little Cloud",
-      text:"Sam the cloud lived high up in the sky. He was small and white and very fluffy. One day Sam saw some children playing in a park below. They looked very hot. Sam felt sad for them. He blew and blew until he made a cool, gentle rain. The children laughed and held out their hands to catch the drops. Sam smiled. Making others happy made him happy too.",
-      questions:[
-        {id:1,text:"Where did Sam the cloud live?",skill:"Literal Recall",guide:"In the sky / high up in the sky",hints:["Look back at the very first sentence.","The story says Sam lived up very high somewhere.","The first sentence says Sam lived high up in the sky."]},
-        {id:2,text:"Why did Sam feel sad?",skill:"Inference",guide:"He saw the children were hot and felt sorry for them",hints:["What did Sam see happening down below?","The children looked very hot. How might Sam have felt seeing that?","Sam saw children who looked very hot. He felt sad because he wanted to help them cool down."]},
-        {id:3,text:"What does 'gentle' mean in 'a cool, gentle rain'?",skill:"Vocabulary",guide:"Soft / light / not hard or heavy",hints:["Did the children laugh or run away from the rain?","Gentle is the opposite of rough or hard.","Gentle means soft and light — not too strong."]},
-        {id:4,text:"What made Sam happy at the end?",skill:"Main Idea",guide:"Making others happy / helping the children",hints:["Read the very last sentence again.","What had Sam just done before he smiled?","The last line says making others happy made him happy too."]},
-        {id:5,text:"Do you think Sam is a kind cloud? Give one reason.",skill:"Critical Thinking",guide:"Any answer with a clear reason",hints:["Did Sam have to help the children?","What does helping without being asked tell us about someone?","Sam chose to help without being asked. That shows kindness."]}
-      ]
-    },
-    {
-      title:"The Stuck Jar",
-      text:"Lily wanted some jam. She pulled and pulled at the jar lid but it would not move. She tried using a towel. Still stuck. She tried asking her cat, but the cat just blinked. Finally, Lily asked her grandpa. He smiled, ran the lid under hot water for ten seconds, and twisted it open easily. 'How did you know that?' Lily asked. 'I've been stuck before,' said Grandpa.",
-      questions:[
-        {id:1,text:"What did Lily want to open?",skill:"Literal Recall",guide:"A jar of jam",hints:["Read the very first sentence.","Lily wanted something from a jar.","Lily wanted to open a jar of jam."]},
-        {id:2,text:"Why do you think the cat couldn't help?",skill:"Inference",guide:"Cats can't open jars / animals don't understand the problem",hints:["What do cats usually do when you ask them something?","What did the cat actually do when Lily asked?","Cats don't understand human problems — the cat just blinked!"]},
-        {id:3,text:"What does 'twisted' mean?",skill:"Vocabulary",guide:"Turned / rotated around",hints:["Think about how you open a jar.","Is twisting the same as pulling or pushing?","Twisted means turned around in a circle — like unscrewing something."]},
-        {id:4,text:"What is the main lesson Grandpa is sharing?",skill:"Main Idea",guide:"Experience teaches you things / you learn from being stuck yourself",hints:["What does Grandpa say at the end?","How did Grandpa know the hot water trick?","Grandpa says 'I've been stuck before' — meaning his own experience taught him the answer."]},
-        {id:5,text:"Have you ever figured out how to do something after trying many times? Tell me about it.",skill:"Critical Thinking",guide:"Any personal experience showing persistence",hints:["Think of something that was hard at first.","Did you keep trying or ask someone for help?","Everyone gets stuck sometimes — the important thing is what you do next."]}
-      ]
-    },
-    {
-      title:"The Bravest Jump",
-      text:"It was Mia's first time at the swimming pool. All the other children were jumping off the diving board. Mia stood at the top and looked down. It felt very, very high. Her legs felt wobbly. She took a big breath, closed her eyes, and jumped. The water was cold and bubbly. When she came back up, she was laughing. 'Again!' she shouted.",
-      questions:[
-        {id:1,text:"Where does this story take place?",skill:"Literal Recall",guide:"At a swimming pool",hints:["Read the first sentence.","Where were all the children?","The story happens at a swimming pool."]},
-        {id:2,text:"Why did Mia's legs feel wobbly?",skill:"Inference",guide:"She was scared / nervous / it looked high",hints:["Have you ever felt wobbly legs? When?","What was Mia looking at when her legs felt wobbly?","When people are nervous or scared, their legs can feel shaky. Mia was scared because it looked so high."]},
-        {id:3,text:"What does 'wobbly' mean?",skill:"Vocabulary",guide:"Shaky / unsteady / not firm",hints:["Think about a wobbly table — what does it do?","Wobbly is the opposite of steady and still.","Wobbly means shaky and unsteady — Mia's legs were trembling with nerves."]},
-        {id:4,text:"How did Mia feel at the end compared to the beginning?",skill:"Main Idea",guide:"At the start she was scared, at the end she was happy and excited / wanted to go again",hints:["What was Mia feeling at the top of the board?","What did she shout after she jumped?","She went from nervous and wobbly to laughing and wanting to go again."]},
-        {id:5,text:"Was it brave of Mia to jump? Why?",skill:"Critical Thinking",guide:"Yes — she was scared but did it anyway / bravery means doing something even when you're scared",hints:["Did Mia want to jump right away?","Can you be brave if you're not scared at all?","Bravery isn't about not being scared — it's about doing something even when you are scared."]}
-      ]
-    }
+const SKILLS = ['Number Sense','Word Problems','Pattern & Logic','Geometry & Measurement','Fractions & Decimals','Mental Math'];
+
+/* PROBLEM BANK
+   Each problem: id, skill, prompt (LaTeX in $ delimiters), answer (canonical),
+   acceptable (array of accepted forms — strings, lowercased on compare),
+   guide, hints (3 levels), method (clean working shown after correct) */
+
+const PROBLEMS = {
+  foundations: [
+    // Number Sense
+    {id:'f-ns-1',skill:'Number Sense',prompt:'There are $7$ birds on a fence. $3$ fly away. How many birds are left?',answer:'4',acceptable:['4','four'],guide:'7 take away 3 equals 4',hints:['When something flies away, do we add or take away?','We start at 7. Count down 3: 6, 5, 4...','Take 3 away from 7. The answer is 4.'],method:'$7 - 3 = 4$'},
+    {id:'f-ns-2',skill:'Number Sense',prompt:'What number comes right after $19$?',answer:'20',acceptable:['20','twenty'],guide:'20 — the next number after 19',hints:['Count up from 19. What comes next?','19, then... what?','19 plus 1 more is 20.'],method:'$19 + 1 = 20$'},
+
+    // Word Problems
+    {id:'f-wp-1',skill:'Word Problems',prompt:'Mia has $4$ apples. Tom gives her $3$ more. How many apples does Mia have now?',answer:'7',acceptable:['7','seven'],guide:'4 + 3 = 7',hints:['Mia is GETTING more apples. Do we add or take away?','Start with 4. Add 3 more. What do you get?','4 + 3 = 7 apples.'],method:'$4 + 3 = 7$'},
+    {id:'f-wp-2',skill:'Word Problems',prompt:'There are $5$ ducks in a pond. $2$ swim away. How many ducks are left?',answer:'3',acceptable:['3','three'],guide:'5 - 2 = 3',hints:['Ducks are leaving — do we add or subtract?','5 minus 2. Count down: 4, 3.','5 take away 2 leaves 3 ducks.'],method:'$5 - 2 = 3$'},
+
+    // Pattern & Logic
+    {id:'f-pl-1',skill:'Pattern & Logic',prompt:'What number comes next? $2,\\ 4,\\ 6,\\ 8,\\ \\_\\_$',answer:'10',acceptable:['10','ten'],guide:'10 — counting up by 2s',hints:['Look at the gap between each number.','Each one is 2 more than the last. 8 + 2 = ?','The pattern is +2 each time. After 8 comes 10.'],method:'Pattern is $+2$. So $8 + 2 = 10$.'},
+    {id:'f-pl-2',skill:'Pattern & Logic',prompt:'I have $3$ red blocks and $2$ blue blocks. How many blocks in total?',answer:'5',acceptable:['5','five'],guide:'3 + 2 = 5',hints:['"In total" means all of them together.','Add the red and blue blocks: 3 + 2.','3 + 2 = 5 blocks altogether.'],method:'$3 + 2 = 5$'},
+
+    // Geometry & Measurement
+    {id:'f-gm-1',skill:'Geometry & Measurement',prompt:'How many sides does a triangle have?',answer:'3',acceptable:['3','three'],guide:'3 sides',hints:['The word "tri" gives you a clue. (Like in tricycle!)','Picture a triangle in your mind. Count its straight edges.','A triangle has 3 sides.'],method:'A triangle has $3$ sides — that\'s why "tri" means three.'},
+    {id:'f-gm-2',skill:'Geometry & Measurement',prompt:'Which is longer — a pencil or a school bus?',answer:'school bus',acceptable:['school bus','bus','a school bus','the school bus','schoolbus'],guide:'A school bus',hints:['Think about how big each one is in real life.','Could a school bus fit in your hand? Could a pencil?','A school bus is much, much longer than a pencil!'],method:'A school bus is many metres long. A pencil is only about 18 cm.'},
+
+    // Fractions & Decimals
+    {id:'f-fd-1',skill:'Fractions & Decimals',prompt:'A pizza is cut into $2$ equal pieces. You eat $1$ piece. How much of the pizza did you eat?',answer:'half',acceptable:['half','1/2','one half','½','a half','one out of two'],guide:'Half / one half / 1/2',hints:['When you split something into 2 equal parts and take 1, what is that called?','It\'s the same as splitting an apple in two and eating one part.','You ate half — written as $\\frac{1}{2}$.'],method:'$1$ piece out of $2$ equal pieces = $\\frac{1}{2}$ (a half).'},
+    {id:'f-fd-2',skill:'Fractions & Decimals',prompt:'What is half of $10$?',answer:'5',acceptable:['5','five'],guide:'Half of 10 is 5',hints:['Half means split into two equal parts.','If you share 10 lollies between 2 people, how many each?','10 split into 2 equal groups = 5.'],method:'$\\frac{10}{2} = 5$'},
+
+    // Mental Math
+    {id:'f-mm-1',skill:'Mental Math',prompt:'Quick — what is $5 + 5$?',answer:'10',acceptable:['10','ten'],guide:'10',hints:['Doubles! 5 and 5.','Hold up two hands — 5 fingers each.','$5 + 5 = 10$.'],method:'$5 + 5 = 10$'},
+    {id:'f-mm-2',skill:'Mental Math',prompt:'Quick — what is $10 - 3$?',answer:'7',acceptable:['7','seven'],guide:'7',hints:['Start at 10 and count down 3.','10... 9, 8, 7.','$10 - 3 = 7$.'],method:'$10 - 3 = 7$'}
   ],
-  early:[
-    {
-      title:"The Last Biscuit",
-      text:"Maya and her brother Leo were sitting at the kitchen table. There was one biscuit left on the plate. They both reached for it at exactly the same time. 'I saw it first,' said Leo. 'I was here first,' said Maya. Their mother walked in and saw their faces — both grumpy, both stubborn. She picked up the biscuit, broke it in half, and gave a piece to each of them. Maya looked at her half. It was still warm. Actually, it tasted better this way. She glanced at Leo. He was smiling too.",
-      questions:[
-        {id:1,text:"What were Maya and Leo arguing about?",skill:"Literal Recall",guide:"The last biscuit on the plate",hints:["Read the first three sentences again.","There was something left on the plate...","They were arguing about the last biscuit."]},
-        {id:2,text:"How did their mother know they were arguing without being told?",skill:"Inference",guide:"She could see from their faces",hints:["What does the story say the mother saw when she walked in?","The story describes their faces. What were they like?","Their mother saw their faces — both grumpy and stubborn. She could tell just from looking at them."]},
-        {id:3,text:"What does 'stubborn' mean?",skill:"Vocabulary",guide:"Refusing to give in / not willing to change their mind",hints:["Both children refused to give up. What describes someone who won't back down?","Stubborn means you stick to what you want even when others disagree.","Stubborn means refusing to give in."]},
-        {id:4,text:"Why do you think the biscuit tasted better after it was shared?",skill:"Inference",guide:"Sharing ended the argument / they felt better without the tension",hints:["What changed after they each got a piece?","Before sharing, how were they both feeling?","Before the share, they were grumpy. After, they were smiling. How we feel can change how things taste."]},
-        {id:5,text:"What is the main lesson in this story?",skill:"Main Idea",guide:"Sharing is better than arguing / compromise leads to happiness",hints:["Think about what happened at the start compared to the end.","Were they happier before or after the biscuit was split?","The story shows that sharing — even something small — makes everyone happier."]}
-      ]
-    },
-    {
-      title:"The New Kid",
-      text:"On Monday, a new boy named Ravi arrived in Ms Chen's class. He sat alone at lunch. Jake noticed but didn't say anything. On Tuesday, Ravi sat alone again. On Wednesday, Jake picked up his tray, walked over, and sat down. 'Is this seat taken?' he asked. Ravi looked surprised. Then he smiled. They talked about football the whole lunch break. On Thursday, three other kids joined them. By Friday, the table was full.",
-      questions:[
-        {id:1,text:"What did Jake notice on Monday?",skill:"Literal Recall",guide:"That Ravi was sitting alone at lunch",hints:["What happened at lunchtime on Monday?","Where was the new boy sitting?","Jake noticed that Ravi was sitting alone at lunch."]},
-        {id:2,text:"Why do you think Jake waited until Wednesday to sit with Ravi?",skill:"Inference",guide:"He was nervous / unsure / needed time to build up courage",hints:["Jake noticed on Monday but didn't do anything. What might have stopped him?","Have you ever wanted to do something kind but felt nervous?","Sometimes it takes courage to approach someone new — Jake may have needed time to feel ready."]},
-        {id:3,text:"What does 'noticed' mean?",skill:"Vocabulary",guide:"Saw / became aware of / paid attention to",hints:["If you notice something, does it mean you just walk past it?","Noticing is more than just seeing — what does it involve?","To notice something means to see it and pay attention to it — Jake saw and registered what was happening."]},
-        {id:4,text:"Why did more kids join the table by Friday?",skill:"Inference",guide:"Jake's action made it okay / others followed his lead",hints:["What happened after Jake sat with Ravi?","Did the other kids join straight away or did it take time?","Jake's action gave others permission to do the same. One kind act created a chain reaction."]},
-        {id:5,text:"What does this story tell us about loneliness and friendship?",skill:"Main Idea",guide:"One small act of kindness can end loneliness / it only takes one person to make a difference",hints:["What changed for Ravi from Monday to Friday?","What was the single thing that started the change?","One person choosing to sit with someone changed everything. The story shows that kindness spreads."]}
-      ]
-    },
-    {
-      title:"The Biggest Wave",
-      text:"Tom and his dad drove to the beach before sunrise. The waves were huge. Tom's dad paddled straight out. Tom sat on the sand and watched. A big wave came. His dad stood up on the board, wobbled, and fell. He came up laughing. He paddled out again. He fell again. And again. After an hour, Tom's dad caught a wave and rode it all the way to shore. Tom ran into the water. 'How many tries did it take?' he shouted. 'Enough,' said his dad, still laughing.",
-      questions:[
-        {id:1,text:"When did Tom and his dad arrive at the beach?",skill:"Literal Recall",guide:"Before sunrise / very early in the morning",hints:["Read the first sentence carefully.","What time of day was it?","They drove to the beach before sunrise — very early in the morning."]},
-        {id:2,text:"What do you think Tom's dad means when he says 'enough'?",skill:"Inference",guide:"As many as it took / the number doesn't matter, what matters is he kept trying",hints:["Did Tom's dad give up after falling?","Is 'enough' a specific number?","'Enough' means as many tries as it takes — the number doesn't matter, what matters is not stopping."]},
-        {id:3,text:"What does 'wobbled' mean?",skill:"Vocabulary",guide:"Lost balance / swayed unsteadily",hints:["Think about standing on something that moves. What might your body do?","Wobbled is similar to the word wobbly.","Wobbled means swayed and lost balance — his dad wasn't steady on the board."]},
-        {id:4,text:"Why did Tom run into the water at the end?",skill:"Inference",guide:"He was excited / proud of his dad / wanted to celebrate",hints:["How do you think Tom felt watching his dad finally succeed?","What does running towards someone usually show?","Tom ran in because he was excited and proud — he wanted to celebrate with his dad."]},
-        {id:5,text:"What lesson does this story teach about trying hard things?",skill:"Main Idea",guide:"Persistence pays off / keep trying even when you fail / failure is part of learning",hints:["How many times did Tom's dad fall before he succeeded?","What would have happened if he gave up after the first fall?","The story shows that failing many times is part of learning — the important thing is to keep trying."]}
-      ]
-    }
+
+  building: [
+    // Number Sense
+    {id:'b-ns-1',skill:'Number Sense',prompt:'$47 + 28 = \\ ?$',answer:'75',acceptable:['75','seventy-five','seventy five'],guide:'75',hints:['Try splitting 28 into 20 + 8.','First do 47 + 20 = 67. Then 67 + 8.','$47 + 20 = 67$, then $67 + 8 = 75$.'],method:'$47 + 28 = 47 + 20 + 8 = 67 + 8 = 75$'},
+    {id:'b-ns-2',skill:'Number Sense',prompt:'$100 - 36 = \\ ?$',answer:'64',acceptable:['64','sixty-four','sixty four'],guide:'64',hints:['You can think: 36 + ? = 100.','From 36 to 40 is 4. From 40 to 100 is 60. Add them.','$36 + 4 = 40$, then $40 + 60 = 100$. So $100 - 36 = 64$.'],method:'$100 - 36 = 64$. Check: $36 + 64 = 100$ ✓'},
+
+    // Word Problems
+    {id:'b-wp-1',skill:'Word Problems',prompt:'A library has $145$ books. $28$ are checked out. How many books are on the shelves?',answer:'117',acceptable:['117','one hundred seventeen','one hundred and seventeen'],guide:'145 - 28 = 117',hints:['Books are being taken away. Do we add or subtract?','Subtract: 145 - 28.','$145 - 28 = 117$ books still on the shelves.'],method:'$145 - 28 = 117$'},
+    {id:'b-wp-2',skill:'Word Problems',prompt:'A baker makes $6$ batches of cookies. Each batch has $8$ cookies. How many cookies in total?',answer:'48',acceptable:['48','forty-eight','forty eight'],guide:'6 × 8 = 48',hints:['"Batches of" usually means multiplication.','6 groups of 8. What is $6 \\times 8$?','$6 \\times 8 = 48$ cookies.'],method:'$6 \\times 8 = 48$'},
+
+    // Pattern & Logic
+    {id:'b-pl-1',skill:'Pattern & Logic',prompt:'Find the next number: $3,\\ 6,\\ 12,\\ 24,\\ \\_\\_$',answer:'48',acceptable:['48','forty-eight','forty eight'],guide:'48 — each number doubles',hints:['Look at how each number relates to the one before.','3 to 6 — what happened? 6 to 12 — same thing?','Each number is doubled. $24 \\times 2 = 48$.'],method:'Pattern: $\\times 2$ each time. $24 \\times 2 = 48$.'},
+    {id:'b-pl-2',skill:'Pattern & Logic',prompt:'I am a number bigger than $20$ but less than $30$. I am even. My two digits add to $10$. What am I?',answer:'28',acceptable:['28','twenty-eight','twenty eight'],guide:'28 — between 20 and 30, even, 2 + 8 = 10',hints:['Even numbers between 20 and 30: 20, 22, 24, 26, 28.','Now check which one\'s digits add to 10.','$2 + 8 = 10$ ✓ — the answer is 28.'],method:'Even numbers $20$–$30$: $20, 22, 24, 26, 28$. Digits add to $10$: only $28$ ($2+8=10$).'},
+
+    // Geometry & Measurement
+    {id:'b-gm-1',skill:'Geometry & Measurement',prompt:'A rectangle is $8$ cm long and $3$ cm wide. What is its perimeter?',answer:'22',acceptable:['22','22 cm','22cm','twenty-two'],guide:'Perimeter = 22 cm (8+3+8+3)',hints:['Perimeter is the distance all the way around.','A rectangle has 4 sides: 2 long ones and 2 short ones.','$8 + 3 + 8 + 3 = 22$ cm.'],method:'Perimeter $= 2 \\times (8 + 3) = 2 \\times 11 = 22$ cm'},
+    {id:'b-gm-2',skill:'Geometry & Measurement',prompt:'How many right angles are inside a square?',answer:'4',acceptable:['4','four'],guide:'4 right angles',hints:['A right angle is a 90° corner — like the corner of a book.','Count the corners of a square.','A square has 4 corners, all right angles.'],method:'A square has $4$ right angles, one at each corner.'},
+
+    // Fractions & Decimals
+    {id:'b-fd-1',skill:'Fractions & Decimals',prompt:'Which is bigger: $\\frac{1}{2}$ or $\\frac{1}{4}$?',answer:'1/2',acceptable:['1/2','½','half','one half','a half','one-half'],guide:'1/2 is bigger than 1/4',hints:['Imagine a pizza. Would you rather have 1 slice from a pizza cut in 2, or in 4?','The bigger the bottom number, the smaller each piece.','$\\frac{1}{2}$ is bigger — fewer pieces means each piece is larger.'],method:'$\\frac{1}{2} = 0.5$ and $\\frac{1}{4} = 0.25$, so $\\frac{1}{2}$ is bigger.'},
+    {id:'b-fd-2',skill:'Fractions & Decimals',prompt:'I have $\\frac{3}{4}$ of a chocolate bar. You have $\\frac{2}{4}$. Who has more?',answer:'i',acceptable:['i','i do','me','you (the speaker)','3/4','three quarters','three-quarters','the first person'],guide:'I do — 3/4 is more than 2/4',hints:['Both fractions have the same bottom number (4). So just compare the tops.','3 pieces vs 2 pieces — which is more?','$\\frac{3}{4} > \\frac{2}{4}$ because 3 > 2.'],method:'When denominators match, just compare numerators: $3 > 2$, so $\\frac{3}{4} > \\frac{2}{4}$.'},
+
+    // Mental Math
+    {id:'b-mm-1',skill:'Mental Math',prompt:'Quick — what is $7 \\times 8$?',answer:'56',acceptable:['56','fifty-six','fifty six'],guide:'56',hints:['Times tables — 7 eights.','Try: $7 \\times 8 = 7 \\times 4 \\times 2 = 28 \\times 2$.','$7 \\times 8 = 56$.'],method:'$7 \\times 8 = 56$'},
+    {id:'b-mm-2',skill:'Mental Math',prompt:'Quick — what is $60 \\div 5$?',answer:'12',acceptable:['12','twelve'],guide:'12',hints:['How many groups of 5 fit in 60?','5 times what equals 60?','$5 \\times 12 = 60$, so $60 \\div 5 = 12$.'],method:'$60 \\div 5 = 12$'}
   ],
-  developing:[
-    {
-      title:"The Bridge Builder",
-      text:"In a small valley between two mountains lived two villages that had never spoken to each other. A river ran between them, too wide and too wild to cross. One autumn, a young girl named Petra decided this was ridiculous. She gathered stones, one by one, from the riverbed, day after day, until her hands were raw. The villagers on both sides watched but said nothing. Then, one morning, an old man from the eastern village waded in beside her without a word. Then two women from the west. Then children. By winter, the bridge was done. Nobody could remember who started it. Everyone remembered finishing it together.",
-      questions:[
-        {id:1,text:"Why had the two villages never spoken to each other?",skill:"Literal Recall",guide:"A river too wide and wild to cross separated them",hints:["What physical barrier is described?","The story describes something between the two villages.","A wild river ran between them that was too wide to cross."]},
-        {id:2,text:"Why does the author say Petra found the situation 'ridiculous'?",skill:"Inference",guide:"The materials to solve the problem were already there — nobody had simply tried",hints:["Think about what Petra used — where did the stones come from?","If the stones were in the river, what does that suggest about solving this earlier?","Petra realised the materials were always there. Nobody had simply tried — which she found absurd."]},
-        {id:3,text:"What does 'her hands were raw' tell us about her effort?",skill:"Vocabulary",guide:"She worked so hard her hands were sore and worn",hints:["What happens to your hands if you carry heavy stones for many days?","Raw skin is painful. What does this show about her dedication?","Raw hands means sore, worn skin from hard work — she worked extremely hard, alone."]},
-        {id:4,text:"Why do you think the others eventually joined in without being asked?",skill:"Inference",guide:"Inspired by her example / felt ashamed they hadn't tried / saw it was possible",hints:["What did the villagers do while Petra worked alone?","They 'watched but said nothing.' What might they have been feeling?","Petra's persistence inspired them — she showed it was possible and perhaps made them feel they should help."]},
-        {id:5,text:"What is the deeper message of this story beyond just building a bridge?",skill:"Critical Thinking",guide:"One person's action can inspire others / division can be overcome / initiative matters more than waiting",hints:["The bridge is real — but what else might it represent?","What changes between the villages besides the river?","The bridge connects them physically, but the real message is that one brave act can end years of division."]}
-      ]
-    },
-    {
-      title:"The Lie That Grew",
-      text:"It started small. When Mrs Park asked who had broken the classroom plant, Omar said nothing. He didn't say 'me.' He just said nothing, and everyone assumed it was someone else. That was on Monday. By Thursday, his friend Dani had been given detention for it. Omar watched Dani sit alone in the classroom at lunch and felt something heavy in his stomach. He picked up his pen and wrote a note: 'It was me. I'm sorry.' He slid it under Mrs Park's door. Detention on Friday was the best he'd felt all week.",
-      questions:[
-        {id:1,text:"How was Omar responsible for breaking the plant?",skill:"Literal Recall",guide:"He broke it and said nothing when asked — his silence let someone else take the blame",hints:["Did Omar say he broke it? Did he say he didn't?","What happened because Omar stayed silent?","Omar said nothing — which let everyone assume it was someone else, even though he had broken it."]},
-        {id:2,text:"What does 'something heavy in his stomach' mean?",skill:"Vocabulary",guide:"Guilt / a bad feeling inside / the weight of knowing he'd done wrong",hints:["Have you ever felt guilty about something? Where did you feel it?","Is this a physical feeling or an emotional one?","This is a metaphor for guilt — the heaviness Omar felt inside from knowing he'd let his friend take the blame."]},
-        {id:3,text:"Why did Omar feel better after getting detention than he had all week?",skill:"Inference",guide:"Telling the truth relieved his guilt / doing the right thing felt better than avoiding consequences",hints:["What had Omar been feeling all week?","What did the note change?","The guilt was worse than the punishment. Telling the truth lifted the weight he'd been carrying."]},
-        {id:4,text:"What made Omar's silence on Monday dishonest, even though he didn't actually lie?",skill:"Critical Thinking",guide:"Silence when you know the truth is being used to deceive — it has the same effect as a lie",hints:["Did Omar say 'it wasn't me'?","If you know the truth and say nothing, what is the result?","Dishonesty isn't only lying — choosing silence when you know someone else will suffer is a form of deception too."]},
-        {id:5,text:"What does this story say about the cost of avoiding the truth?",skill:"Main Idea",guide:"The weight of guilt is often worse than the consequence of honesty / small deceptions grow into bigger problems",hints:["What was Omar's original reason for saying nothing?","Was avoiding trouble worth what happened?","Omar avoided a small punishment but suffered guilt all week. The story shows that honesty, though hard, is lighter to carry than guilt."]}
-      ]
-    },
-    {
-      title:"The Empty Trophy Cabinet",
-      text:"Coach Rivera had never won a championship. Every year the Riverside Hawks made the finals. Every year they lost. The other coaches said she was too focused on development over winning. 'You're teaching them life skills,' one said, as if it were a criticism. Rivera just smiled. Years later, her former players were coaches, teachers, doctors. One became the mayor. They came back every year for a reunion. The trophy cabinet was still empty. But the hall was always full.",
-      questions:[
-        {id:1,text:"What did other coaches criticise Coach Rivera for?",skill:"Literal Recall",guide:"Being too focused on development over winning / teaching life skills instead of winning",hints:["What did the other coaches say about her approach?","Was their criticism about her results or her method?","Other coaches said she focused too much on development and life skills rather than winning."]},
-        {id:2,text:"What does the empty trophy cabinet represent in this story?",skill:"Inference",guide:"Conventional success / the kind of achievement others could see and measure — which Rivera didn't have",hints:["What do trophies usually represent?","The cabinet was empty but the hall was full. What's the contrast saying?","The empty cabinet represents the obvious, visible kind of success — championships. Rivera didn't have that."]},
-        {id:3,text:"What does 'development over winning' mean?",skill:"Vocabulary",guide:"Focusing on how players grow as people rather than just scoring victories",hints:["What might a coach teach besides game strategy?","If you develop a player, what are you building in them?","Development means helping someone grow — in skills, character, resilience. It's the long-term investment rather than short-term wins."]},
-        {id:4,text:"Why did her former players keep coming back every year?",skill:"Inference",guide:"She had a lasting positive impact on their lives / they felt a deep connection and gratitude",hints:["What had her players become? What does that tell you?","Would people travel back every year for someone who hadn't mattered to them?","Her players became successful, meaningful people. They returned because she had shaped who they were, not just how they played."]},
-        {id:5,text:"What is the author arguing about how we measure success?",skill:"Critical Thinking",guide:"Success measured by trophies and titles misses the deeper impact a person can have on others",hints:["What did Coach Rivera have that other coaches didn't, despite fewer trophies?","Is a full hall more or less valuable than a full trophy cabinet?","The story argues that real success is measured in human impact — the people you shape — not in trophies that collect dust."]}
-      ]
-    }
+
+  stretching: [
+    // Number Sense
+    {id:'s-ns-1',skill:'Number Sense',prompt:'$234 \\times 6 = \\ ?$',answer:'1404',acceptable:['1404','1,404','one thousand four hundred and four','one thousand four hundred four'],guide:'1404',hints:['Try splitting 234 into 200 + 30 + 4.','$200 \\times 6 = 1200$. $30 \\times 6 = 180$. $4 \\times 6 = 24$.','$1200 + 180 + 24 = 1404$.'],method:'$234 \\times 6 = (200 + 30 + 4) \\times 6 = 1200 + 180 + 24 = 1404$'},
+    {id:'s-ns-2',skill:'Number Sense',prompt:'What is the value of the digit $7$ in the number $4{,}725$?',answer:'700',acceptable:['700','seven hundred','7 hundreds','7 hundred','hundreds'],guide:'700 (seven hundreds)',hints:['Look at the place each digit sits in: thousands, hundreds, tens, ones.','In 4725: 4 is thousands, 7 is hundreds, 2 is tens, 5 is ones.','The 7 is in the hundreds place, so it stands for 700.'],method:'In $4{,}725$ the digit $7$ sits in the hundreds place, so it represents $700$.'},
+
+    // Word Problems
+    {id:'s-wp-1',skill:'Word Problems',prompt:'A train leaves at $9{:}25$ am and arrives at $11{:}10$ am. How long was the journey (in minutes)?',answer:'105',acceptable:['105','105 minutes','105 mins','1 hour 45 minutes','1h 45m','1:45','one hour forty-five minutes'],guide:'105 minutes (1 hour 45 minutes)',hints:['Break it into chunks. From 9:25 to 10:25 is one hour.','From 10:25 to 11:10 — count the minutes.','9:25 → 10:25 is 60 min. 10:25 → 11:10 is 45 min. Total: 105 min.'],method:'$9{:}25$ to $10{:}25$ = $60$ min. $10{:}25$ to $11{:}10$ = $45$ min. Total = $105$ min ($1$ hr $45$ min).'},
+    {id:'s-wp-2',skill:'Word Problems',prompt:'Apples cost $\\$0.45$ each. You buy $7$ apples and pay with a $\\$5$ note. How much change do you get (in dollars)?',answer:'1.85',acceptable:['1.85','$1.85','1.85 dollars','one dollar eighty-five','185 cents'],guide:'$1.85 change',hints:['First find the total cost: $0.45 \\times 7$.','$0.45 \\times 7 = 3.15$. Now subtract from 5.','$\\$5.00 - \\$3.15 = \\$1.85$ change.'],method:'Cost: $0.45 \\times 7 = \\$3.15$. Change: $\\$5.00 - \\$3.15 = \\$1.85$'},
+
+    // Pattern & Logic
+    {id:'s-pl-1',skill:'Pattern & Logic',prompt:'What are the next two numbers? $1,\\ 4,\\ 9,\\ 16,\\ \\_\\_,\\ \\_\\_$',answer:'25, 36',acceptable:['25,36','25, 36','25 and 36','25 36','twenty-five thirty-six','twenty-five and thirty-six'],guide:'25 and 36 — these are square numbers',hints:['Look closely: $1 = 1\\times1$, $4 = 2\\times2$, $9 = 3\\times3$, $16 = 4\\times4$.','These are the SQUARE numbers. What come next?','$5 \\times 5 = 25$. $6 \\times 6 = 36$.'],method:'Square numbers: $1^2, 2^2, 3^2, 4^2, 5^2, 6^2 = 1, 4, 9, 16, 25, 36$'},
+    {id:'s-pl-2',skill:'Pattern & Logic',prompt:'There are 3 boxes. The red box weighs more than the blue. The blue weighs more than the green. Which box is heaviest?',answer:'red',acceptable:['red','the red box','red box','the red one'],guide:'Red is heaviest',hints:['Write the comparisons down: Red > Blue, Blue > Green.','That means Red > Blue > Green.','Red is the heaviest.'],method:'Red > Blue and Blue > Green, so Red > Blue > Green. Red is heaviest.'},
+
+    // Geometry & Measurement
+    {id:'s-gm-1',skill:'Geometry & Measurement',prompt:'A rectangle is $12$ m long and $5$ m wide. What is its area (in $m^2$)?',answer:'60',acceptable:['60','60 m2','60 m²','60 square metres','60 sqm','sixty'],guide:'60 m²',hints:['Area of a rectangle = length × width.','$12 \\times 5 = ?$','$12 \\times 5 = 60$ m².'],method:'Area $= L \\times W = 12 \\times 5 = 60$ m²'},
+    {id:'s-gm-2',skill:'Geometry & Measurement',prompt:'A square has perimeter $36$ cm. What is the length of one side?',answer:'9',acceptable:['9','9 cm','9cm','nine'],guide:'9 cm',hints:['A square has 4 equal sides. Perimeter = 4 × side.','So side = perimeter ÷ 4.','$36 \\div 4 = 9$ cm.'],method:'Side $= \\frac{36}{4} = 9$ cm'},
+
+    // Fractions & Decimals
+    {id:'s-fd-1',skill:'Fractions & Decimals',prompt:'$0.7 + 0.45 = \\ ?$',answer:'1.15',acceptable:['1.15','one point one five','1.150'],guide:'1.15',hints:['Line up the decimal points first. Think 0.70 + 0.45.','$70 + 45 = 115$ hundredths.','$0.70 + 0.45 = 1.15$.'],method:'$0.70 + 0.45 = 1.15$'},
+    {id:'s-fd-2',skill:'Fractions & Decimals',prompt:'Convert $\\frac{3}{5}$ to a decimal.',answer:'0.6',acceptable:['0.6','.6','0.60','six tenths'],guide:'0.6',hints:['$\\frac{3}{5}$ means 3 divided by 5.','Or: multiply top and bottom by 2 to get tenths. $\\frac{6}{10}$.','$\\frac{3}{5} = \\frac{6}{10} = 0.6$.'],method:'$\\frac{3}{5} = \\frac{6}{10} = 0.6$'},
+
+    // Mental Math
+    {id:'s-mm-1',skill:'Mental Math',prompt:'Quick — $25\\%$ of $80 = \\ ?$',answer:'20',acceptable:['20','twenty'],guide:'20',hints:['$25\\%$ is the same as $\\frac{1}{4}$.','One quarter of 80. Divide 80 by 4.','$80 \\div 4 = 20$.'],method:'$25\\% = \\frac{1}{4}$, so $\\frac{80}{4} = 20$'},
+    {id:'s-mm-2',skill:'Mental Math',prompt:'Quick — $144 \\div 12 = \\ ?$',answer:'12',acceptable:['12','twelve'],guide:'12',hints:['12 times what equals 144?','Think squares: $12 \\times 12$.','$12 \\times 12 = 144$, so $144 \\div 12 = 12$.'],method:'$12 \\times 12 = 144$, so $144 \\div 12 = 12$'}
   ],
-  fluent:[
-    {
-      title:"The Algorithm That Chose",
-      text:"In 2031, every Year 7 student in the country was assigned a career pathway by an AI system called ARIA. The system analysed grades, social patterns, family income, and even facial micro-expressions during interviews. Proponents called it 'objective.' Critics called it a sentence. Mia's result: Agricultural Technician. She had wanted to be a surgeon. Her teacher, Ms. Okafor, read the report and set it face-down on her desk. 'ARIA has a 94% accuracy rate for life satisfaction at age 40,' she said quietly. 'But it has never been wrong in a way it could see.' Mia stared at her. 'What does that mean?' Ms. Okafor picked up the report and handed it back. 'It means the question isn't whether ARIA is right. It's whether being right is the only thing that matters.'",
-      questions:[
-        {id:1,text:"What data did ARIA use to assign career pathways?",skill:"Literal Recall",guide:"Grades, social patterns, family income, facial micro-expressions",hints:["The story lists the data types in one sentence.","Look for 'The system analysed...'","ARIA analysed grades, social patterns, family income, and facial micro-expressions."]},
-        {id:2,text:"What does Ms. Okafor mean by 'ARIA has never been wrong in a way it could see'?",skill:"Inference",guide:"ARIA can't measure what it wasn't designed to measure — passion, dignity, meaning don't register as errors",hints:["What can ARIA measure? What can't it?","94% satisfaction sounds good — but what might be missing from that measure?","ARIA is accurate for what it measures, but can't measure personal meaning or the value of pursuing a dream."]},
-        {id:3,text:"What is the difference between 'objective' and 'just'?",skill:"Vocabulary",guide:"Objective means data-based without bias; just means morally fair — they're not the same thing",hints:["Proponents said 'objective.' Critics said 'a sentence.' What's the difference?","Can something be accurate but still unfair?","Objective means unbiased — but just means morally right. ARIA may be one without being the other."]},
-        {id:4,text:"Why did the author specifically make Mia want to be a surgeon?",skill:"Critical Thinking",guide:"Surgery requires empathy, human judgment in life-or-death moments — things ARIA can't assess. Maximises the stakes.",hints:["What does a surgeon need beyond data and grades?","If Mia wanted to be a data analyst, would the story feel as powerful?","Surgery requires empathy and judgment in life-or-death situations — precisely what ARIA cannot measure."]},
-        {id:5,text:"Do you agree that 'being right isn't the only thing that matters'? Argue your position.",skill:"Critical Thinking",guide:"Any well-reasoned position with evidence from the text or broader reasoning",hints:["What things in life matter that can't be measured by data?","Consider the other side: if ARIA makes people genuinely happier, is that justification enough?","Ms. Okafor suggests accuracy doesn't justify removing choice. But someone could argue better outcomes serve the greater good. What do you think?"]}
-      ]
-    },
-    {
-      title:"The Last Newspaper",
-      text:"The Millbrook Gazette had been printed every Thursday for 112 years. On the last Thursday, editor Helen Marsh locked the office herself. The digital version had more readers than the paper ever had. It was cheaper, faster, and reached people in seventeen countries. Helen knew all this. She still felt like she was burying something. Her junior reporter, Marcus, found her at the door. 'It's not really gone,' he said. 'The stories are still there.' Helen turned the key. 'The stories were never the point,' she said. 'The point was that every Thursday, someone in this town held the same thing in their hands.'",
-      questions:[
-        {id:1,text:"How long had the Millbrook Gazette been printed?",skill:"Literal Recall",guide:"112 years / every Thursday for 112 years",hints:["The story mentions a specific number of years.","Look for a number near the word 'printed'.","The Gazette had been printed every Thursday for 112 years."]},
-        {id:2,text:"What does Helen mean when she says 'the stories were never the point'?",skill:"Inference",guide:"The physical newspaper created a shared community experience — something digital reading can't replicate",hints:["If the stories weren't the point, what was?","What does she say was 'the point' instead?","Helen valued the shared physical experience — everyone in town holding the same thing at the same time. That's what digital reading loses."]},
-        {id:3,text:"What does 'burying something' mean in this context?",skill:"Vocabulary",guide:"Ending something that had life / mourning the loss of something that mattered",hints:["You bury things that have died. What is Helen treating the newspaper like?","Is this a literal burial or a metaphorical one?","Burying here is a metaphor — Helen feels like she's ending something alive and meaningful, not just closing a business."]},
-        {id:4,text:"Marcus says 'it's not really gone.' Helen disagrees. Who do you think is right?",skill:"Critical Thinking",guide:"Both have valid points — Marcus is right about content surviving; Helen is right that the communal physical experience is lost",hints:["What exactly does Marcus think has survived?","What does Helen think has been lost?","Marcus is right that the journalism survives digitally. Helen is right that the shared physical ritual of a community holding the same object is irreplaceable."]},
-        {id:5,text:"What does this story suggest about what is lost when old forms of communication disappear?",skill:"Main Idea",guide:"Physical media created shared community experiences and rituals that digital versions, despite being better in measurable ways, cannot fully replace",hints:["The digital version has more readers and reaches more people. So what exactly is lost?","Is something valuable only if it reaches the most people?","The story argues that beyond content, physical media created community rituals — everyone sharing the same object at the same moment — and that loss is real even if it's hard to measure."]}
-      ]
-    },
-    {
-      title:"The Photograph",
-      text:"The photograph had sat on Grandma Elise's mantelpiece for forty years. In it, a young woman stood laughing outside a building nobody recognised. When Elise died, her daughter Clara found a letter tucked behind the frame. It was from someone named Thomas, dated 1974. 'I'm sorry I wasn't brave enough,' it said. 'I hope you found what I couldn't give you.' Clara looked at the laughing woman in the photograph. She had always assumed the happiness in that image was about her grandfather. Now she wasn't sure. Some photographs, she realised, are answers to questions you never thought to ask.",
-      questions:[
-        {id:1,text:"Where was the photograph kept, and for how long?",skill:"Literal Recall",guide:"On Grandma Elise's mantelpiece for forty years",hints:["Look for details about where the photo was and how long it had been there.","The story gives a specific location and time period.","The photograph sat on Grandma Elise's mantelpiece for forty years."]},
-        {id:2,text:"What does Thomas's letter suggest about his relationship with Elise?",skill:"Inference",guide:"He loved her but was too afraid to commit / there was a path not taken between them",hints:["What does 'I wasn't brave enough' suggest Thomas failed to do?","What might someone need to be brave about in a relationship?","Thomas implies he loved Elise but couldn't give her what she needed — suggesting a relationship that was never fully pursued."]},
-        {id:3,text:"What does the phrase 'questions you never thought to ask' mean?",skill:"Vocabulary",guide:"Aspects of someone's life you never considered or were curious about — hidden depths to people we think we know",hints:["Clara thought she understood the photograph. What changed?","Is it possible to know someone fully?","The phrase suggests that people we love have whole lives and stories we never wondered about — until something reveals them."]},
-        {id:4,text:"Why do you think Elise kept both the photograph and the letter for forty years?",skill:"Inference",guide:"It mattered deeply to her / it represented a significant moment or choice in her life she didn't want to forget",hints:["Would you keep something for forty years if it didn't matter?","What does keeping something hidden but preserved suggest about its importance?","Elise kept them because that moment — whatever it meant — was significant enough that she couldn't let it go, even if she never spoke of it."]},
-        {id:5,text:"What does this story suggest about how well we really know the people we love?",skill:"Critical Thinking",guide:"The people closest to us have entire inner lives, choices, and histories we know nothing about — love doesn't equal full knowledge",hints:["Clara thought she understood her grandmother. Was she right?","Is it unsettling or comforting to know that people we love have hidden depths?","The story suggests that even people we love deeply remain partly unknown to us — they existed fully before we knew them, and made choices we may never learn about."]}
-      ]
-    }
+
+  advanced: [
+    // Number Sense
+    {id:'a-ns-1',skill:'Number Sense',prompt:'$-8 + 15 - 4 = \\ ?$',answer:'3',acceptable:['3','three','+3'],guide:'3',hints:['Work left to right. First $-8 + 15$.','$-8 + 15 = 7$. Then $7 - 4$.','$7 - 4 = 3$.'],method:'$-8 + 15 - 4 = 7 - 4 = 3$'},
+    {id:'a-ns-2',skill:'Number Sense',prompt:'What is $2^3 + 3^2$?',answer:'17',acceptable:['17','seventeen'],guide:'17 (which is 8 + 9)',hints:['$2^3$ means $2 \\times 2 \\times 2$. $3^2$ means $3 \\times 3$.','$2^3 = 8$ and $3^2 = 9$.','$8 + 9 = 17$.'],method:'$2^3 + 3^2 = 8 + 9 = 17$'},
+
+    // Word Problems
+    {id:'a-wp-1',skill:'Word Problems',prompt:'A car travels $240$ km in $3$ hours at constant speed. At the same speed, how far will it travel in $5$ hours?',answer:'400',acceptable:['400','400 km','400km','four hundred','400 kilometres','400 kilometers'],guide:'400 km',hints:['First find the speed: distance ÷ time.','$240 \\div 3 = 80$ km/h.','At 80 km/h for 5 hours: $80 \\times 5 = 400$ km.'],method:'Speed $= \\frac{240}{3} = 80$ km/h. Distance in 5 hr $= 80 \\times 5 = 400$ km.'},
+    {id:'a-wp-2',skill:'Word Problems',prompt:'A shirt is reduced by $30\\%$ to $\\$42$. What was its original price?',answer:'60',acceptable:['60','$60','60 dollars','sixty','sixty dollars'],guide:'$60',hints:['If reduced by 30%, the sale price is 70% of the original.','So $0.70 \\times \\text{original} = 42$.','Original $= 42 \\div 0.70 = \\$60$.'],method:'$70\\%$ of original $= 42$, so original $= \\frac{42}{0.7} = \\$60$. Check: $30\\%$ off $\\$60$ = $\\$18$ off, so sale = $\\$42$ ✓'},
+
+    // Pattern & Logic
+    {id:'a-pl-1',skill:'Pattern & Logic',prompt:'Find the next number: $2,\\ 3,\\ 5,\\ 8,\\ 12,\\ 17,\\ \\_\\_$',answer:'23',acceptable:['23','twenty-three'],guide:'23 — differences are 1, 2, 3, 4, 5, 6',hints:['Look at the differences between each pair: 1, 2, 3, 4, 5...','The gap is growing by 1 each time. So the next gap is 6.','$17 + 6 = 23$.'],method:'Differences: $+1, +2, +3, +4, +5$. Next: $+6$. So $17 + 6 = 23$.'},
+    {id:'a-pl-2',skill:'Pattern & Logic',prompt:'All roses are flowers. Some flowers fade quickly. Can we say "all roses fade quickly"? Why or why not?',answer:'no',acceptable:['no','we cannot','we can\'t','can\'t','cannot','we cannot say that','no we cant','no we can\'t'],guide:'No — only some flowers fade quickly, not all',hints:['"Some flowers" — does that mean every flower?','If only SOME flowers fade quickly, it could be the daisies, not the roses.','We can\'t conclude all roses fade quickly — we only know some flowers do.'],method:'"Some flowers fade quickly" doesn\'t mean "all". Roses might or might not be in that "some". The conclusion isn\'t valid.'},
+
+    // Geometry & Measurement
+    {id:'a-gm-1',skill:'Geometry & Measurement',prompt:'A circle has radius $5$ cm. What is its area? (Use $\\pi \\approx 3.14$, give answer in $cm^2$)',answer:'78.5',acceptable:['78.5','78.5 cm2','78.5 cm²','seventy-eight point five','78.5 sq cm'],guide:'78.5 cm²',hints:['Area of a circle = $\\pi r^2$.','$r^2 = 5^2 = 25$. Then multiply by 3.14.','$3.14 \\times 25 = 78.5$ cm².'],method:'Area $= \\pi r^2 = 3.14 \\times 5^2 = 3.14 \\times 25 = 78.5$ cm²'},
+    {id:'a-gm-2',skill:'Geometry & Measurement',prompt:'A triangle has base $8$ cm and height $6$ cm. What is its area (in $cm^2$)?',answer:'24',acceptable:['24','24 cm2','24 cm²','twenty-four'],guide:'24 cm²',hints:['Area of a triangle = $\\frac{1}{2} \\times$ base $\\times$ height.','$\\frac{1}{2} \\times 8 \\times 6$.','$\\frac{1}{2} \\times 48 = 24$ cm².'],method:'Area $= \\frac{1}{2} \\times b \\times h = \\frac{1}{2} \\times 8 \\times 6 = 24$ cm²'},
+
+    // Fractions & Decimals
+    {id:'a-fd-1',skill:'Fractions & Decimals',prompt:'Simplify $\\frac{18}{24}$ to its lowest form.',answer:'3/4',acceptable:['3/4','three quarters','three-quarters','¾','3/4'],guide:'3/4',hints:['Find the largest number that divides into both 18 and 24.','$18 = 6 \\times 3$ and $24 = 6 \\times 4$. Divide top and bottom by 6.','$\\frac{18}{24} = \\frac{3}{4}$.'],method:'$\\frac{18}{24} = \\frac{18 \\div 6}{24 \\div 6} = \\frac{3}{4}$'},
+    {id:'a-fd-2',skill:'Fractions & Decimals',prompt:'$\\frac{3}{4} \\div \\frac{1}{2} = \\ ?$',answer:'3/2',acceptable:['3/2','1.5','1 1/2','one and a half','one and one half','one point five','one half'],guide:'3/2 or 1½',hints:['Dividing by a fraction = multiplying by its reciprocal (flipped).','$\\frac{3}{4} \\div \\frac{1}{2} = \\frac{3}{4} \\times \\frac{2}{1}$.','$\\frac{3 \\times 2}{4 \\times 1} = \\frac{6}{4} = \\frac{3}{2}$ or $1\\frac{1}{2}$.'],method:'$\\frac{3}{4} \\div \\frac{1}{2} = \\frac{3}{4} \\times \\frac{2}{1} = \\frac{6}{4} = \\frac{3}{2} = 1\\frac{1}{2}$'},
+
+    // Mental Math
+    {id:'a-mm-1',skill:'Mental Math',prompt:'Quick — $15\\%$ of $200 = \\ ?$',answer:'30',acceptable:['30','thirty'],guide:'30',hints:['Try: 10% of 200 = 20. Then 5% of 200 = 10.','Add them: 10% + 5% = 15%. So 20 + 10.','$15\\%$ of $200 = 30$.'],method:'$10\\%$ of $200 = 20$. $5\\%$ of $200 = 10$. So $15\\% = 20 + 10 = 30$.'},
+    {id:'a-mm-2',skill:'Mental Math',prompt:'Quick — $7^2 + 3^2 = \\ ?$',answer:'58',acceptable:['58','fifty-eight','fifty eight'],guide:'58',hints:['$7^2 = 49$ and $3^2 = 9$.','$49 + 9 = ?$','$49 + 9 = 58$.'],method:'$7^2 + 3^2 = 49 + 9 = 58$'}
   ]
 };
 
+/* STATE */
 let S={
-  screen:'welcome',name:'',age:8,level:null,passage:null,
-  chat:[],messages:[],qIndex:0,hintLevel:0,loading:false,loadingMsg:'',
-  skills:freshSkills(),result:null,error:''
+  screen:'welcome',
+  name:'',
+  level:null,
+  problems:[],     // 6 problems for this session, one per skill
+  pIndex:0,
+  chat:[],
+  messages:[],     // for AI conversation
+  hintLevel:0,
+  loading:false,
+  loadingMsg:'',
+  skills:freshSkills(),
+  result:null,
+  error:'',
+  awaitingMethod:false,  // true when we asked "how did you work it out?"
 };
 
-function freshSkills(){return{'Literal Recall':{score:0,attempts:0},'Vocabulary':{score:0,attempts:0},'Inference':{score:0,attempts:0},'Main Idea':{score:0,attempts:0},'Critical Thinking':{score:0,attempts:0}};}
+function freshSkills(){
+  const o={};
+  SKILLS.forEach(s=>o[s]={score:0,attempts:0,gotRight:false,hintsUsed:0});
+  return o;
+}
 
 function set(u){S={...S,...u};render();}
 
+/* Build a session: pick one problem from each skill at the chosen level */
+function buildSession(level){
+  const pool = PROBLEMS[level] || [];
+  const session = [];
+  SKILLS.forEach(skill=>{
+    const candidates = pool.filter(p=>p.skill===skill);
+    if(candidates.length){
+      const pick = candidates[Math.floor(Math.random()*candidates.length)];
+      session.push(pick);
+    }
+  });
+  return session;
+}
+
+/* AI call to Vercel proxy */
 async function callAI(messages,system){
-  const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system,messages})});
+  const r=await fetch(API,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system,messages})
+  });
   if(!r.ok){const err=await r.text();throw new Error(`Status ${r.status}: ${err}`);}
   const d=await r.json();
   if(d.error)throw new Error(d.error.message||'API error');
   return d.content.map(b=>b.text||'').join('');
 }
 
+/* Loose answer check — strip whitespace, lowercase, normalise common forms */
+function normalise(s){
+  return String(s).toLowerCase()
+    .replace(/[\$,\s]/g,'')
+    .replace(/cm2|cm\^2|cm²/g,'cm2')
+    .replace(/m2|m\^2|m²/g,'m2')
+    .trim();
+}
+
+function checkAnswer(userAnswer, problem){
+  const u = normalise(userAnswer);
+  if(!u) return false;
+  // direct match against canonical or acceptable list
+  if(normalise(problem.answer) === u) return true;
+  for(const a of (problem.acceptable||[])){
+    if(normalise(a) === u) return true;
+  }
+  // also: if user wrote "X = answer" or "answer ="
+  const stripped = u.replace(/^.*=/,'').replace(/=.*$/,'');
+  if(normalise(problem.answer) === stripped) return true;
+  for(const a of (problem.acceptable||[])){
+    if(normalise(a) === stripped) return true;
+  }
+  return false;
+}
+
 function tutorSystem(){
-  const q=S.passage.questions[S.qIndex];
-  const isLastQ=S.qIndex>=S.passage.questions.length-1;
-  return `You are ReadWise, a warm encouraging reading tutor for ${S.name}, age ${S.age}.
+  const p = S.problems[S.pIndex];
+  const isLast = S.pIndex >= S.problems.length - 1;
+  const wasCorrect = S.skills[p.skill].gotRight;
+  return `You are Burrow, a warm thoughtful math tutor by White Rabbit Data Service. You're tutoring ${S.name||'a student'}.
 
-QUESTION ASKED: "${q.text}"
-WHAT A CORRECT ANSWER LOOKS LIKE: ${q.guide}
-HINTS USED: ${S.hintLevel}
-THIS IS THE LAST QUESTION: ${isLastQ}
+PROBLEM SHOWN: ${p.prompt}
+EXPECTED ANSWER: ${p.answer}
+SKILL: ${p.skill}
+HINTS USED SO FAR: ${S.hintLevel}
+IS LAST PROBLEM: ${isLast}
+ALREADY GOT IT RIGHT THIS PROBLEM: ${wasCorrect}
+AWAITING METHOD EXPLANATION: ${S.awaitingMethod}
 
-CRITICAL RULES — READ CAREFULLY:
-1. Be VERY GENEROUS when marking correct. If the child shows they understood the key idea — even in simple words — that is CORRECT. Do not demand perfect wording.
-2. If answer shows understanding of the key concept → celebrate specifically WHY it is right, then write [NEXT] at the end.
-3. If answer is clearly wrong or way off → warmly diagnose why (wrong vocab? missed inference?) and ask ONE gentle follow-up question. Never say "wrong" or "incorrect".
-4. If child has attempted 2+ times or used hints → accept a partial answer, praise what they got right, gently add what was missing, then write [NEXT].
-5. If this is the last question AND answer is acceptable → end with [DONE] instead of [NEXT].
-6. Keep response to 2-3 sentences MAX.
-7. Language for age ${S.age}: ${S.age<=7?'very simple, warm, playful — like a kind teacher':S.age<=9?'friendly and clear — like a supportive tutor':S.age<=11?'encouraging and conversational':'thoughtful and intellectually engaged'}
-8. NEVER be picky about exact wording. The goal is comprehension, not recitation.
-9. Examples of what to accept: "the sky" = correct for "high up in the sky". "she helped them" = correct for "she wanted to help". "nice/kind" = correct for character analysis.`;
+CRITICAL RULES:
+1. The student's answer correctness has ALREADY BEEN CHECKED before you. Trust the context above.
+
+2. If AWAITING METHOD EXPLANATION is true → the student got it right with no hints, and we asked them to explain their method. Now they're explaining.
+   → Validate their thinking warmly in 1-2 sentences. If their method is sound, say so specifically. If they got the right answer by a slightly off path, gently correct without being harsh. Optionally offer one alternative method in 1 line if there's a really elegant one. End with [NEXT] (or [DONE] if last).
+
+3. If ALREADY GOT IT RIGHT THIS PROBLEM is true → student is responding to your last message (probably a "how did you work it out" prompt). Treat as method explanation. Validate, then [NEXT]/[DONE].
+
+4. If the student's answer is WRONG → diagnose the likely error type:
+   - Arithmetic slip (right method, wrong calculation) → "I think you've got the right idea — just check the calculation"
+   - Wrong operation (added when should have multiplied, etc.) → "Look closely at what the question is asking us to do"
+   - Misread the problem → "Let's read the problem one more time"
+   - Conceptual gap → "Let me ask it differently..."
+   Then ask ONE gentle Socratic question. Never say "wrong" or "incorrect". Keep to 2 sentences.
+
+5. If the student's answer is CORRECT and HINTS WERE USED (hintLevel > 0) → affirm warmly, briefly state the answer in context (1 sentence), then [NEXT] or [DONE].
+
+6. If the student's answer is CORRECT and NO HINTS USED → ask "How did you work it out?" warmly. Do NOT say [NEXT] yet. Set the scene for them to explain.
+
+7. After 3+ failed attempts on the same problem → gently give the answer and the method, encourage them, then [NEXT] or [DONE].
+
+8. Use $...$ for inline math (LaTeX). Examples: $7 \\times 8 = 56$, $\\frac{3}{4}$. The interface renders LaTeX.
+
+9. Keep it warm, brief (2-3 sentences max), respectful. Never patronising. The student is intelligent.
+
+10. Examples of accepting: "I added them" is a fine method explanation for an addition problem. "I just knew it" is fine for mental math. Don't demand step-by-step proof — celebrate the thinking they share.`;
 }
 
 function diagnosisSystem(){
-  return `Generate a reading profile for ${S.name}, age ${S.age}.
-Passage: "${S.passage.title}"
-Skills: ${JSON.stringify(S.skills)}
+  return `Generate a math reasoning profile for ${S.name||'this student'}.
+Level played: ${S.level}
+Skills tracked this session: ${JSON.stringify(S.skills)}
 
-Return ONLY valid JSON (no markdown):
-{"levels":[{"name":"Literal Recall","score":0-100,"observation":"1-2 sentences specific to this child"},{"name":"Vocabulary","score":0-100,"observation":"..."},{"name":"Inference","score":0-100,"observation":"..."},{"name":"Main Idea","score":0-100,"observation":"..."},{"name":"Critical Thinking","score":0-100,"observation":"..."}],"superpower":"5-7 words: strongest skill","rootGap":"One sentence: most important thing to develop next","encouragement":"3 warm sentences direct to ${S.name} — personal and specific"}`;
+Determine if they should LEVEL UP, STAY, or LEVEL DOWN based on these scores.
+- LEVEL UP: average score ≥ 75% AND at least 4 of 6 skills attempted with score ≥ 70%
+- LEVEL DOWN: average score < 40%
+- STAY: anything else
+
+Return ONLY valid JSON (no markdown, no preamble):
+{
+  "skills":[
+    {"name":"Number Sense","score":0-100,"observation":"1 specific sentence about ${S.name||'the student'}'s performance on this skill"},
+    {"name":"Word Problems","score":0-100,"observation":"..."},
+    {"name":"Pattern & Logic","score":0-100,"observation":"..."},
+    {"name":"Geometry & Measurement","score":0-100,"observation":"..."},
+    {"name":"Fractions & Decimals","score":0-100,"observation":"..."},
+    {"name":"Mental Math","score":0-100,"observation":"..."}
+  ],
+  "superpower":"5-7 words: their strongest math skill",
+  "rootGap":"One sentence: the most important thing to focus on next",
+  "encouragement":"3 warm sentences direct to ${S.name||'the student'} — personal and specific to today's session",
+  "levelRecommendation":"UP" | "STAY" | "DOWN",
+  "levelReason":"One short sentence explaining the recommendation"
+}`;
 }
 
 function handleStart(){
   if(!S.name.trim()){set({error:'Please enter your name first!'});return;}
-  const suggested=S.age<=6?'emergent':S.age<=8?'early':S.age<=10?'developing':'fluent';
-  set({error:'',level:suggested,screen:'level'});
+  // save name
+  saveChild({name:S.name.trim()});
+  set({error:'',screen:'level'});
 }
 
 function startSession(){
   if(!S.level)return;
-  const available=PASSAGES[S.level];
-  const passage=available[Math.floor(Math.random()*available.length)];
-  set({screen:'passage',passage});
-}
-
-async function beginTutoring(){
-  const q=S.passage.questions[0];
-  const opening=`Hi ${S.name}! I've read "${S.passage.title}" with you. Let's talk about it!\n\n**${q.text}**`;
+  const session = buildSession(S.level);
+  if(!session.length){
+    set({error:'Could not load problems. Please try again.'});return;
+  }
   set({
     screen:'tutor',
-    chat:[{r:'t',text:opening,type:'q'}],
-    messages:[{role:'user',content:'Child is ready. Ask the first question warmly.'},{role:'assistant',content:opening}],
-    qIndex:0,hintLevel:0,skills:freshSkills(),result:null,loading:false
+    problems:session,
+    pIndex:0,
+    chat:[],
+    messages:[],
+    hintLevel:0,
+    skills:freshSkills(),
+    result:null,
+    awaitingMethod:false,
   });
+  // post first problem intro
+  setTimeout(()=>{
+    const p = S.problems[0];
+    const opening = `Hi ${S.name}! I've got 6 problems lined up for you — one of each kind. Let's start.\n\n**Problem 1 of 6 · ${p.skill}**`;
+    set({
+      chat:[{r:'t',text:opening,type:'intro'}],
+      messages:[{role:'assistant',content:opening}],
+    });
+  },200);
 }
 
 async function sendAnswer(answer){
   if(!answer.trim()||S.loading)return;
-  const newChat=[...S.chat,{r:'c',text:answer}];
-  const newMsgs=[...S.messages,{role:'user',content:answer}];
-  set({chat:newChat,messages:newMsgs,loading:true});
+  const userMsg = {r:'c',text:answer,long:answer.length>20};
+  const newChat = [...S.chat,userMsg];
+  const newMsgs = [...S.messages,{role:'user',content:answer}];
+  const p = S.problems[S.pIndex];
+
+  // Decide: is this an answer attempt or a method explanation?
+  const isMethodExplanation = S.skills[p.skill].gotRight || S.awaitingMethod;
+  let isCorrect = false;
+  if(!isMethodExplanation){
+    isCorrect = checkAnswer(answer, p);
+  }
+
+  // Update skills tracking
+  const updSkills = {...S.skills};
+  const skillData = {...updSkills[p.skill]};
+  if(!isMethodExplanation){
+    skillData.attempts += 1;
+    skillData.hintsUsed = Math.max(skillData.hintsUsed, S.hintLevel);
+    if(isCorrect && !skillData.gotRight){
+      // first-time correct: score based on hints used
+      const penalty = S.hintLevel * 18;
+      skillData.score = Math.max(40, 100 - penalty - Math.max(0, skillData.attempts - 1) * 10);
+      skillData.gotRight = true;
+    } else if(!isCorrect && !skillData.gotRight){
+      // wrong attempt
+      skillData.score = Math.max(15, 60 - skillData.attempts * 12);
+    }
+  }
+  updSkills[p.skill] = skillData;
+
+  set({chat:newChat,messages:newMsgs,loading:true,skills:updSkills});
   showTyping();
+
   try{
-    const resp=await callAI(newMsgs,tutorSystem());
-    const isDone=resp.includes('[DONE]');
-    const isNext=resp.includes('[NEXT]');
-    const clean=resp.replace('[NEXT]','').replace('[DONE]','').trim();
-    const updChat=[...newChat,{r:'t',text:clean,type:isNext?'correct':'feedback'}];
-    const updMsgs=[...newMsgs,{role:'assistant',content:clean}];
-    const updSkills={...S.skills};
-    const q=S.passage.questions[S.qIndex];
-    if(q.skill in updSkills){
-      if(isNext){const pen=S.hintLevel*15;const sc=Math.max(40,100-pen);updSkills[q.skill]={score:updSkills[q.skill].attempts===0?sc:Math.round((updSkills[q.skill].score+sc)/2),attempts:updSkills[q.skill].attempts+1};}
-      else{updSkills[q.skill]={score:Math.max(10,updSkills[q.skill].score-15),attempts:updSkills[q.skill].attempts+1};}
+    const resp = await callAI(newMsgs, tutorSystem());
+    const isDone = resp.includes('[DONE]');
+    const isNext = resp.includes('[NEXT]');
+    const clean = resp.replace('[NEXT]','').replace('[DONE]','').trim();
+
+    const updChat = [...newChat,{r:'t',text:clean,type:isCorrect?'correct':'feedback'}];
+    const updMsgs = [...newMsgs,{role:'assistant',content:clean}];
+
+    // Determine awaiting state for next turn
+    let awaiting = false;
+    if(isCorrect && S.hintLevel === 0 && !isMethodExplanation && !isNext && !isDone){
+      // we just got it right with no hints, AI should have asked "how did you work it out?"
+      awaiting = true;
     }
-    if(isDone||(isNext&&S.qIndex>=S.passage.questions.length-1)){
-      set({chat:updChat,messages:updMsgs,skills:updSkills,loading:true,screen:'loading',loadingMsg:`Building ${S.name}'s reading profile...`});
-      await generateResult(updMsgs,updSkills);
-    } else if(isNext){
-      const ni=S.qIndex+1;const nq=S.passage.questions[ni];
-      const trans=`**Question ${ni+1} of ${S.passage.questions.length}:**\n${nq.text}`;
-      set({chat:[...updChat,{r:'t',text:trans,type:'q'}],messages:[...updMsgs,{role:'assistant',content:trans}],qIndex:ni,hintLevel:0,skills:updSkills,loading:false});
-    } else{
-      set({chat:updChat,messages:updMsgs,skills:updSkills,loading:false});
+
+    // Auto-advance fallback: after 4 failed attempts on this problem, force next
+    const stuck = !skillData.gotRight && skillData.attempts >= 4;
+    const shouldAdvance = isDone || isNext || stuck;
+
+    if(shouldAdvance){
+      const isLastProblem = S.pIndex >= S.problems.length - 1;
+      if(isDone || isLastProblem){
+        // session complete
+        set({
+          chat:updChat,
+          messages:updMsgs,
+          loading:true,
+          screen:'loading',
+          loadingMsg:`Building ${S.name}'s reasoning profile...`,
+          awaitingMethod:false,
+        });
+        await generateResult(updMsgs, updSkills);
+      } else {
+        const nextIdx = S.pIndex + 1;
+        const nextP = S.problems[nextIdx];
+        const trans = `**Problem ${nextIdx+1} of ${S.problems.length} · ${nextP.skill}**`;
+        set({
+          chat:[...updChat,{r:'t',text:trans,type:'intro'}],
+          messages:[...updMsgs,{role:'assistant',content:trans}],
+          pIndex:nextIdx,
+          hintLevel:0,
+          loading:false,
+          awaitingMethod:false,
+        });
+      }
+    } else {
+      set({chat:updChat,messages:updMsgs,loading:false,awaitingMethod:awaiting});
     }
-  }catch(e){
-    const errMsg=`Sorry, I had a connection problem. Error: ${e.message}. Please try again.`;
-    set({chat:[...newChat,{r:'t',text:errMsg,type:'error'}],messages:newMsgs,loading:false});
+  } catch(e){
+    const errMsg = `Sorry, I had a connection problem. (${e.message}) Try again?`;
+    set({
+      chat:[...newChat,{r:'t',text:errMsg,type:'error'}],
+      messages:newMsgs,
+      loading:false,
+    });
   }
 }
 
-async function generateResult(msgs,skills){
+async function generateResult(msgs, skills){
   try{
-    const raw=await callAI(msgs,diagnosisSystem());
-    const result=JSON.parse(raw.replace(/```json\n?|```\n?/g,'').trim());
-    const sessions=JSON.parse(localStorage.getItem('rw_sessions')||'[]');
-    sessions.push({name:S.name,age:S.age,level:S.level,storyTitle:S.passage.title,date:new Date().toLocaleDateString('en-AU',{day:'numeric',month:'short'}),levels:result.levels,superpower:result.superpower,rootGap:result.rootGap});
-    localStorage.setItem('rw_sessions',JSON.stringify(sessions));
+    const raw = await callAI(msgs, diagnosisSystem());
+    const cleaned = raw.replace(/```json\n?|```\n?/g,'').trim();
+    const result = JSON.parse(cleaned);
+
+    // save session
+    const sessions = JSON.parse(localStorage.getItem('burrow_sessions')||'[]');
+    sessions.push({
+      name: S.name,
+      level: S.level,
+      date: new Date().toISOString(),
+      dateLabel: new Date().toLocaleDateString('en-AU',{day:'numeric',month:'short'}),
+      skills: result.skills,
+      superpower: result.superpower,
+      rootGap: result.rootGap,
+      levelRecommendation: result.levelRecommendation,
+      levelReason: result.levelReason,
+    });
+    localStorage.setItem('burrow_sessions', JSON.stringify(sessions));
+
     set({screen:'results',result,loading:false});
-  }catch(e){
-    const levels=Object.entries(skills).map(([name,d])=>({name,score:d.attempts>0?d.score:60,observation:d.attempts>0?`${S.name} worked through this skill.`:'Not assessed this session.'}));
-    set({screen:'results',result:{levels,superpower:'Dedicated and thoughtful reader',rootGap:'Continue reading varied texts to build all comprehension skills.',encouragement:`Well done, ${S.name}! You completed your reading session today. Every story makes you a stronger reader. Keep going!`},loading:false});
+  } catch(e){
+    // fallback profile from local skills
+    const skillArr = SKILLS.map(name=>{
+      const d = skills[name];
+      return {
+        name,
+        score: d.attempts > 0 ? d.score : 50,
+        observation: d.gotRight
+          ? `${S.name||'You'} solved this with ${d.hintsUsed} hint${d.hintsUsed===1?'':'s'}.`
+          : (d.attempts>0 ? 'Worked through but needed support.' : 'Not assessed this session.')
+      };
+    });
+    set({
+      screen:'results',
+      result:{
+        skills: skillArr,
+        superpower: 'Persistent problem-solver',
+        rootGap: 'Keep practising across all six skills.',
+        encouragement: `Well done, ${S.name||'mate'}! You finished a full math session today. Every problem you tackle makes you stronger.`,
+        levelRecommendation: 'STAY',
+        levelReason: 'Try this level again to consolidate.',
+      },
+      loading:false
+    });
   }
 }
 
 function useHint(){
-  const q=S.passage.questions[S.qIndex];
-  const hi=Math.min(S.hintLevel,2);
-  const labels=['💡 Gentle nudge','🔍 Here\'s a clue','📖 Let me guide you'];
-  const msg=`${labels[hi]}: ${q.hints[hi]}`;
-  set({chat:[...S.chat,{r:'t',text:msg,type:'hint'}],hintLevel:S.hintLevel+1});
+  const p = S.problems[S.pIndex];
+  if(S.hintLevel >= 3) return;
+  const labels = ['💡 Gentle nudge','🔍 Here\'s a clue','📖 Let me guide you'];
+  const msg = `${labels[S.hintLevel]}: ${p.hints[S.hintLevel]}`;
+  set({
+    chat:[...S.chat,{r:'t',text:msg,type:'hint'}],
+    hintLevel: S.hintLevel + 1,
+  });
+  // re-render katex on next tick
+  setTimeout(renderMath, 30);
 }
 
 function showTyping(){
-  const win=document.getElementById('cw');
-  if(!win)return;
-  const el=document.createElement('div');
-  el.id='typing';el.className='msg t';
-  el.innerHTML=`<div class="m-av ta">🦉</div><div class="typing-wrap"><div class="td"></div><div class="td"></div><div class="td"></div></div>`;
-  win.appendChild(el);win.scrollTop=win.scrollHeight;
+  const win = document.getElementById('cw');
+  if(!win) return;
+  const el = document.createElement('div');
+  el.id = 'typing';
+  el.className = 'msg t';
+  el.innerHTML = `<div class="m-av ta">${RABBIT_SVG}</div><div class="typing-wrap"><div class="td"></div><div class="td"></div><div class="td"></div></div>`;
+  win.appendChild(el);
+  win.scrollTop = win.scrollHeight;
 }
 
-function fmt(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>').replace(/\n/g,'<br>');}
+/* Markdown-lite formatting + LaTeX-friendly */
+function fmt(t){
+  return t
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+}
 
-function colFor(s){return s>=70?{f:'#1D9E75',t:'#085041'}:s>=45?{f:'#EF9F27',t:'#633806'}:{f:'#D85A30',t:'#993C1D'};}
+function colFor(s){
+  if(s>=70) return {f:'#5A7A5C',t:'#2E4530'};   // sage
+  if(s>=45) return {f:'#C99A2D',t:'#7A5D18'};   // gold
+  return {f:'#B8451F',t:'#8E3215'};             // rust
+}
 
+function renderMath(){
+  if(!window.renderMathInElement) return;
+  document.querySelectorAll('.bubble, .problem-text, .lc-name').forEach(el=>{
+    if(el.dataset.mathRendered) return;
+    try{
+      window.renderMathInElement(el,{
+        delimiters:[
+          {left:'$$',right:'$$',display:true},
+          {left:'$',right:'$',display:false}
+        ],
+        throwOnError:false
+      });
+      el.dataset.mathRendered = '1';
+    }catch{}
+  });
+}
+
+/* PERSISTENCE */
+function saveChild(c){
+  const existing = getChild() || {};
+  localStorage.setItem('burrow_child', JSON.stringify({...existing,...c}));
+}
+function getChild(){
+  try{return JSON.parse(localStorage.getItem('burrow_child')||'null');}catch{return null;}
+}
+
+/* ROUTING / RENDER */
 function render(){
-  const app=document.getElementById('app');
-  const badge=document.getElementById('navBadge');
-  if(S.level&&LEVELS[S.level]){badge.textContent=`${LEVELS[S.level].icon} ${LEVELS[S.level].label}`;badge.style.display='inline';}else{badge.style.display='none';}
+  const app = document.getElementById('app');
+  const badge = document.getElementById('navBadge');
+  if(S.level && LEVELS[S.level]){
+    badge.textContent = `${LEVELS[S.level].icon} ${LEVELS[S.level].label}`;
+    badge.style.display = 'inline-block';
+  } else {
+    badge.style.display = 'none';
+  }
 
-  if(S.screen==='welcome'){
-    app.innerHTML=`<div class="screen">
-<div class="welcome-hero"><span class="welcome-emoji">📖</span><h1>Your Personal Reading Tutor</h1><p>A story made just for you, a real conversation about it, and a complete picture of your reading superpowers.</p></div>
+  if(S.screen === 'welcome'){
+    app.innerHTML = `<div class="screen">
+<div class="welcome-hero">
+  <svg class="welcome-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#1A1815"/>
+    <path d="M22 11 C21 11, 20.5 13, 20.5 16 L20.5 24 C20.5 26, 21 27, 22 27 C23 27, 23.5 26, 23.5 24 L23.5 16 C23.5 13, 23 11, 22 11 Z" fill="#B8451F"/>
+    <g transform="rotate(12 42 14)">
+      <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#1A1815"/>
+      <path d="M42 11 C41 11, 40.5 13, 40.5 16 L40.5 24 C40.5 26, 41 27, 42 27 C43 27, 43.5 26, 43.5 24 L43.5 16 C43.5 13, 43 11, 42 11 Z" fill="#B8451F"/>
+    </g>
+    <ellipse cx="32" cy="42" rx="17" ry="16" fill="#1A1815"/>
+    <circle cx="26" cy="40" r="1.6" fill="#F8F4EC"/>
+    <circle cx="38" cy="40" r="1.6" fill="#F8F4EC"/>
+    <ellipse cx="32" cy="46" rx="1.4" ry="1" fill="#B8451F"/>
+    <path d="M30 48 Q32 50 34 48" stroke="#F8F4EC" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+  </svg>
+  <h1>Down the <em>burrow</em>, into math.</h1>
+  <p>Six fresh problems, real conversation, and a complete picture of how you think — not just what you got right.</p>
+</div>
 <div class="card">
-  <label class="field-label">What's your name?</label>
+  <label class="field-label" for="ni">What's your name?</label>
   <input class="text-input" id="ni" type="text" placeholder="Type your name..." value="${S.name}" maxlength="30" autocomplete="off"/>
-  <div class="gap"></div>
-  <label class="field-label">How old are you?</label>
-  <div class="age-row">${[5,6,7,8,9,10,11,12].map(a=>`<button class="age-btn ${S.age===a?'sel':''}" onclick="set({age:${a}})">${a}</button>`).join('')}</div>
   ${S.error?`<div class="error-box">${S.error}</div>`:''}
   <div class="gap"></div>
-  <button class="btn-main" onclick="handleStart()">Let's go! →</button>
-</div></div>`;
-    const i=document.getElementById('ni');
-    i.addEventListener('input',e=>{S.name=e.target.value;});
-    i.addEventListener('keydown',e=>{if(e.key==='Enter')handleStart();});
+  <button class="btn-main" onclick="handleStart()">Continue →</button>
+</div>
+</div>`;
+    const i = document.getElementById('ni');
+    i.addEventListener('input', e=>{S.name = e.target.value;});
+    i.addEventListener('keydown', e=>{if(e.key==='Enter') handleStart();});
     i.focus();
   }
 
-  else if(S.screen==='level'){
-    app.innerHTML=`<div class="screen">
-<div class="welcome-hero" style="padding-top:1rem"><span class="welcome-emoji">🎯</span><h1>Choose your level!</h1><p>We've suggested one based on your age — but you can change it.</p></div>
-<div class="level-grid">${Object.entries(LEVELS).map(([k,lv])=>`<div class="level-card ${S.level===k?'sel':''}" onclick="set({level:'${k}'})"><div class="lc-icon">${lv.icon}</div><div class="lc-name">${lv.label}</div><div class="lc-desc">Ages ${lv.ages} · ${lv.desc}</div></div>`).join('')}</div>
-<button class="btn-main" onclick="startSession()">Start my story →</button></div>`;
-  }
-
-  else if(S.screen==='passage'){
-    const lv=LEVELS[S.level];
-    const fs=S.age<=7?'20px':S.age<=9?'17px':'16px';
-    const lh=S.age<=7?'2.1':'1.9';
-    const midSession=S.chat.length>0;
-    const qNum=S.qIndex+1;
-    const totalQ=S.passage.questions.length;
-    app.innerHTML=`<div class="screen">
-<div class="passage-meta"><span class="badge b-teal">${lv.icon} ${lv.label}</span><span class="badge b-amber">📝 ${S.passage.questions.length} questions</span></div>
-<h2 class="passage-title">${S.passage.title}</h2>
-<div class="passage-card"><p class="passage-text" style="font-size:${fs};line-height:${lh}">${S.passage.text}</p></div>
-<div class="passage-tip"><span>💡</span><span>Read carefully! Your tutor will ask you ${S.passage.questions.length} questions. You can come back to re-read any time.</span></div>
-${midSession
-  ? `<div style="background:var(--forest-xlight);border-radius:11px;padding:0.85rem 1rem;margin-bottom:0.75rem;font-size:14px;color:var(--forest);font-weight:600">📍 You are on Question ${qNum} of ${totalQ}</div>
-     <button class="btn-forest" onclick="set({screen:'tutor'})">← Back to Question ${qNum}</button>`
-  : `<button class="btn-forest" onclick="beginTutoring()">I'm ready — let's go! →</button>`
-}</div>`;
-  }
-
-  else if(S.screen==='tutor'){
-    const q=S.passage.questions[S.qIndex];
-    const pct=Math.round((S.qIndex/S.passage.questions.length)*100);
-    const currentQ=S.passage.questions[S.qIndex];
-    const chatHTML=S.chat.slice(-6).map(m=>{
-      if(m.r==='t')return`<div class="msg t"><div class="m-av ta">🦉</div><div class="bubble">${fmt(m.text)}</div></div>`;
-      return`<div class="msg c"><div class="m-av ca">⭐</div><div class="bubble">${fmt(m.text)}</div></div>`;
-    }).join('');
-    const skillsHTML=Object.entries(S.skills).filter(([,d])=>d.attempts>0).map(([name,d])=>{
-      const col=colFor(d.score);
-      return`<div class="sk-row"><span class="sk-name">${name}</span><div class="sk-track"><div class="sk-fill" style="width:${d.score}%;background:${col.f}"></div></div><span class="sk-score" style="color:${col.t}">${d.score}%</span></div>`;
-    }).join('');
-
-    app.innerHTML=`<div class="screen">
-<div class="tutor-header">
-  <div class="tutor-left"><div class="tutor-av">🦉</div><div><div class="tutor-name">ReadWise Tutor</div><div class="tutor-status">${S.loading?'Thinking...':'Ready'}</div></div></div>
-  <button class="reread-btn" onclick="set({screen:'passage'})">← Re-read</button>
+  else if(S.screen === 'level'){
+    app.innerHTML = `<div class="screen">
+<div class="welcome-hero" style="padding-top:1rem">
+  <h1>Pick where to start.</h1>
+  <p>You're at a <em>level</em>, not an age. Choose what feels right — you can always move up.</p>
 </div>
-<div class="progress-row"><span>Question ${S.qIndex+1} of ${S.passage.questions.length}</span><span class="badge b-teal" style="font-size:11px">${q.skill}</span></div>
+<div class="level-grid">${Object.entries(LEVELS).map(([k,lv])=>`
+  <div class="level-card ${S.level===k?'sel':''}" onclick="set({level:'${k}'})" tabindex="0" role="button" aria-pressed="${S.level===k}">
+    <div class="lc-num">LEVEL ${lv.num}</div>
+    <div class="lc-name">${lv.label}</div>
+    <div class="lc-desc">${lv.desc}</div>
+  </div>`).join('')}</div>
+<button class="btn-main" onclick="startSession()" ${!S.level?'disabled':''}>Start the session →</button>
+</div>`;
+    setTimeout(renderMath,30);
+  }
+
+  else if(S.screen === 'tutor'){
+    const p = S.problems[S.pIndex];
+    const pct = Math.round(((S.pIndex)/S.problems.length)*100);
+    const chatHTML = S.chat.slice(-8).map(m=>{
+      if(m.r==='t'){
+        return `<div class="msg t"><div class="m-av ta">${RABBIT_SVG}</div><div class="bubble">${fmt(m.text)}</div></div>`;
+      }
+      return `<div class="msg c"><div class="m-av ca">${(S.name||'Y').charAt(0).toUpperCase()}</div><div class="bubble${m.long?' long':''}">${fmt(m.text)}</div></div>`;
+    }).join('');
+
+    const skillsHTML = Object.entries(S.skills).filter(([,d])=>d.attempts>0).map(([name,d])=>{
+      const col = colFor(d.score);
+      return `<div class="sk-row"><span class="sk-name">${name}</span><div class="sk-track"><div class="sk-fill" style="width:${d.score}%;background:${col.f}"></div></div><span class="sk-score" style="color:${col.t}">${d.score}%</span></div>`;
+    }).join('');
+
+    app.innerHTML = `<div class="screen">
+<div class="tutor-header">
+  <div class="tutor-left">
+    <div class="tutor-av">${RABBIT_SVG}</div>
+    <div>
+      <div class="tutor-name">Burrow</div>
+      <div class="tutor-status${S.loading?' thinking':''}">${S.loading?'Thinking...':'Ready'}</div>
+    </div>
+  </div>
+</div>
+<div class="progress-row">
+  <span>Problem ${S.pIndex+1} of ${S.problems.length}</span>
+  <span class="badge b-rust">${p.skill}</span>
+</div>
 <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
-<div style="background:var(--white);border:1px solid var(--border);border-radius:13px;padding:10px 14px;margin-bottom:10px;font-size:15px;font-weight:600;color:var(--ink)">❓ ${currentQ.text}</div>
+<div class="problem-card">
+  <div class="problem-skill-tag">${p.skill}</div>
+  <div class="problem-text">${p.prompt}</div>
+</div>
 <div class="chat-win" id="cw">${chatHTML}</div>
 <div class="input-wrap">
-  <textarea class="chat-in" id="ci" placeholder="Write your answer here..." rows="1" ${S.loading?'disabled':''}></textarea>
-  <button class="send-btn" onclick="doSend()" ${S.loading?'disabled':''}>→</button>
+  <textarea class="chat-in" id="ci" placeholder="${S.awaitingMethod?'Tell Burrow how you worked it out...':'Type your answer...'}" rows="1" ${S.loading?'disabled':''}></textarea>
+  <button class="send-btn" onclick="doSend()" ${S.loading?'disabled':''} aria-label="Send answer">→</button>
 </div>
 <div class="action-row">
-  ${S.hintLevel<3&&!S.loading?`<button class="action-btn" onclick="useHint()">💡 Hint (${3-S.hintLevel} left)</button>`:''}
+  ${(S.hintLevel<3 && !S.loading && !S.awaitingMethod && !S.skills[p.skill].gotRight)?`<button class="action-btn" onclick="useHint()">Hint (${3-S.hintLevel} left)</button>`:''}
 </div>
-${skillsHTML?`<div class="skill-map"><div class="sm-title">Your understanding map</div>${skillsHTML}</div>`:''}
+${skillsHTML?`<div class="skill-map"><div class="sm-title">Your reasoning map</div>${skillsHTML}</div>`:''}
 </div>`;
-    const cw=document.getElementById('cw');
+    const cw = document.getElementById('cw');
     if(cw){
-      setTimeout(()=>{
-        cw.scrollTop=cw.scrollHeight;
-        const ci=document.getElementById('ci');
-        if(ci) ci.scrollIntoView({behavior:'smooth',block:'end'});
-      },100);
+      setTimeout(()=>{cw.scrollTop = cw.scrollHeight;},80);
     }
-    const ci=document.getElementById('ci');
+    const ci = document.getElementById('ci');
     if(ci){
       ci.addEventListener('input',()=>{ci.style.height='auto';ci.style.height=ci.scrollHeight+'px';});
-      ci.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doSend();}});
-      if(!S.loading)ci.focus();
+      ci.addEventListener('keydown', e=>{if(e.key==='Enter' && !e.shiftKey){e.preventDefault();doSend();}});
+      if(!S.loading) ci.focus();
     }
+    setTimeout(renderMath,40);
   }
 
-  else if(S.screen==='loading'){
-    app.innerHTML=`<div class="loading"><div class="l-icon">✨</div><h2>${S.loadingMsg||'One moment...'}</h2><p>Just a moment, ${S.name}!</p><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+  else if(S.screen === 'loading'){
+    app.innerHTML = `<div class="loading">
+  <svg class="l-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#1A1815"/>
+    <path d="M22 11 C21 11, 20.5 13, 20.5 16 L20.5 24 C20.5 26, 21 27, 22 27 C23 27, 23.5 26, 23.5 24 L23.5 16 C23.5 13, 23 11, 22 11 Z" fill="#B8451F"/>
+    <g transform="rotate(12 42 14)">
+      <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#1A1815"/>
+      <path d="M42 11 C41 11, 40.5 13, 40.5 16 L40.5 24 C40.5 26, 41 27, 42 27 C43 27, 43.5 26, 43.5 24 L43.5 16 C43.5 13, 43 11, 42 11 Z" fill="#B8451F"/>
+    </g>
+    <ellipse cx="32" cy="42" rx="17" ry="16" fill="#1A1815"/>
+    <circle cx="26" cy="40" r="1.6" fill="#F8F4EC"/>
+    <circle cx="38" cy="40" r="1.6" fill="#F8F4EC"/>
+    <ellipse cx="32" cy="46" rx="1.4" ry="1" fill="#B8451F"/>
+    <path d="M30 48 Q32 50 34 48" stroke="#F8F4EC" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+  </svg>
+  <h2>${S.loadingMsg||'One moment...'}</h2>
+  <p>Just a moment, ${S.name||'there'}.</p>
+  <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+</div>`;
   }
 
-  else if(S.screen==='results'){
-    const d=S.result;
-    const bars=d.levels.map(lv=>{const col=colFor(lv.score);return`<div class="rb-row"><div class="rb-meta"><span class="rb-name">${lv.name}</span><span class="rb-score" style="color:${col.t}">${lv.score}%</span></div><div class="rb-track"><div class="rb-fill" style="width:${lv.score}%;background:${col.f}"></div></div><div class="rb-obs">${lv.observation}</div></div>`;}).join('');
-    app.innerHTML=`<div class="screen">
-<div class="r-hero"><span class="r-icon">🌟</span><h2>${S.name}'s Reading Profile</h2><p>From "${S.passage.title}"</p></div>
-<div class="sp-card"><div class="sp-icon">⚡</div><div><div class="sp-label">Reading Superpower</div><div class="sp-text">${d.superpower}</div></div></div>
-<div class="r-card"><div class="r-card-title">Comprehension Map</div>${bars}</div>
-<div class="gap-card"><div class="gap-lbl">→ Next Focus</div><div class="gap-txt">${d.rootGap}</div></div>
-<div class="enc-card"><p>"${d.encouragement}"</p></div>
+  else if(S.screen === 'results'){
+    const d = S.result;
+    const bars = (d.skills||[]).map(sk=>{
+      const col = colFor(sk.score);
+      return `<div class="rb-row">
+  <div class="rb-meta">
+    <span class="rb-name">${sk.name}</span>
+    <span class="rb-score" style="color:${col.t}">${sk.score}%</span>
+  </div>
+  <div class="rb-track"><div class="rb-fill" style="width:${sk.score}%;background:${col.f}"></div></div>
+  <div class="rb-obs">${sk.observation||''}</div>
+</div>`;
+    }).join('');
+
+    const lvlRec = (d.levelRecommendation||'STAY').toUpperCase();
+    const lvlIcon = lvlRec==='UP'?'⬆️':lvlRec==='DOWN'?'⬇️':'➡️';
+    const lvlLabel = lvlRec==='UP'?'Ready to level up':lvlRec==='DOWN'?'Try a different level':'Keep building at this level';
+
+    app.innerHTML = `<div class="screen">
+<div class="r-hero">
+  <svg class="r-mark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 6 C20 6, 18 9, 18 14 L18 26 C18 30, 20 32, 22 32 C24 32, 26 30, 26 26 L26 14 C26 9, 24 6, 22 6 Z" fill="#1A1815"/>
+    <path d="M22 11 C21 11, 20.5 13, 20.5 16 L20.5 24 C20.5 26, 21 27, 22 27 C23 27, 23.5 26, 23.5 24 L23.5 16 C23.5 13, 23 11, 22 11 Z" fill="#B8451F"/>
+    <g transform="rotate(12 42 14)">
+      <path d="M42 6 C40 6, 38 9, 38 14 L38 26 C38 30, 40 32, 42 32 C44 32, 46 30, 46 26 L46 14 C46 9, 44 6, 42 6 Z" fill="#1A1815"/>
+      <path d="M42 11 C41 11, 40.5 13, 40.5 16 L40.5 24 C40.5 26, 41 27, 42 27 C43 27, 43.5 26, 43.5 24 L43.5 16 C43.5 13, 43 11, 42 11 Z" fill="#B8451F"/>
+    </g>
+    <ellipse cx="32" cy="42" rx="17" ry="16" fill="#1A1815"/>
+    <circle cx="26" cy="40" r="1.6" fill="#F8F4EC"/>
+    <circle cx="38" cy="40" r="1.6" fill="#F8F4EC"/>
+    <ellipse cx="32" cy="46" rx="1.4" ry="1" fill="#B8451F"/>
+    <path d="M30 48 Q32 50 34 48" stroke="#F8F4EC" stroke-width="0.8" stroke-linecap="round" fill="none"/>
+  </svg>
+  <h2>${S.name}'s Reasoning Profile</h2>
+  <p>${LEVELS[S.level]?.label||''} · ${new Date().toLocaleDateString('en-AU',{day:'numeric',month:'short'})}</p>
+</div>
+<div class="sp-card">
+  <span class="sp-icon">⚡</span>
+  <div>
+    <div class="sp-label">Math Superpower</div>
+    <div class="sp-text">${d.superpower||'Strong reasoning'}</div>
+  </div>
+</div>
+<div class="r-card">
+  <div class="r-card-title">Reasoning Map</div>
+  ${bars}
+</div>
+<div class="gap-card">
+  <div class="gap-lbl">→ Next Focus</div>
+  <div class="gap-txt">${d.rootGap||'Keep practising across all skills.'}</div>
+</div>
+<div class="level-suggest">
+  <div class="level-suggest-icon">${lvlIcon}</div>
+  <div>
+    <div class="level-suggest-lbl">${lvlLabel}</div>
+    <div class="level-suggest-text">${d.levelReason||''}</div>
+  </div>
+</div>
+<div class="enc-card"><p>${d.encouragement||''}</p></div>
 <div class="r-btns">
-  <button class="btn-again" onclick="tryAnother()">Try another story →</button>
+  <button class="btn-main" onclick="tryAnother()">Another session →</button>
+  <a href="/dashboard" class="btn-sage" style="display:block;text-align:center;text-decoration:none;line-height:1.4">View dashboard</a>
   <button class="btn-ghost" onclick="goHome()">Start over</button>
-</div></div>`;
+</div>
+</div>`;
+    setTimeout(renderMath,40);
   }
 }
 
-function doSend(){const ci=document.getElementById('ci');if(!ci)return;const v=ci.value.trim();if(!v||S.loading)return;ci.value='';ci.style.height='auto';sendAnswer(v);}
-function tryAnother(){
-  set({screen:'level',passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});
+function doSend(){
+  const ci = document.getElementById('ci');
+  if(!ci) return;
+  const v = ci.value.trim();
+  if(!v || S.loading) return;
+  ci.value = '';
+  ci.style.height = 'auto';
+  sendAnswer(v);
 }
-function goHome(){set({screen:'welcome',level:null,passage:null,chat:[],messages:[],qIndex:0,hintLevel:0,skills:freshSkills(),result:null,error:'',loading:false});}
 
-const saved=localStorage.getItem('rw_child');
-if(saved){try{const c=JSON.parse(saved);S.name=c.name||'';S.age=c.age||8;}catch{}}
+function tryAnother(){
+  set({
+    screen:'level',
+    problems:[],
+    pIndex:0,
+    chat:[],
+    messages:[],
+    hintLevel:0,
+    skills:freshSkills(),
+    result:null,
+    error:'',
+    loading:false,
+    awaitingMethod:false,
+  });
+}
+
+function goHome(){
+  set({
+    screen:'welcome',
+    level:null,
+    problems:[],
+    pIndex:0,
+    chat:[],
+    messages:[],
+    hintLevel:0,
+    skills:freshSkills(),
+    result:null,
+    error:'',
+    loading:false,
+    awaitingMethod:false,
+  });
+}
+
+/* INIT */
+const savedChild = getChild();
+if(savedChild && savedChild.name){
+  S.name = savedChild.name;
+}
+// allow ?level=xxx and ?name=xxx URL hints
+try{
+  const params = new URLSearchParams(window.location.search);
+  const urlName = params.get('name');
+  const urlLevel = params.get('level');
+  if(urlName) S.name = urlName;
+  if(urlLevel && LEVELS[urlLevel]) S.level = urlLevel;
+}catch{}
+
 render();
+
+// Re-render LaTeX once KaTeX has loaded
+window.addEventListener('load', ()=>{
+  setTimeout(renderMath,60);
+});
 </script>
 </body>
 </html>
