@@ -1063,7 +1063,7 @@ async function callAI(messages,system){
   const r=await fetch(API,{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,system,messages})
+    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:600,system,messages})
   });
   if(!r.ok){const err=await r.text();throw new Error(`Status ${r.status}: ${err}`);}
   const d=await r.json();
