@@ -249,6 +249,206 @@ nav{
 }
 .problem-text .katex{font-size:1.1em}
 
+/* VERTICAL STACK (column arithmetic) */
+.vertical-stack{
+  display:inline-flex;
+  flex-direction:column;
+  gap:3px;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:600;
+  margin:14px 0 6px;
+  padding:14px 18px 14px 14px;
+  background:var(--parchment);
+  border-radius:11px;
+  border:1px solid var(--border);
+}
+.v-row{display:flex;gap:4px;justify-content:flex-end}
+.vc{
+  width:38px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  color:var(--ink);
+  border-radius:4px;
+}
+.vc.op{
+  font-weight:700;
+  color:var(--rust);
+  font-size:24px;
+}
+.vc.empty{color:transparent}
+.v-labels .vc{
+  font-size:10px;
+  font-weight:700;
+  color:var(--rust);
+  letter-spacing:0.06em;
+  height:22px;
+  background:var(--rust-xlight);
+  border:1px solid var(--rust-light);
+  text-transform:uppercase;
+}
+.v-line .vc{
+  border-bottom:2.5px solid var(--ink);
+  border-radius:0;
+  padding-bottom:2px;
+}
+.v-result .vc{
+  font-size:26px;
+  color:var(--rust);
+  font-weight:700;
+}
+@media(max-width:480px){
+  .vc{width:32px;height:36px;font-size:24px}
+  .v-result .vc{font-size:22px}
+  .vertical-stack{padding:12px 14px 12px 10px}
+}
+
+/* WORKING SPACE (stage 1 — guided steps) */
+.workspace{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:1.25rem 1.4rem;
+  margin-bottom:0.85rem;
+  box-shadow:var(--shadow-sm);
+}
+.workspace-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:1rem;
+  font-size:11px;
+  font-weight:700;
+  color:var(--rust);
+  text-transform:uppercase;
+  letter-spacing:0.09em;
+}
+.workspace-header span.skip{
+  color:var(--ink-soft);
+  font-weight:500;
+  text-transform:none;
+  letter-spacing:0;
+  font-size:13px;
+  cursor:pointer;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.workspace-header span.skip:hover{color:var(--rust)}
+.step{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:0.7rem 0;
+  border-bottom:1px dashed var(--border);
+  animation:stepIn 0.32s ease;
+}
+.step:last-child{border-bottom:none}
+.step.done .step-num{background:var(--sage);color:var(--white)}
+.step.active .step-num{background:var(--rust);color:var(--white)}
+.step.upcoming{opacity:0.4}
+.step.upcoming .step-num{background:var(--parchment-deep);color:var(--ink-faint)}
+@keyframes stepIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
+.step-num{
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:600;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  transition:all 0.2s;
+}
+.step-body{flex:1;min-width:0}
+.step-prompt{
+  font-size:15px;
+  color:var(--ink);
+  line-height:1.5;
+  margin-bottom:8px;
+  font-weight:500;
+}
+.step-input-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+.step-input{
+  flex:0 1 130px;
+  padding:9px 12px;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:600;
+  font-size:17px;
+  border:1.5px solid var(--border);
+  border-radius:9px;
+  background:var(--parchment);
+  color:var(--ink);
+  outline:none;
+  transition:border-color 0.18s,background 0.18s;
+}
+.step-input:focus{border-color:var(--rust);background:var(--white)}
+.step-input.done{
+  background:var(--sage-xlight);
+  border-color:var(--sage-light);
+  color:var(--sage-dark);
+}
+.step-input.error{border-color:var(--rust);background:var(--rust-xlight)}
+.step-check-btn{
+  padding:8px 14px;
+  background:var(--rust);
+  color:var(--white);
+  border:none;
+  border-radius:8px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:600;
+  font-size:13px;
+  cursor:pointer;
+  transition:all 0.16s;
+}
+.step-check-btn:hover{background:var(--rust-dark)}
+.step-check-btn:disabled{opacity:0.4;cursor:not-allowed}
+.step-feedback{
+  font-size:13px;
+  color:var(--ink-soft);
+  margin-top:6px;
+  line-height:1.5;
+}
+.step-feedback.error{color:var(--rust-dark)}
+.step-feedback.success{color:var(--sage-dark)}
+.step-locked{
+  font-size:13px;
+  color:var(--ink-faint);
+  font-style:italic;
+}
+.step-value-display{
+  font-family:'JetBrains Mono',monospace;
+  font-weight:600;
+  font-size:16px;
+  color:var(--sage-dark);
+  background:var(--sage-xlight);
+  padding:4px 12px;
+  border-radius:7px;
+  display:inline-block;
+}
+
+/* Stage indicator pill */
+.stage-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 10px;
+  border-radius:99px;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+.stage-pill.s1{background:var(--rust-xlight);color:var(--rust-dark)}
+.stage-pill.s2{background:var(--sage-xlight);color:var(--sage-dark)}
+
 /* TUTOR */
 .tutor-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
 .tutor-left{display:flex;align-items:center;gap:11px}
@@ -724,11 +924,11 @@ const PROBLEMS = {
 
   building: [
     // Number Sense
-    {id:'b-ns-1',skill:'Number Sense',prompt:'$47 + 28 = \\ ?$',answer:'75',acceptable:['75','seventy-five','seventy five'],guide:'75',hints:['Try splitting 28 into 20 + 8.','First do 47 + 20 = 67. Then 67 + 8.','$47 + 20 = 67$, then $67 + 8 = 75$.'],method:'$47 + 28 = 47 + 20 + 8 = 67 + 8 = 75$'},
-    {id:'b-ns-2',skill:'Number Sense',prompt:'$100 - 36 = \\ ?$',answer:'64',acceptable:['64','sixty-four','sixty four'],guide:'64',hints:['You can think: 36 + ? = 100.','From 36 to 40 is 4. From 40 to 100 is 60. Add them.','$36 + 4 = 40$, then $40 + 60 = 100$. So $100 - 36 = 64$.'],method:'$100 - 36 = 64$. Check: $36 + 64 = 100$ ✓'},
+    {id:'b-ns-1',skill:'Number Sense',prompt:'$47 + 28 = \\ ?$',vertical:{op:'+',terms:[47,28]},steps:[{prompt:'Ones column: $7 + 8 = ?$',answer:'15',accept:['15']},{prompt:'Write the 5, carry 1. Tens column: $4 + 2 + 1 = ?$',answer:'7',accept:['7']},{prompt:'So the answer is:',answer:'75',accept:['75']}],answer:'75',acceptable:['75','seventy-five','seventy five'],guide:'75',hints:['Start with the ones column. What is $7 + 8$?','$7 + 8 = 15$. Write the 5, carry the 1 to the tens column.','Tens: $4 + 2 + 1 (\\text{carried}) = 7$. So the answer is $75$.'],method:'$47 + 28 = 75$. Check: ones $7+8=15$ (write 5, carry 1), tens $4+2+1 = 7$.'},
+    {id:'b-ns-2',skill:'Number Sense',prompt:'$100 - 36 = \\ ?$',vertical:{op:'-',terms:[100,36]},steps:[{prompt:'After regrouping: $100$ becomes $0$ hundreds, $9$ tens, $10$ ones. Ones: $10 - 6 = ?$',answer:'4',accept:['4']},{prompt:'Tens: $9 - 3 = ?$',answer:'6',accept:['6']},{prompt:'So the answer is:',answer:'64',accept:['64']}],answer:'64',acceptable:['64','sixty-four','sixty four'],guide:'64',hints:['You can\'t take 6 from 0. We need to borrow from the tens. But the tens are 0 too — so we have to borrow from the hundreds first.','Borrow 1 from the hundreds: $100$ becomes $0$ hundreds, $10$ tens, $0$ ones. Then borrow 1 from the tens: $9$ tens and $10$ ones.','Now: ones $10 - 6 = 4$. Tens $9 - 3 = 6$. Hundreds $0 - 0 = 0$. Answer: $64$.'],method:'Regroup $100$ as $0$ hundreds, $9$ tens, $10$ ones. Then $10-6=4$, $9-3=6$. Answer: $64$.'},
 
     // Word Problems
-    {id:'b-wp-1',skill:'Word Problems',prompt:'A library has $145$ books. $28$ are checked out. How many books are on the shelves?',answer:'117',acceptable:['117','one hundred seventeen','one hundred and seventeen'],guide:'145 - 28 = 117',hints:['Books are being taken away. Do we add or subtract?','Subtract: 145 - 28.','$145 - 28 = 117$ books still on the shelves.'],method:'$145 - 28 = 117$'},
+    {id:'b-wp-1',skill:'Word Problems',prompt:'A library has $145$ books. $28$ are checked out. How many books are on the shelves?',steps:[{prompt:'What operation? (add or subtract)',answer:'subtract',accept:['subtract','-','take away','minus','subtraction']},{prompt:'Now solve: $145 - 28 = ?$',answer:'117',accept:['117']}],answer:'117',acceptable:['117','one hundred seventeen','one hundred and seventeen'],guide:'145 - 28 = 117',hints:['Books are being taken away. Do we add or subtract?','Subtract: 145 - 28.','$145 - 28 = 117$ books still on the shelves.'],method:'$145 - 28 = 117$'},
     {id:'b-wp-2',skill:'Word Problems',prompt:'A baker makes $6$ batches of cookies. Each batch has $8$ cookies. How many cookies in total?',answer:'48',acceptable:['48','forty-eight','forty eight'],guide:'6 × 8 = 48',hints:['"Batches of" usually means multiplication.','6 groups of 8. What is $6 \\times 8$?','$6 \\times 8 = 48$ cookies.'],method:'$6 \\times 8 = 48$'},
 
     // Pattern & Logic
@@ -750,12 +950,12 @@ const PROBLEMS = {
 
   stretching: [
     // Number Sense
-    {id:'s-ns-1',skill:'Number Sense',prompt:'$234 \\times 6 = \\ ?$',answer:'1404',acceptable:['1404','1,404','one thousand four hundred and four','one thousand four hundred four'],guide:'1404',hints:['Try splitting 234 into 200 + 30 + 4.','$200 \\times 6 = 1200$. $30 \\times 6 = 180$. $4 \\times 6 = 24$.','$1200 + 180 + 24 = 1404$.'],method:'$234 \\times 6 = (200 + 30 + 4) \\times 6 = 1200 + 180 + 24 = 1404$'},
+    {id:'s-ns-1',skill:'Number Sense',prompt:'$234 \\times 6 = \\ ?$',steps:[{prompt:'$200 \\times 6 = ?$',answer:'1200',accept:['1200','1,200']},{prompt:'$30 \\times 6 = ?$',answer:'180',accept:['180']},{prompt:'$4 \\times 6 = ?$',answer:'24',accept:['24']},{prompt:'Add them: $1200 + 180 + 24 = ?$',answer:'1404',accept:['1404','1,404']}],answer:'1404',acceptable:['1404','1,404','one thousand four hundred and four','one thousand four hundred four'],guide:'1404',hints:['Try splitting 234 into 200 + 30 + 4.','$200 \\times 6 = 1200$. $30 \\times 6 = 180$. $4 \\times 6 = 24$.','$1200 + 180 + 24 = 1404$.'],method:'$234 \\times 6 = (200 + 30 + 4) \\times 6 = 1200 + 180 + 24 = 1404$'},
     {id:'s-ns-2',skill:'Number Sense',prompt:'What is the value of the digit $7$ in the number $4{,}725$?',answer:'700',acceptable:['700','seven hundred','7 hundreds','7 hundred','hundreds'],guide:'700 (seven hundreds)',hints:['Look at the place each digit sits in: thousands, hundreds, tens, ones.','In 4725: 4 is thousands, 7 is hundreds, 2 is tens, 5 is ones.','The 7 is in the hundreds place, so it stands for 700.'],method:'In $4{,}725$ the digit $7$ sits in the hundreds place, so it represents $700$.'},
 
     // Word Problems
-    {id:'s-wp-1',skill:'Word Problems',prompt:'A train leaves at $9{:}25$ am and arrives at $11{:}10$ am. How long was the journey (in minutes)?',answer:'105',acceptable:['105','105 minutes','105 mins','1 hour 45 minutes','1h 45m','1:45','one hour forty-five minutes'],guide:'105 minutes (1 hour 45 minutes)',hints:['Break it into chunks. From 9:25 to 10:25 is one hour.','From 10:25 to 11:10 — count the minutes.','9:25 → 10:25 is 60 min. 10:25 → 11:10 is 45 min. Total: 105 min.'],method:'$9{:}25$ to $10{:}25$ = $60$ min. $10{:}25$ to $11{:}10$ = $45$ min. Total = $105$ min ($1$ hr $45$ min).'},
-    {id:'s-wp-2',skill:'Word Problems',prompt:'Apples cost $\\$0.45$ each. You buy $7$ apples and pay with a $\\$5$ note. How much change do you get (in dollars)?',answer:'1.85',acceptable:['1.85','$1.85','1.85 dollars','one dollar eighty-five','185 cents'],guide:'$1.85 change',hints:['First find the total cost: $0.45 \\times 7$.','$0.45 \\times 7 = 3.15$. Now subtract from 5.','$\\$5.00 - \\$3.15 = \\$1.85$ change.'],method:'Cost: $0.45 \\times 7 = \\$3.15$. Change: $\\$5.00 - \\$3.15 = \\$1.85$'},
+    {id:'s-wp-1',skill:'Word Problems',prompt:'A train leaves at $9{:}25$ am and arrives at $11{:}10$ am. How long was the journey (in minutes)?',steps:[{prompt:'How many minutes from $9{:}25$ to $10{:}25$?',answer:'60',accept:['60']},{prompt:'How many minutes from $10{:}25$ to $11{:}10$?',answer:'45',accept:['45']},{prompt:'Total minutes:',answer:'105',accept:['105']}],answer:'105',acceptable:['105','105 minutes','105 mins','1 hour 45 minutes','1h 45m','1:45','one hour forty-five minutes'],guide:'105 minutes (1 hour 45 minutes)',hints:['Break it into chunks. From 9:25 to 10:25 is one hour.','From 10:25 to 11:10 — count the minutes.','9:25 → 10:25 is 60 min. 10:25 → 11:10 is 45 min. Total: 105 min.'],method:'$9{:}25$ to $10{:}25$ = $60$ min. $10{:}25$ to $11{:}10$ = $45$ min. Total = $105$ min ($1$ hr $45$ min).'},
+    {id:'s-wp-2',skill:'Word Problems',prompt:'Apples cost $\\$0.45$ each. You buy $7$ apples and pay with a $\\$5$ note. How much change do you get (in dollars)?',steps:[{prompt:'Total cost: $0.45 \\times 7 = ?$',answer:'3.15',accept:['3.15','$3.15','3.15 dollars']},{prompt:'Change: $\\$5.00 - \\$3.15 = ?$',answer:'1.85',accept:['1.85','$1.85','1.85 dollars']}],answer:'1.85',acceptable:['1.85','$1.85','1.85 dollars','one dollar eighty-five','185 cents'],guide:'$1.85 change',hints:['First find the total cost: $0.45 \\times 7$.','$0.45 \\times 7 = 3.15$. Now subtract from 5.','$\\$5.00 - \\$3.15 = \\$1.85$ change.'],method:'Cost: $0.45 \\times 7 = \\$3.15$. Change: $\\$5.00 - \\$3.15 = \\$1.85$'},
 
     // Pattern & Logic
     {id:'s-pl-1',skill:'Pattern & Logic',prompt:'What are the next two numbers? $1,\\ 4,\\ 9,\\ 16,\\ \\_\\_,\\ \\_\\_$',answer:'25, 36',acceptable:['25,36','25, 36','25 and 36','25 36','twenty-five thirty-six','twenty-five and thirty-six'],guide:'25 and 36 — these are square numbers',hints:['Look closely: $1 = 1\\times1$, $4 = 2\\times2$, $9 = 3\\times3$, $16 = 4\\times4$.','These are the SQUARE numbers. What come next?','$5 \\times 5 = 25$. $6 \\times 6 = 36$.'],method:'Square numbers: $1^2, 2^2, 3^2, 4^2, 5^2, 6^2 = 1, 4, 9, 16, 25, 36$'},
@@ -777,11 +977,11 @@ const PROBLEMS = {
   advanced: [
     // Number Sense
     {id:'a-ns-1',skill:'Number Sense',prompt:'$-8 + 15 - 4 = \\ ?$',answer:'3',acceptable:['3','three','+3'],guide:'3',hints:['Work left to right. First $-8 + 15$.','$-8 + 15 = 7$. Then $7 - 4$.','$7 - 4 = 3$.'],method:'$-8 + 15 - 4 = 7 - 4 = 3$'},
-    {id:'a-ns-2',skill:'Number Sense',prompt:'What is $2^3 + 3^2$?',answer:'17',acceptable:['17','seventeen'],guide:'17 (which is 8 + 9)',hints:['$2^3$ means $2 \\times 2 \\times 2$. $3^2$ means $3 \\times 3$.','$2^3 = 8$ and $3^2 = 9$.','$8 + 9 = 17$.'],method:'$2^3 + 3^2 = 8 + 9 = 17$'},
+    {id:'a-ns-2',skill:'Number Sense',prompt:'What is $2^3 + 3^2$?',steps:[{prompt:'$2^3 = 2 \\times 2 \\times 2 = ?$',answer:'8',accept:['8']},{prompt:'$3^2 = 3 \\times 3 = ?$',answer:'9',accept:['9']},{prompt:'Now add: $8 + 9 = ?$',answer:'17',accept:['17']}],answer:'17',acceptable:['17','seventeen'],guide:'17 (which is 8 + 9)',hints:['$2^3$ means $2 \\times 2 \\times 2$. $3^2$ means $3 \\times 3$.','$2^3 = 8$ and $3^2 = 9$.','$8 + 9 = 17$.'],method:'$2^3 + 3^2 = 8 + 9 = 17$'},
 
     // Word Problems
     {id:'a-wp-1',skill:'Word Problems',prompt:'A car travels $240$ km in $3$ hours at constant speed. At the same speed, how far will it travel in $5$ hours?',answer:'400',acceptable:['400','400 km','400km','four hundred','400 kilometres','400 kilometers'],guide:'400 km',hints:['First find the speed: distance ÷ time.','$240 \\div 3 = 80$ km/h.','At 80 km/h for 5 hours: $80 \\times 5 = 400$ km.'],method:'Speed $= \\frac{240}{3} = 80$ km/h. Distance in 5 hr $= 80 \\times 5 = 400$ km.'},
-    {id:'a-wp-2',skill:'Word Problems',prompt:'A shirt is reduced by $30\\%$ to $\\$42$. What was its original price?',answer:'60',acceptable:['60','$60','60 dollars','sixty','sixty dollars'],guide:'$60',hints:['If reduced by 30%, the sale price is 70% of the original.','So $0.70 \\times \\text{original} = 42$.','Original $= 42 \\div 0.70 = \\$60$.'],method:'$70\\%$ of original $= 42$, so original $= \\frac{42}{0.7} = \\$60$. Check: $30\\%$ off $\\$60$ = $\\$18$ off, so sale = $\\$42$ ✓'},
+    {id:'a-wp-2',skill:'Word Problems',prompt:'A shirt is reduced by $30\\%$ to $\\$42$. What was its original price?',steps:[{prompt:'If reduced by $30\\%$, the sale price is what percent of the original? (write as a number, e.g. 70)',answer:'70',accept:['70','70%']},{prompt:'So $0.70 \\times \\text{original} = 42$. To find original: $42 \\div 0.70 = ?$',answer:'60',accept:['60','$60','60.00','$60.00']}],answer:'60',acceptable:['60','$60','60 dollars','sixty','sixty dollars'],guide:'$60',hints:['If reduced by 30%, the sale price is 70% of the original.','So $0.70 \\times \\text{original} = 42$.','Original $= 42 \\div 0.70 = \\$60$.'],method:'$70\\%$ of original $= 42$, so original $= \\frac{42}{0.7} = \\$60$. Check: $30\\%$ off $\\$60$ = $\\$18$ off, so sale = $\\$42$ ✓'},
 
     // Pattern & Logic
     {id:'a-pl-1',skill:'Pattern & Logic',prompt:'Find the next number: $2,\\ 3,\\ 5,\\ 8,\\ 12,\\ 17,\\ \\_\\_$',answer:'23',acceptable:['23','twenty-three'],guide:'23 — differences are 1, 2, 3, 4, 5, 6',hints:['Look at the differences between each pair: 1, 2, 3, 4, 5...','The gap is growing by 1 each time. So the next gap is 6.','$17 + 6 = 23$.'],method:'Differences: $+1, +2, +3, +4, +5$. Next: $+6$. So $17 + 6 = 23$.'},
@@ -806,8 +1006,12 @@ let S={
   screen:'welcome',
   name:'',
   level:null,
-  problems:[],     // 6 problems for this session, one per skill
-  pIndex:0,
+  problems:[],     // 6 stage-1 problems for this session, one per skill
+  pIndex:0,        // which problem (0-5)
+  stage:1,         // 1 = guided/stage-1, 2 = independent/stage-2
+  stage2Problem:null,  // the twin problem for stage 2 of current pair
+  stepIndex:0,     // which step is currently being worked
+  stepValues:[],   // values entered for each step
   chat:[],
   messages:[],     // for AI conversation
   hintLevel:0,
@@ -817,6 +1021,7 @@ let S={
   result:null,
   error:'',
   awaitingMethod:false,  // true when we asked "how did you work it out?"
+  pairResults:[],  // tracks per-pair: needed_stage1 (bool), aced_stage2 (bool)
 };
 
 function freshSkills(){
@@ -839,6 +1044,18 @@ function buildSession(level){
     }
   });
   return session;
+}
+
+/* Pick a twin problem (stage 2) — same skill+level, different from stage 1.
+   If no twin exists, returns null and we treat the pair as stage-1-only. */
+function pickTwin(stage1Problem, level){
+  const pool = PROBLEMS[level] || [];
+  const candidates = pool.filter(p =>
+    p.skill === stage1Problem.skill &&
+    p.id !== stage1Problem.id
+  );
+  if(!candidates.length) return null;
+  return candidates[Math.floor(Math.random()*candidates.length)];
 }
 
 /* AI call to Vercel proxy */
@@ -881,9 +1098,14 @@ function checkAnswer(userAnswer, problem){
 }
 
 function tutorSystem(){
-  const p = S.problems[S.pIndex];
-  const isLast = S.pIndex >= S.problems.length - 1;
-  const wasCorrect = S.skills[p.skill].gotRight;
+  const isStage2 = S.stage === 2;
+  const p = isStage2 && S.stage2Problem ? S.stage2Problem : S.problems[S.pIndex];
+  const isLastPair = S.pIndex >= S.problems.length - 1;
+  const isLast = isLastPair && isStage2;
+  const wasCorrect = isStage2 ? !!S.skills[p.skill].stage2GotRight : !!S.skills[p.skill].gotRight;
+  const stageContext = isStage2
+    ? `\nSTAGE: 2 (Independent practice — child just worked through a similar problem step-by-step. This is their chance to apply it without scaffolding.)`
+    : `\nSTAGE: 1 (Single-stage problem — no step structure. Standard tutoring.)`;
   return `You are Burrow, a warm thoughtful math tutor by White Rabbit Data Service. You're tutoring ${S.name||'a student'}.
 
 PROBLEM SHOWN: ${p.prompt}
@@ -891,35 +1113,37 @@ EXPECTED ANSWER: ${p.answer}
 SKILL: ${p.skill}
 HINTS USED SO FAR: ${S.hintLevel}
 IS LAST PROBLEM: ${isLast}
-ALREADY GOT IT RIGHT THIS PROBLEM: ${wasCorrect}
-AWAITING METHOD EXPLANATION: ${S.awaitingMethod}
+ALREADY GOT IT RIGHT: ${wasCorrect}
+AWAITING METHOD EXPLANATION: ${S.awaitingMethod}${stageContext}
 
 CRITICAL RULES:
 1. The student's answer correctness has ALREADY BEEN CHECKED before you. Trust the context above.
 
 2. If AWAITING METHOD EXPLANATION is true → the student got it right with no hints, and we asked them to explain their method. Now they're explaining.
-   → Validate their thinking warmly in 1-2 sentences. If their method is sound, say so specifically. If they got the right answer by a slightly off path, gently correct without being harsh. Optionally offer one alternative method in 1 line if there's a really elegant one. End with [NEXT] (or [DONE] if last).
+   → Validate their thinking warmly in 1-2 sentences. If their method is sound, say so specifically. End with [NEXT] (or [DONE] if last).
 
-3. If ALREADY GOT IT RIGHT THIS PROBLEM is true → student is responding to your last message (probably a "how did you work it out" prompt). Treat as method explanation. Validate, then [NEXT]/[DONE].
+3. If ALREADY GOT IT RIGHT is true → student is responding to your last message. Treat as method explanation. Validate briefly, then [NEXT]/[DONE].
 
 4. If the student's answer is WRONG → diagnose the likely error type:
-   - Arithmetic slip (right method, wrong calculation) → "I think you've got the right idea — just check the calculation"
-   - Wrong operation (added when should have multiplied, etc.) → "Look closely at what the question is asking us to do"
+   - Arithmetic slip → "I think you've got the right idea — just check the calculation"
+   - Wrong operation → "Look closely at what the question is asking us to do"
    - Misread the problem → "Let's read the problem one more time"
    - Conceptual gap → "Let me ask it differently..."
    Then ask ONE gentle Socratic question. Never say "wrong" or "incorrect". Keep to 2 sentences.
 
-5. If the student's answer is CORRECT and HINTS WERE USED (hintLevel > 0) → affirm warmly, briefly state the answer in context (1 sentence), then [NEXT] or [DONE].
+5. If CORRECT and HINTS WERE USED → affirm warmly, briefly state the answer in context, then [NEXT] or [DONE].
 
-6. If the student's answer is CORRECT and NO HINTS USED → ask "How did you work it out?" warmly. Do NOT say [NEXT] yet. Set the scene for them to explain.
+6. If CORRECT and NO HINTS USED:
+   - Stage 1: ask "How did you work it out?" warmly. Do NOT say [NEXT] yet.
+   - Stage 2: praise the transfer ("Nice — you applied that beautifully!" or similar — they just succeeded on an independent problem after working through a guided one). [NEXT] or [DONE].
 
-7. After 3+ failed attempts on the same problem → gently give the answer and the method, encourage them, then [NEXT] or [DONE].
+7. After 3+ failed attempts on this problem → gently give the answer and method, encourage them, [NEXT] or [DONE].
 
-8. Use $...$ for inline math (LaTeX). Examples: $7 \\times 8 = 56$, $\\frac{3}{4}$. The interface renders LaTeX.
+8. Use $...$ for inline math (LaTeX). Examples: $7 \\times 8 = 56$, $\\frac{3}{4}$.
 
-9. Keep it warm, brief (2-3 sentences max), respectful. Never patronising. The student is intelligent.
+9. Keep it warm, brief (2-3 sentences max), respectful. Never patronising.
 
-10. Examples of accepting: "I added them" is a fine method explanation for an addition problem. "I just knew it" is fine for mental math. Don't demand step-by-step proof — celebrate the thinking they share.`;
+10. Stage 2 specifically: this is independent practice after guided work. Emphasise transfer ("you used what you just learned") rather than discovery.`;
 }
 
 function diagnosisSystem(){
@@ -967,17 +1191,21 @@ function startSession(){
     screen:'tutor',
     problems:session,
     pIndex:0,
+    stage:1,
+    stage2Problem:null,
+    stepIndex:0,
+    stepValues:[],
     chat:[],
     messages:[],
     hintLevel:0,
     skills:freshSkills(),
     result:null,
     awaitingMethod:false,
+    pairResults:[],
   });
   // post first problem intro
   setTimeout(()=>{
-    const p = S.problems[0];
-    const opening = `Hi ${S.name}! I've got 6 problems lined up for you — one of each kind. Let's start.\n\n**Problem 1 of 6 · ${p.skill}**`;
+    const opening = `Hi ${S.name}! Let's get started — take your time on each one.`;
     set({
       chat:[{r:'t',text:opening,type:'intro'}],
       messages:[{role:'assistant',content:opening}],
@@ -990,10 +1218,14 @@ async function sendAnswer(answer){
   const userMsg = {r:'c',text:answer,long:answer.length>20};
   const newChat = [...S.chat,userMsg];
   const newMsgs = [...S.messages,{role:'user',content:answer}];
-  const p = S.problems[S.pIndex];
+
+  // In stage 2, the active problem is the twin
+  const isStage2 = S.stage === 2;
+  const p = isStage2 && S.stage2Problem ? S.stage2Problem : S.problems[S.pIndex];
+  const skillName = p.skill;
 
   // Decide: is this an answer attempt or a method explanation?
-  const isMethodExplanation = S.skills[p.skill].gotRight || S.awaitingMethod;
+  const isMethodExplanation = (S.skills[skillName].gotRight && S.stage === 2 && S.skills[skillName].stage2GotRight) || S.awaitingMethod;
   let isCorrect = false;
   if(!isMethodExplanation){
     isCorrect = checkAnswer(answer, p);
@@ -1001,21 +1233,36 @@ async function sendAnswer(answer){
 
   // Update skills tracking
   const updSkills = {...S.skills};
-  const skillData = {...updSkills[p.skill]};
+  const skillData = {...updSkills[skillName]};
   if(!isMethodExplanation){
-    skillData.attempts += 1;
-    skillData.hintsUsed = Math.max(skillData.hintsUsed, S.hintLevel);
-    if(isCorrect && !skillData.gotRight){
-      // first-time correct: score based on hints used
-      const penalty = S.hintLevel * 18;
-      skillData.score = Math.max(40, 100 - penalty - Math.max(0, skillData.attempts - 1) * 10);
-      skillData.gotRight = true;
-    } else if(!isCorrect && !skillData.gotRight){
-      // wrong attempt
-      skillData.score = Math.max(15, 60 - skillData.attempts * 12);
+    skillData.attempts = (skillData.attempts || 0) + 1;
+    skillData.hintsUsed = Math.max(skillData.hintsUsed || 0, S.hintLevel);
+    if(isCorrect){
+      if(isStage2){
+        // stage 2 correct — bonus points (transfer success)
+        skillData.stage2GotRight = true;
+        // Boost score if they did stage 2 cleanly
+        const stage2Bonus = S.hintLevel === 0 ? 15 : 5;
+        skillData.score = Math.min(100, (skillData.score || 60) + stage2Bonus);
+        // Mark pair result
+        const pr = [...S.pairResults];
+        if(pr[S.pIndex]) pr[S.pIndex].acedStage2 = (S.hintLevel === 0);
+        S.pairResults = pr;
+      } else if(!skillData.gotRight){
+        // stage 1 (no-steps problem) first-time correct
+        const penalty = S.hintLevel * 18;
+        skillData.score = Math.max(40, 100 - penalty - Math.max(0, skillData.attempts - 1) * 10);
+        skillData.gotRight = true;
+      }
+    } else if(!isCorrect){
+      if(isStage2){
+        skillData.score = Math.max(20, (skillData.score || 60) - 8);
+      } else if(!skillData.gotRight){
+        skillData.score = Math.max(15, 60 - skillData.attempts * 12);
+      }
     }
   }
-  updSkills[p.skill] = skillData;
+  updSkills[skillName] = skillData;
 
   set({chat:newChat,messages:newMsgs,loading:true,skills:updSkills});
   showTyping();
@@ -1032,18 +1279,17 @@ async function sendAnswer(answer){
     // Determine awaiting state for next turn
     let awaiting = false;
     if(isCorrect && S.hintLevel === 0 && !isMethodExplanation && !isNext && !isDone){
-      // we just got it right with no hints, AI should have asked "how did you work it out?"
       awaiting = true;
     }
 
     // Auto-advance fallback: after 4 failed attempts on this problem, force next
-    const stuck = !skillData.gotRight && skillData.attempts >= 4;
+    const stuck = !isCorrect && skillData.attempts >= 4;
     const shouldAdvance = isDone || isNext || stuck;
 
     if(shouldAdvance){
-      const isLastProblem = S.pIndex >= S.problems.length - 1;
-      if(isDone || isLastProblem){
-        // session complete
+      const isLastPair = S.pIndex >= S.problems.length - 1;
+      if(isDone || (isStage2 && isLastPair)){
+        // Session complete
         set({
           chat:updChat,
           messages:updMsgs,
@@ -1053,7 +1299,8 @@ async function sendAnswer(answer){
           awaitingMethod:false,
         });
         await generateResult(updMsgs, updSkills);
-      } else {
+      } else if(isStage2) {
+        // Stage 2 done — advance to next pair
         const nextIdx = S.pIndex + 1;
         const nextP = S.problems[nextIdx];
         const trans = `**Problem ${nextIdx+1} of ${S.problems.length} · ${nextP.skill}**`;
@@ -1061,10 +1308,50 @@ async function sendAnswer(answer){
           chat:[...updChat,{r:'t',text:trans,type:'intro'}],
           messages:[...updMsgs,{role:'assistant',content:trans}],
           pIndex:nextIdx,
+          stage:1,
+          stage2Problem:null,
+          stepIndex:0,
+          stepValues:[],
+          stepFeedback:null,
           hintLevel:0,
           loading:false,
           awaitingMethod:false,
         });
+      } else {
+        // Stage 1 (single-stage problem) done — try to find a twin for stage 2
+        const stage1Problem = S.problems[S.pIndex];
+        const hasSteps = stage1Problem.steps && stage1Problem.steps.length > 0;
+        if(!hasSteps){
+          // No stage 2 for problems without steps. Try a twin anyway? Skip — keep current behaviour.
+          if(isLastPair){
+            set({
+              chat:updChat,
+              messages:updMsgs,
+              loading:true,
+              screen:'loading',
+              loadingMsg:`Building ${S.name}'s reasoning profile...`,
+              awaitingMethod:false,
+            });
+            await generateResult(updMsgs, updSkills);
+          } else {
+            const nextIdx = S.pIndex + 1;
+            const nextP = S.problems[nextIdx];
+            const trans = `**Problem ${nextIdx+1} of ${S.problems.length} · ${nextP.skill}**`;
+            set({
+              chat:[...updChat,{r:'t',text:trans,type:'intro'}],
+              messages:[...updMsgs,{role:'assistant',content:trans}],
+              pIndex:nextIdx,
+              stage:1,
+              stage2Problem:null,
+              stepIndex:0,
+              stepValues:[],
+              stepFeedback:null,
+              hintLevel:0,
+              loading:false,
+              awaitingMethod:false,
+            });
+          }
+        }
       }
     } else {
       set({chat:updChat,messages:updMsgs,loading:false,awaitingMethod:awaiting});
@@ -1129,15 +1416,16 @@ async function generateResult(msgs, skills){
 }
 
 function useHint(){
-  const p = S.problems[S.pIndex];
+  const isStage2 = S.stage === 2;
+  const p = isStage2 && S.stage2Problem ? S.stage2Problem : S.problems[S.pIndex];
   if(S.hintLevel >= 3) return;
   const labels = ['💡 Gentle nudge','🔍 Here\'s a clue','📖 Let me guide you'];
-  const msg = `${labels[S.hintLevel]}: ${p.hints[S.hintLevel]}`;
+  const hint = (p.hints && p.hints[S.hintLevel]) || 'Take another look at the problem.';
+  const msg = `${labels[S.hintLevel]}: ${hint}`;
   set({
     chat:[...S.chat,{r:'t',text:msg,type:'hint'}],
     hintLevel: S.hintLevel + 1,
   });
-  // re-render katex on next tick
   setTimeout(renderMath, 30);
 }
 
@@ -1163,6 +1451,213 @@ function colFor(s){
   if(s>=70) return {f:'#5A7A5C',t:'#2E4530'};   // sage
   if(s>=45) return {f:'#C99A2D',t:'#7A5D18'};   // gold
   return {f:'#B8451F',t:'#8E3215'};             // rust
+}
+
+/* Render a vertical-stack column-arithmetic problem.
+   Spec: { op:'+|-|×|÷', terms:[a,b] }
+   showLabels: when true, show H/T/O place-value labels above */
+function renderVertical(spec, showLabels){
+  const ops = {'+':'+','-':'−','×':'×','÷':'÷'};
+  const opSym = ops[spec.op] || spec.op;
+  const strs = spec.terms.map(t => String(t));
+  const width = Math.max(...strs.map(s => s.length));
+  const labelNames = ['Ones','Tens','Hund','Thou'];
+  const labels = [];
+  for(let i = 0; i < width; i++) labels.unshift(labelNames[i] || '');
+
+  function digitCells(num, withOp){
+    const s = String(num).padStart(width, ' ');
+    let html = '';
+    if(withOp){
+      html += `<span class="vc op">${opSym}</span>`;
+    } else {
+      html += `<span class="vc empty">.</span>`;
+    }
+    for(const ch of s){
+      if(ch === ' ') html += `<span class="vc empty">.</span>`;
+      else html += `<span class="vc">${ch}</span>`;
+    }
+    return html;
+  }
+
+  let html = `<div class="vertical-stack">`;
+  if(showLabels){
+    html += `<div class="v-row v-labels"><span class="vc empty">.</span>`;
+    for(const l of labels){
+      html += `<span class="vc" title="${l}">${l.charAt(0)}</span>`;
+    }
+    html += `</div>`;
+  }
+  // First term — no operator prefix
+  html += `<div class="v-row">${digitCells(spec.terms[0], false)}</div>`;
+  // Second term — with operator (this row gets the underline)
+  html += `<div class="v-row v-line">${digitCells(spec.terms[1], true)}</div>`;
+  // Result — question marks
+  html += `<div class="v-row v-result"><span class="vc empty">.</span>`;
+  for(let i = 0; i < width; i++) html += `<span class="vc">?</span>`;
+  html += `</div>`;
+  html += `</div>`;
+  return html;
+}
+
+/* Render the structured working space for stage 1 of a problem with steps.
+   Each step gets its own input. Steps are revealed sequentially as the child completes them. */
+function renderWorkspace(p){
+  const steps = p.steps || [];
+  let html = `<div class="workspace">`;
+  html += `<div class="workspace-header"><span>Working — step by step</span><span class="skip" onclick="skipToAnswer()">Already know the answer? Skip →</span></div>`;
+  steps.forEach((st, idx) => {
+    const isDone = idx < S.stepIndex;
+    const isActive = idx === S.stepIndex;
+    const isUpcoming = idx > S.stepIndex;
+    const cls = isDone ? 'done' : (isActive ? 'active' : 'upcoming');
+    html += `<div class="step ${cls}">`;
+    html += `<div class="step-num">${isDone ? '✓' : idx+1}</div>`;
+    html += `<div class="step-body">`;
+    html += `<div class="step-prompt">${st.prompt}</div>`;
+    if(isDone){
+      html += `<span class="step-value-display">${S.stepValues[idx] || st.answer}</span>`;
+    } else if(isActive){
+      html += `<div class="step-input-row">`;
+      html += `<input class="step-input" id="stepInput" type="text" inputmode="text" placeholder="Type your answer..." autocomplete="off"/>`;
+      html += `<button class="step-check-btn" onclick="checkStep()">Check →</button>`;
+      html += `</div>`;
+      if(S.stepFeedback){
+        html += `<div class="step-feedback ${S.stepFeedback.type}">${S.stepFeedback.text}</div>`;
+      }
+    } else {
+      html += `<div class="step-locked">Complete step ${idx} first</div>`;
+    }
+    html += `</div></div>`;
+  });
+  html += `</div>`;
+  return html;
+}
+
+/* Check whether the current step input is correct */
+function checkStep(){
+  const inp = document.getElementById('stepInput');
+  if(!inp) return;
+  const val = inp.value.trim();
+  if(!val) return;
+
+  const p = S.problems[S.pIndex];
+  const step = p.steps[S.stepIndex];
+  const accept = step.accept || [step.answer];
+  const isCorrect = accept.some(a => normalise(String(a)) === normalise(val));
+
+  if(isCorrect){
+    const newValues = [...S.stepValues];
+    newValues[S.stepIndex] = val;
+    const nextIndex = S.stepIndex + 1;
+    if(nextIndex >= p.steps.length){
+      // All steps complete — they've worked through it correctly
+      // Auto-advance to stage 2 (independent practice)
+      stage1Complete(true);
+    } else {
+      set({stepIndex: nextIndex, stepValues: newValues, stepFeedback: null});
+    }
+  } else {
+    set({stepFeedback: {type:'error', text:`Have another look at this one. Try again.`}});
+  }
+}
+
+/* If child can answer right away, skip the structured working */
+function skipToAnswer(){
+  // Show a confirmation-ish prompt: switch the workspace to a single answer field
+  set({stage: 1.5}); // 1.5 = "skipping stage 1, single answer"
+}
+
+/* Submit final answer when in skip mode (stage 1.5) */
+async function submitSkipAnswer(){
+  const inp = document.getElementById('skipInput');
+  if(!inp) return;
+  const val = inp.value.trim();
+  if(!val || S.loading) return;
+  const p = S.problems[S.pIndex];
+  const isCorrect = checkAnswer(val, p);
+  if(isCorrect){
+    // Aced it without scaffolding — record that, move straight to stage 2
+    const skillData = {...S.skills[p.skill]};
+    skillData.score = 95; // very high — they didn't even need stage 1
+    skillData.gotRight = true;
+    skillData.attempts = 1;
+    skillData.skippedStage1 = true;
+    const updSkills = {...S.skills, [p.skill]: skillData};
+    set({skills: updSkills});
+    stage1Complete(false); // false = didn't need stage 1
+  } else {
+    // They thought they knew but didn't — go back to the structured working
+    set({stage: 1, stepFeedback: {type:'error', text:`Not quite — let's work through it step by step.`}});
+  }
+}
+
+/* Stage 1 is complete (either through steps or skip).
+   Move to stage 2 with a twin problem. */
+function stage1Complete(neededStage1){
+  const p = S.problems[S.pIndex];
+  const twin = pickTwin(p, S.level);
+
+  // Record pair info
+  const pairResults = [...S.pairResults];
+  pairResults[S.pIndex] = {neededStage1, acedStage2: null, problemId: p.id, twinId: twin?.id};
+
+  if(!twin){
+    // No twin available — skip stage 2, advance to next problem
+    advancePair(true /* completed without stage 2 */);
+    return;
+  }
+
+  // Update skill score for stage 1 success
+  const skillData = {...S.skills[p.skill]};
+  if(!skillData.gotRight){
+    skillData.gotRight = true;
+    skillData.attempts = (skillData.attempts || 0) + 1;
+    skillData.score = neededStage1 ? 65 : 95; // 65 = needed scaffolding, 95 = didn't
+    skillData.usedStage1 = neededStage1;
+  }
+  const updSkills = {...S.skills, [p.skill]: skillData};
+
+  set({
+    stage: 2,
+    stage2Problem: twin,
+    stepIndex: 0,
+    stepValues: [],
+    stepFeedback: null,
+    hintLevel: 0,
+    awaitingMethod: false,
+    pairResults,
+    skills: updSkills,
+  });
+  setTimeout(renderMath, 30);
+}
+
+/* Move to the next pair (or finish session). */
+function advancePair(success){
+  const isLastPair = S.pIndex >= S.problems.length - 1;
+  if(isLastPair){
+    // Session complete
+    set({
+      loading: true,
+      screen: 'loading',
+      loadingMsg: `Building ${S.name}'s reasoning profile...`,
+      awaitingMethod: false,
+    });
+    generateResult(S.messages, S.skills);
+    return;
+  }
+  // Next pair
+  set({
+    pIndex: S.pIndex + 1,
+    stage: 1,
+    stage2Problem: null,
+    stepIndex: 0,
+    stepValues: [],
+    stepFeedback: null,
+    hintLevel: 0,
+    awaitingMethod: false,
+  });
+  setTimeout(renderMath, 30);
 }
 
 function renderMath(){
@@ -1253,8 +1748,18 @@ function render(){
   }
 
   else if(S.screen === 'tutor'){
-    const p = S.problems[S.pIndex];
-    const pct = Math.round(((S.pIndex)/S.problems.length)*100);
+    // Determine which problem we're showing this turn
+    const stage1Problem = S.problems[S.pIndex];
+    const isStage2 = S.stage === 2;
+    const p = isStage2 && S.stage2Problem ? S.stage2Problem : stage1Problem;
+    const hasSteps = stage1Problem.steps && stage1Problem.steps.length > 0;
+    const showWorkspace = !isStage2 && S.stage === 1 && hasSteps;
+    const showSkipMode = !isStage2 && S.stage === 1.5;
+
+    const totalPairs = S.problems.length;
+    const completedPairs = S.pIndex + (isStage2 ? 0.5 : 0);
+    const pct = Math.round((completedPairs / totalPairs) * 100);
+
     const chatHTML = S.chat.slice(-8).map(m=>{
       if(m.r==='t'){
         return `<div class="msg t"><div class="m-av ta">${RABBIT_SVG}</div><div class="bubble">${fmt(m.text)}</div></div>`;
@@ -1267,6 +1772,70 @@ function render(){
       return `<div class="sk-row"><span class="sk-name">${name}</span><div class="sk-track"><div class="sk-fill" style="width:${d.score}%;background:${col.f}"></div></div><span class="sk-score" style="color:${col.t}">${d.score}%</span></div>`;
     }).join('');
 
+    // Stage indicator
+    const stagePill = hasSteps ? (
+      isStage2
+        ? `<span class="stage-pill s2">Independent · Practice 2</span>`
+        : `<span class="stage-pill s1">Guided · Practice 1</span>`
+    ) : '';
+
+    // Problem display: vertical, problem-text, or workspace
+    let problemContent = '';
+    if(showWorkspace){
+      // Stage 1 with steps — show problem statement + workspace
+      problemContent = `<div class="problem-card">
+        <div class="problem-skill-tag">${p.skill}${stagePill ? ' · ' + stagePill : ''}</div>
+        ${p.vertical
+          ? renderVertical(p.vertical, S.hintLevel >= 2 || (S.skills[p.skill].attempts >= 1 && !S.skills[p.skill].gotRight))
+          : `<div class="problem-text">${p.prompt}</div>`
+        }
+      </div>
+      ${renderWorkspace(p)}`;
+    } else if(showSkipMode){
+      // Stage 1.5 — child wants to skip. Single answer field.
+      problemContent = `<div class="problem-card">
+        <div class="problem-skill-tag">${p.skill}${stagePill ? ' · ' + stagePill : ''}</div>
+        ${p.vertical
+          ? renderVertical(p.vertical, false)
+          : `<div class="problem-text">${p.prompt}</div>`
+        }
+      </div>
+      <div class="workspace">
+        <div class="workspace-header"><span>Your answer</span><span class="skip" onclick="set({stage:1, stepFeedback:null})">← Show me the steps instead</span></div>
+        <div class="step active">
+          <div class="step-num">→</div>
+          <div class="step-body">
+            <div class="step-prompt">What's your final answer?</div>
+            <div class="step-input-row">
+              <input class="step-input" id="skipInput" type="text" placeholder="Type your answer..." autocomplete="off"/>
+              <button class="step-check-btn" onclick="submitSkipAnswer()">Submit →</button>
+            </div>
+            ${S.stepFeedback ? `<div class="step-feedback ${S.stepFeedback.type}">${S.stepFeedback.text}</div>` : ''}
+          </div>
+        </div>
+      </div>`;
+    } else {
+      // Stage 2, OR stage 1 without steps — current chat-based UI
+      problemContent = `<div class="problem-card">
+        <div class="problem-skill-tag">${p.skill}${stagePill ? ' · ' + stagePill : ''}</div>
+        ${p.vertical
+          ? renderVertical(p.vertical, S.hintLevel >= 2 || (S.skills[p.skill].attempts >= 1 && !S.skills[p.skill].gotRight))
+          : `<div class="problem-text">${p.prompt}</div>`
+        }
+      </div>`;
+    }
+
+    // Chat input area only shown for stage 2 / non-workspace mode
+    const chatInputArea = (showWorkspace || showSkipMode) ? '' : `
+<div class="chat-win" id="cw">${chatHTML}</div>
+<div class="input-wrap">
+  <textarea class="chat-in" id="ci" placeholder="${S.awaitingMethod?'Tell Burrow how you worked it out...':'Type your answer...'}" rows="1" ${S.loading?'disabled':''}></textarea>
+  <button class="send-btn" onclick="doSend()" ${S.loading?'disabled':''} aria-label="Send answer">→</button>
+</div>
+<div class="action-row">
+  ${(S.hintLevel<3 && !S.loading && !S.awaitingMethod && !S.skills[p.skill].gotRight)?`<button class="action-btn" onclick="useHint()">Hint (${3-S.hintLevel} left)</button>`:''}
+</div>`;
+
     app.innerHTML = `<div class="screen">
 <div class="tutor-header">
   <div class="tutor-left">
@@ -1278,33 +1847,39 @@ function render(){
   </div>
 </div>
 <div class="progress-row">
-  <span>Problem ${S.pIndex+1} of ${S.problems.length}</span>
+  <span>Problem ${S.pIndex+1} of ${S.problems.length}${isStage2 ? ' · independent' : (hasSteps ? ' · guided' : '')}</span>
   <span class="badge b-rust">${p.skill}</span>
 </div>
 <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
-<div class="problem-card">
-  <div class="problem-skill-tag">${p.skill}</div>
-  <div class="problem-text">${p.prompt}</div>
-</div>
-<div class="chat-win" id="cw">${chatHTML}</div>
-<div class="input-wrap">
-  <textarea class="chat-in" id="ci" placeholder="${S.awaitingMethod?'Tell Burrow how you worked it out...':'Type your answer...'}" rows="1" ${S.loading?'disabled':''}></textarea>
-  <button class="send-btn" onclick="doSend()" ${S.loading?'disabled':''} aria-label="Send answer">→</button>
-</div>
-<div class="action-row">
-  ${(S.hintLevel<3 && !S.loading && !S.awaitingMethod && !S.skills[p.skill].gotRight)?`<button class="action-btn" onclick="useHint()">Hint (${3-S.hintLevel} left)</button>`:''}
-</div>
+${problemContent}
+${chatInputArea}
 ${skillsHTML?`<div class="skill-map"><div class="sm-title">Your reasoning map</div>${skillsHTML}</div>`:''}
 </div>`;
-    const cw = document.getElementById('cw');
-    if(cw){
-      setTimeout(()=>{cw.scrollTop = cw.scrollHeight;},80);
-    }
-    const ci = document.getElementById('ci');
-    if(ci){
-      ci.addEventListener('input',()=>{ci.style.height='auto';ci.style.height=ci.scrollHeight+'px';});
-      ci.addEventListener('keydown', e=>{if(e.key==='Enter' && !e.shiftKey){e.preventDefault();doSend();}});
-      if(!S.loading) ci.focus();
+
+    // Focus appropriate input
+    if(showWorkspace){
+      const stepInp = document.getElementById('stepInput');
+      if(stepInp){
+        stepInp.focus();
+        stepInp.addEventListener('keydown', e=>{if(e.key==='Enter'){e.preventDefault();checkStep();}});
+      }
+    } else if(showSkipMode){
+      const skipInp = document.getElementById('skipInput');
+      if(skipInp){
+        skipInp.focus();
+        skipInp.addEventListener('keydown', e=>{if(e.key==='Enter'){e.preventDefault();submitSkipAnswer();}});
+      }
+    } else {
+      const cw = document.getElementById('cw');
+      if(cw){
+        setTimeout(()=>{cw.scrollTop = cw.scrollHeight;},80);
+      }
+      const ci = document.getElementById('ci');
+      if(ci){
+        ci.addEventListener('input',()=>{ci.style.height='auto';ci.style.height=ci.scrollHeight+'px';});
+        ci.addEventListener('keydown', e=>{if(e.key==='Enter' && !e.shiftKey){e.preventDefault();doSend();}});
+        if(!S.loading) ci.focus();
+      }
     }
     setTimeout(renderMath,40);
   }
@@ -1414,6 +1989,11 @@ function tryAnother(){
     screen:'level',
     problems:[],
     pIndex:0,
+    stage:1,
+    stage2Problem:null,
+    stepIndex:0,
+    stepValues:[],
+    stepFeedback:null,
     chat:[],
     messages:[],
     hintLevel:0,
@@ -1422,6 +2002,7 @@ function tryAnother(){
     error:'',
     loading:false,
     awaitingMethod:false,
+    pairResults:[],
   });
 }
 
@@ -1431,6 +2012,11 @@ function goHome(){
     level:null,
     problems:[],
     pIndex:0,
+    stage:1,
+    stage2Problem:null,
+    stepIndex:0,
+    stepValues:[],
+    stepFeedback:null,
     chat:[],
     messages:[],
     hintLevel:0,
@@ -1439,6 +2025,7 @@ function goHome(){
     error:'',
     loading:false,
     awaitingMethod:false,
+    pairResults:[],
   });
 }
 
